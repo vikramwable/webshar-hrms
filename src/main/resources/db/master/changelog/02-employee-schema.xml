@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+  <changeSet id="01" author="nikhil.shinde">
+    <createTable tableName="employees" remarks="Table containing details of organizations">
+      <column name="id" type="BIGINT" autoIncrement="true">
+        <constraints nullable="false" unique="true" primaryKey="true" />
+      </column>
+      <column name="guid" type="varchar(100)">
+        <constraints nullable="false" unique="true" />
+      </column>
+      <column name="emp_id" type="BIGINT">
+        <constraints nullable="false" unique="true" />
+      </column>
+      <column name="org_id" type="BIGINT">
+        <constraints nullable="false" />
+      </column>
+      <column name="firstName" type="varchar(100)">
+        <constraints nullable="false" />
+      </column>
+      <column name="middleName" type="varchar(100)">
+        <constraints nullable="false" />
+      </column>
+      <column name="lastName" type="varchar(100)">
+        <constraints nullable="false" />
+      </column>
+      <column name="date_of_birth" type="date">
+        <constraints nullable="false" />
+      </column>
+      <column name="isActive" type="boolean" defaultValue="false">
+        <constraints nullable="false"/>
+      </column>
+      <column name="email" type="varchar(100)">
+        <constraints nullable="false" />
+      </column>
+      <column name="joining_date" type="date">
+        <constraints nullable="false" />
+      </column>
+      <column name="exit_daye" type="date">
+        <constraints nullable="true" />
+      </column>
+      <column name="address" type="varchar(300)">
+        <constraints nullable="true" />
+      </column>
+      <column name="contact" type="varchar(100)">
+        <constraints nullable="false" />
+      </column>
+      <column name="desiganation" type="varchar(100)">
+        <constraints nullable="false" />
+      </column>
+      <column name="created_at" type="datetime">
+        <constraints nullable="false" />
+      </column>
+      <column name="updated_at" type="datetime">
+        <constraints nullable="false" />
+      </column>
+    </createTable>
+    <addForeignKeyConstraint baseColumnNames="org_id" baseTableName="employees" constraintName="fk_org_id" onDelete="RESTRICT" referencedColumnNames="id" referencedTableName="organizations" />
+  </changeSet>
+</databaseChangeLog>
