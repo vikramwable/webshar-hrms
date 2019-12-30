@@ -1,6 +1,8 @@
 package org.webshar.hrms.dao;
 
-public class RoleDao
-{
+import org.webshar.hrms.models.db.Role;
+import org.webshar.hrms.repositories.BaseRepository;
 
+public interface RoleDao extends BaseRepository<Role, Long>
+{
 }

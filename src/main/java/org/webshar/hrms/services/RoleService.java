@@ -3,7 +3,7 @@ package org.webshar.hrms.services;
 import org.webshar.hrms.dao.exceptions.EntityNotFoundException;
 import org.webshar.hrms.models.db.Role;
 
-public interface EncounterService
+public interface RoleService
 {
-  Role getEncounter(String roleGuid) throws EntityNotFoundException;
+  Role getRole(Long roleGuid) throws EntityNotFoundException;
 }
