@@ -1,47 +1,27 @@
 package org.webshar.hrms.dao.impl;
 
 import java.util.List;
+import java.util.Optional;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import org.springframework.stereotype.Repository;
-import org.webshar.hrms.dao.RoleDao;
+import org.webshar.hrms.dao.RoleRepository;
+import org.webshar.hrms.dao.RoleRepositoryCustom;
 import org.webshar.hrms.models.db.Role;
 
 @Repository
-public class RoleDaoImpl implements RoleDao
+public class RoleDaoImpl implements RoleRepositoryCustom
 {
 
   @PersistenceContext
-  private EntityManager entityManager;
+  EntityManager entityManager;
 
   @Override
-  public Role findById(Long id)
+  public List<Role> getRoleNameLike(String name)
   {
-    return entityManager.find(Role.class, id);
-  }
-
-  @Override
-  public Role save(Role persisted)
-  {
-    return null;
-  }
-
-  @Override
-  public Role update(Role updated)
-  {
-    return null;
-  }
-
-  @Override
-  public List<Role> findAll()
-  {
-    return null;
-  }
-
-  @Override
-  public void delete(Role deleted)
-  {
-    Object managed = entityManager.merge(deleted);
-    entityManager.remove(managed);
+    Query query = entityManager.createQuery("SELECT name FROM Role WHERE name LIKE ?",Role.class);
+    query.setParameter(1,name);
+    return  query.getResultList();
   }
 }

@@ -5,5 +5,5 @@ import org.webshar.hrms.models.db.Role;
 
 public interface RoleService
 {
-  Role getRole(Long roleGuid) throws EntityNotFoundException;
+  Role getRole(Long roleId) throws EntityNotFoundException;
 }

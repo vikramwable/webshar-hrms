@@ -2,6 +2,7 @@ package org.webshar.hrms.services.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.webshar.hrms.dao.RoleRepository;
 import org.webshar.hrms.dao.exceptions.EntityNotFoundException;
 import org.webshar.hrms.dao.impl.RoleDaoImpl;
 import org.webshar.hrms.models.db.Role;
@@ -12,11 +13,11 @@ public class RoleServiceImpl implements RoleService
 {
 
   @Autowired
-  RoleDaoImpl roleDaoImpl;
+  RoleRepository roleRepository;
+
   @Override
   public Role getRole(Long roleId) throws EntityNotFoundException
   {
-    Role role = roleDaoImpl.findById(roleId);
-    return role;
+    return roleRepository.findById(roleId).orElse(null);
   }
 }
