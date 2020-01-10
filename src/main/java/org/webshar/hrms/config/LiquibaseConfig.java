@@ -1,4 +1,4 @@
-package org.webshar.hrms.Configurations;
+package org.webshar.hrms.config;
 
 import liquibase.integration.spring.SpringLiquibase;
 

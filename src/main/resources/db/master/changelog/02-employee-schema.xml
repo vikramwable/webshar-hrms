@@ -30,7 +30,7 @@
         <constraints nullable="false"/>
       </column>
       <column name="email" type="varchar(100)">
-        <constraints nullable="false" />
+        <constraints nullable="false" unique="true"/>
       </column>
       <column name="joining_date" type="date">
         <constraints nullable="false" />

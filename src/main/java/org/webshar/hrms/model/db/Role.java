@@ -1,6 +1,9 @@
-package org.webshar.hrms.models.db;
+package org.webshar.hrms.model.db;
 
+import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
+import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,8 +15,8 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 @Entity
-@Table(name="role", uniqueConstraints = {@UniqueConstraint(columnNames = {"id"})})
-public class Role
+@Table(name = "role", uniqueConstraints = {@UniqueConstraint(columnNames = {"id"})})
+public class Role implements Serializable
 {
 
   @Id
@@ -22,9 +25,9 @@ public class Role
   private Long id;
 
   @Column(name = "guid", nullable = false, unique = true, length = 11)
-  private String guid;
+  private UUID guid;
 
-  @Column(name = "name", nullable = false, length = 200)
+  @Column(name = "name", nullable = false, unique = true, length = 200)
   private String name;
 
   @CreationTimestamp
@@ -45,12 +48,12 @@ public class Role
     this.id = id;
   }
 
-  public String getGuid()
+  public UUID getGuid()
   {
     return guid;
   }
 
-  public void setGuid(String guid)
+  public void setGuid(UUID guid)
   {
     this.guid = guid;
   }
@@ -88,7 +91,7 @@ public class Role
   @Override
   public String toString()
   {
-    return "Role {"+
+    return "Role {" +
         "id='" + id + '\'' +
         ", guid='" + guid + '\'' +
         ", name='" + name + '\'' +
@@ -96,83 +99,23 @@ public class Role
   }
 
   @Override
-  public int hashCode(){
-
-    final int prime = 31;
-    int result = 1;
-
-    result = prime * result + ((guid == null) ? 0 : guid.hashCode());
-    result = prime * result + ((name == null) ? 0 : name.hashCode());
-    result = prime * result + ((createdAt == null) ? 0 : createdAt.hashCode());
-    result = prime * result + ((updatedAt == null) ? 0 : updatedAt.hashCode());
-
-    return result;
-  }
-
-  @Override
-  public boolean equals(final Object obj){
-
-    if (this == obj)
+  public boolean equals(Object o)
+  {
+    if (this == o)
     {
       return true;
     }
-    if (obj == null)
+    if (o == null || getClass() != o.getClass())
     {
       return false;
     }
-    if (getClass() != obj.getClass())
-    {
-      return false;
-    }
-    final Role other = (Role) obj;
+    Role role = (Role) o;
+    return name.equals(role.name);
+  }
 
-    if (guid == null)
-    {
-      if (other.guid != null)
-      {
-        return false;
-      }
-    }
-    else if (!guid.equals(other.guid))
-    {
-      return false;
-    }
-
-    if (name == null)
-    {
-      if (other.name != null)
-      {
-        return false;
-      }
-    }
-    else if (!name.equals(other.name))
-    {
-      return false;
-    }
-
-    if (createdAt == null)
-    {
-      if (other.createdAt != null)
-      {
-        return false;
-      }
-    }
-    else if (!createdAt.equals(other.createdAt))
-    {
-      return false;
-    }
-
-    if (updatedAt == null)
-    {
-      if (other.updatedAt != null)
-      {
-        return false;
-      }
-    }
-    else if (!updatedAt.equals(other.updatedAt))
-    {
-      return false;
-    }
-    return true;
+  @Override
+  public int hashCode()
+  {
+    return Objects.hash(name);
   }
 }

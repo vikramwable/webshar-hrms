@@ -1,6 +1,6 @@
-package org.webshar.hrms.dao.exceptions;
+package org.webshar.hrms.service.exception;
 
-public class EntityNotFoundException extends DaoException
+public class EntityNotFoundException extends ServiceException
 {
 
   public EntityNotFoundException(final String errorMessage, final Throwable errorObject)
