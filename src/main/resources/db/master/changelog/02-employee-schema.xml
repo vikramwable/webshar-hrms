@@ -18,7 +18,7 @@
         <constraints nullable="false" />
       </column>
       <column name="middleName" type="varchar(100)">
-        <constraints nullable="false" />
+        <constraints nullable="true" />
       </column>
       <column name="lastName" type="varchar(100)">
         <constraints nullable="false" />
@@ -35,7 +35,7 @@
       <column name="joining_date" type="date">
         <constraints nullable="false" />
       </column>
-      <column name="exit_daye" type="date">
+      <column name="exit_date" type="date">
         <constraints nullable="true" />
       </column>
       <column name="address" type="varchar(300)">
@@ -44,7 +44,7 @@
       <column name="contact" type="varchar(100)">
         <constraints nullable="false" />
       </column>
-      <column name="desiganation" type="varchar(100)">
+      <column name="designation" type="varchar(100)">
         <constraints nullable="false" />
       </column>
       <column name="created_at" type="datetime">

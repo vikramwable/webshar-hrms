@@ -13,4 +13,5 @@ public class ResourceCreateRequest
   @Getter
   @Setter
   private String name;
+  private Boolean isActive;
 }
