@@ -1,6 +1,6 @@
 package org.webshar.hrms.response;
 
-public class WHResponse<T>
+public class BaseResponse<T>
 {
   public static String SUCCESS = "Success";
   public static String FAILED = "Failed";
@@ -14,7 +14,7 @@ public class WHResponse<T>
     return status;
   }
 
-  public WHResponse<T> setStatus(final String status)
+  public BaseResponse<T> setStatus(final String status)
   {
     this.status = status;
     return this;
@@ -25,7 +25,7 @@ public class WHResponse<T>
     return message;
   }
 
-  public WHResponse<T> setMessage(final String message)
+  public BaseResponse<T> setMessage(final String message)
   {
     this.message = message;
     return this;
@@ -36,7 +36,7 @@ public class WHResponse<T>
     return entity;
   }
 
-  public WHResponse<T> setEntity(final T entity)
+  public BaseResponse<T> setEntity(final T entity)
   {
     this.entity = entity;
     return this;

@@ -27,18 +27,4 @@ public class OrganizationUpdateRequest
   {
     return name == null || StringUtils.isNoneBlank(name);
   }
-
-  @AssertTrue(message = ErrorMessageConstants.ORGANIZATION_INVALID_STATAUS)
-  private boolean isValidStatus()
-  {
-    if (isActive == null)
-    {
-      return true;
-    }
-    else if (isActive != true && isActive != false)
-    {
-      return false;
-    }
-    return true;
-  }
 }
