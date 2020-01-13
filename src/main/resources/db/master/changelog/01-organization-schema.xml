@@ -11,7 +11,7 @@
       <column name="guid" type="uuid" defaultValue="uuid_generate_v4()">
         <constraints nullable="true" unique="true" />
       </column>
-      <column name="isActive" type="boolean" defaultValue="false">
+      <column name="is_active" type="boolean" defaultValue="false">
         <constraints nullable="false"  />
       </column>
       <column name="created_at" type="datetime">

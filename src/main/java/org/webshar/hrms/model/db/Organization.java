@@ -40,7 +40,7 @@ public class Organization implements Serializable
   @Setter
   private String name;
 
-  @Column(name = "isActive", nullable = false)
+  @Column(name = "is_active", nullable = false)
   @Getter
   @Setter
   private Boolean isActive;
