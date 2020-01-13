@@ -4,7 +4,8 @@ import java.util.Collections;
 import java.util.List;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,7 +36,7 @@ public class ResourceController
   @Autowired
   ResourceService resourceService;
 
-  private static final Logger LOGGER = Logger.getLogger(ResourceController.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(ResourceController.class);
 
   @GetMapping(value = "/services/api/web/hrms/resources/{resource_id}")
   public ResponseEntity<Response> getResourceById(@PathVariable("resource_id") Long resourceId)
