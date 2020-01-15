@@ -18,7 +18,7 @@
         <constraints nullable="false" />
       </column>
     </createTable>
-    <addForeignKeyConstraint baseColumnNames="resource_id" baseTableName="resource_permission" constraintName="fk_resource_id" onDelete="RESTRICT" referencedColumnNames="id" referencedTableName="resources" />
-    <addForeignKeyConstraint baseColumnNames="permission_id" baseTableName="resource_permission" constraintName="fk_permission_id" onDelete="RESTRICT" referencedColumnNames="id" referencedTableName="permissions" />
+    <addForeignKeyConstraint baseColumnNames="resource_id" baseTableName="resource_permission" constraintName="fk_resource_id" onDelete="RESTRICT" referencedColumnNames="id" referencedTableName="resource" />
+    <addForeignKeyConstraint baseColumnNames="permission_id" baseTableName="resource_permission" constraintName="fk_permission_id" onDelete="RESTRICT" referencedColumnNames="id" referencedTableName="permission" />
   </changeSet>
 </databaseChangeLog>
