@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.webshar.hrms.constants.ErrorMessageConstants;
 import org.webshar.hrms.model.builder.RolePermissionBuilder;
+import org.webshar.hrms.model.db.Permission;
+import org.webshar.hrms.model.db.Role;
 import org.webshar.hrms.model.db.RolePermission;
 import org.webshar.hrms.repository.RolePermissionRepository;
 import org.webshar.hrms.request.rolepermission.RolePermissionCreateRequest;
@@ -23,6 +25,12 @@ public class RolePermissionService
   @Autowired
   RolePermissionBuilder rolePermissionBuilder;
 
+  @Autowired
+  RoleService roleService;
+
+  @Autowired
+  PermissionService permissionService;
+
   public RolePermission getRolePermissionById(Long rolePermissionId) throws EntityNotFoundException
   {
     return rolePermissionRepository.findById(rolePermissionId)
@@ -33,8 +41,13 @@ public class RolePermissionService
 
   public RolePermission createRolePermission(
       RolePermissionCreateRequest rolePermissionCreateRequest)
-      throws EntityAlreadyExistsException
+      throws EntityNotFoundException
   {
+    Role role = roleService.getRoleById(rolePermissionCreateRequest.getRoleId());
+
+    Permission permission = permissionService
+        .getPermissionById(rolePermissionCreateRequest.getPermissionId());
+
     List<RolePermission> rolePermissions = rolePermissionRepository
         .findByRoleIdAndPermissionId(rolePermissionCreateRequest.getRoleId(),
             rolePermissionCreateRequest.getPermissionId());
@@ -55,6 +68,17 @@ public class RolePermissionService
       RolePermissionUpdateRequest rolePermissionUpdateRequest)
       throws EntityNotFoundException
   {
+    if (rolePermissionUpdateRequest.getRoleId() != null)
+    {
+      Role role = roleService.getRoleById(rolePermissionUpdateRequest.getRoleId());
+    }
+
+    if (rolePermissionUpdateRequest.getPermissionId() != null)
+    {
+      Permission permission = permissionService
+          .getPermissionById(rolePermissionUpdateRequest.getPermissionId());
+    }
+
     Optional<RolePermission> rolePermissionToUpdate = rolePermissionRepository
         .findById(rolePermissionUpdateRequest.getId());
 
