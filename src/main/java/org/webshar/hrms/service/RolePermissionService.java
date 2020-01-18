@@ -46,7 +46,9 @@ public class RolePermissionService
       return rolePermissionRepository.save(rolePermissionToCreate);
     }
     else
+    {
       return rolePermissions.get(0);
+    }
   }
 
   public RolePermission updateRolePermission(
