@@ -64,4 +64,12 @@ public class ErrorMessageConstants
   public static final String EMPLOYEE_BY_ID_NOT_FOUND = "Employee with given id not found";
   public static final String EMPLOYEE_INVALID_STATAUS = "Employee isActive value is "
       + "should be true or false";
+
+  /**
+   * Error messages related to Role_Permission entity
+   */
+  public static final String ROLE_PERMISSION_ID_NOT_NULL = "RolePermission id cannot be null";
+  public static final String ROLE_PERMISSION_ROLE_ID_NOT_NULL = "Role id cannot be null";
+  public static final String ROLE_PERMISSION_PERMISSION_ID_NOT_NULL = "Permission id cannot be null";
+  public static final String ROLE_PERMISSION_BY_ID_NOT_FOUND = "RolePermission with given id not found";
 }
