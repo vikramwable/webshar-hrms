@@ -9,7 +9,7 @@
         <constraints nullable="false" unique="true" />
       </column>
       <column name="guid" type="uuid" defaultValue="uuid_generate_v4()">
-        <constraints nullable="true" unique="true" />
+        <constraints nullable="false" unique="true" />
       </column>
       <column name="is_active" type="boolean" defaultValue="false">
         <constraints nullable="false"  />

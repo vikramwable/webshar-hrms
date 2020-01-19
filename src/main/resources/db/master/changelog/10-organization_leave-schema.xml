@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+  <changeSet id="10" author="nikhil">
+    <createTable tableName="organization_leave"
+      remarks="Table containing details of organization_leave">
+      <column name="id" type="BIGINT" autoIncrement="true">
+        <constraints nullable="false" unique="true" primaryKey="true"/>
+      </column>
+      <column name="leave_type_id" type="BIGINT">
+        <constraints nullable="false"/>
+      </column>
+      <column name="org_id" type="BIGINT">
+        <constraints nullable="false"/>
+      </column>
+      <column name="count" type="BIGINT">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_at" type="datetime">
+        <constraints nullable="false"/>
+      </column>
+      <column name="updated_at" type="datetime">
+        <constraints nullable="false"/>
+      </column>
+    </createTable>
+
+    <addForeignKeyConstraint baseColumnNames="leave_type_id" baseTableName="organization_leave"
+      constraintName="fk_leave_type_id" onDelete="RESTRICT" referencedColumnNames="id"
+      referencedTableName="leave_type"/>
+    <addForeignKeyConstraint baseColumnNames="org_id" baseTableName="organization_leave"
+      constraintName="fk_organization_leave_org_id" onDelete="RESTRICT" referencedColumnNames="id"
+      referencedTableName="organization"/>
+
+  </changeSet>
+</databaseChangeLog>

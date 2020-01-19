@@ -15,5 +15,13 @@
     relativeToChangelogFile="true"/>
   <include file="changelog/06-resource_permissions-schema.xml" relativeToChangelogFile="true"/>
   <include file="changelog/07-roles_permissions_schema.xml" relativeToChangelogFile="true"/>
+
+  <include file="changelog/08-leave_type-schema.xml" relativeToChangelogFile="true"/>
+  <include file="changelog/09-leave_status-schema.xml" relativeToChangelogFile="true"/>
+  <include file="changelog/10-organization_leave-schema.xml" relativeToChangelogFile="true"/>
+  <include file="changelog/11-leave-schema.xml" relativeToChangelogFile="true"/>
+  <include file="changelog/12-leave-approval.xml" relativeToChangelogFile="true"/>
+  <include file="changelog/13-employee_leave_allocation-schema.xml" relativeToChangelogFile="true"/>
+
 </databaseChangeLog>
 
