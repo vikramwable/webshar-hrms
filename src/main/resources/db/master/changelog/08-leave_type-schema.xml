@@ -18,5 +18,26 @@
         <constraints nullable="false" />
       </column>
     </createTable>
+
+    <insert tableName="leave_type">
+      <column name="type" value="CL"/>
+      <column name="created_at" value="now()"/>
+      <column name="updated_at" value="now()"/>
+    </insert>
+    <insert tableName="leave_type">
+      <column name="type" value="SL"/>
+      <column name="created_at" value="now()"/>
+      <column name="updated_at" value="now()"/>
+    </insert>
+    <insert tableName="leave_type">
+      <column name="type" value="PL"/>
+      <column name="created_at" value="now()"/>
+      <column name="updated_at" value="now()"/>
+    </insert>
+    <insert tableName="leave_type">
+      <column name="type" value="Other"/>
+      <column name="created_at" value="now()"/>
+      <column name="updated_at" value="now()"/>
+    </insert>
   </changeSet>
 </databaseChangeLog>
