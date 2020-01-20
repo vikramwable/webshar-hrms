@@ -38,7 +38,7 @@ public class ResourcePermissionController
 
   private static final Logger LOGGER = LoggerFactory.getLogger(ResourcePermissionController.class);
 
-  @GetMapping(value = "/services/api/web/hrms/resource_permissions/{resource_permission_id}")
+  @GetMapping(value = "/services/api/web/hrms/resource-permissions/{resource_permission_id}")
   public ResponseEntity<Response> getResourcePermissionById(
       @PathVariable("resource_permission_id") Long resourcePermissionId)
       throws ServiceException
@@ -52,7 +52,7 @@ public class ResourcePermissionController
     return ResponseEntity.ok(response);
   }
 
-  @PostMapping(value = "/services/api/web/hrms/resource_permissions")
+  @PostMapping(value = "/services/api/web/hrms/resource-permissions")
   public ResponseEntity<Response> createResourcePermission(
       @Valid @RequestBody @NotNull ResourcePermissionCreateRequest resourcePermissionCreateRequest)
       throws ServiceException
@@ -66,7 +66,7 @@ public class ResourcePermissionController
     return ResponseEntity.status(HttpStatus.CREATED).body(response);
   }
 
-  @PatchMapping(value = "/services/api/web/hrms/resource_permissions/{resource_permission_id}")
+  @PatchMapping(value = "/services/api/web/hrms/resource-permissions/{resource_permission_id}")
   public ResponseEntity<Response> updateResourcePermissionById(
       @PathVariable("resource_permission_id") Long resourcePermissionId,
       @NotNull @Valid @RequestBody
@@ -80,7 +80,7 @@ public class ResourcePermissionController
     return ResponseEntity.ok(response);
   }
 
-  @DeleteMapping(value = "/services/api/web/hrms/resource_permissions/{resource_permission_id}")
+  @DeleteMapping(value = "/services/api/web/hrms/resource-permissions/{resource_permission_id}")
   public ResponseEntity<Void> deleteResourcePermissionById(
       @PathVariable("resource_permission_id") Long resourcePermissionId)
       throws ServiceException
@@ -89,7 +89,7 @@ public class ResourcePermissionController
     return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
   }
 
-  @GetMapping(value = "/services/api/web/hrms/resource_permissions")
+  @GetMapping(value = "/services/api/web/hrms/resource-permissions")
   public ResponseEntity<BatchResponse> getAllResourcePermissions()
   {
     BatchResponse batchResponse = new BatchResponse();

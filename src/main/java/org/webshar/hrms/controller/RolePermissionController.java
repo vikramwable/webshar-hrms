@@ -38,7 +38,7 @@ public class RolePermissionController
 
   private static final Logger LOGGER = LoggerFactory.getLogger(RolePermissionController.class);
 
-  @GetMapping(value = "/services/api/web/hrms/role_permissions/{role_permission_id}")
+  @GetMapping(value = "/services/api/web/hrms/role-permissions/{role_permission_id}")
   public ResponseEntity<Response> getRolePermissionById(
       @PathVariable("role_permission_id") Long rolePermissionId)
       throws ServiceException
@@ -51,7 +51,7 @@ public class RolePermissionController
     return ResponseEntity.ok(response);
   }
 
-  @PostMapping(value = "/services/api/web/hrms/role_permissions")
+  @PostMapping(value = "/services/api/web/hrms/role-permissions")
   public ResponseEntity<Response> createRolePermission(
       @Valid @RequestBody @NotNull RolePermissionCreateRequest rolePermissionCreateRequest)
       throws ServiceException
@@ -65,7 +65,7 @@ public class RolePermissionController
     return ResponseEntity.status(HttpStatus.CREATED).body(response);
   }
 
-  @PatchMapping(value = "/services/api/web/hrms/role_permissions/{role_permission_id}")
+  @PatchMapping(value = "/services/api/web/hrms/role-permissions/{role_permission_id}")
   public ResponseEntity<Response> updateRolePermissionById(
       @PathVariable("role_permission_id") Long rolePermissionId,
       @NotNull @Valid @RequestBody
@@ -78,7 +78,7 @@ public class RolePermissionController
     return ResponseEntity.ok(response);
   }
 
-  @DeleteMapping(value = "/services/api/web/hrms/role_permissions/{role_permission_id}")
+  @DeleteMapping(value = "/services/api/web/hrms/role-permissions/{role_permission_id}")
   public ResponseEntity<Void> deleteRolePermissionById(
       @PathVariable("role_permission_id") Long rolePermissionId)
       throws ServiceException
@@ -87,7 +87,7 @@ public class RolePermissionController
     return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
   }
 
-  @GetMapping(value = "/services/api/web/hrms/role_permissions")
+  @GetMapping(value = "/services/api/web/hrms/role-permissions")
   public ResponseEntity<BatchResponse> getAllRolePermissions()
   {
     BatchResponse batchResponse = new BatchResponse();

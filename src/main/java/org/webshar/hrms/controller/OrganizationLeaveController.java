@@ -38,7 +38,7 @@ public class OrganizationLeaveController
 
   private static final Logger LOGGER = LoggerFactory.getLogger(OrganizationLeaveController.class);
 
-  @GetMapping(value = "/services/api/web/hrms/organization_leaves/{organization_id}")
+  @GetMapping(value = "/services/api/web/hrms/organization-leaves/{organization_id}")
   public ResponseEntity<BatchResponse> getOrganizationLeavesByOrganizationId(
       @PathVariable("organization_id") Long organizationId)
       throws ServiceException
@@ -52,7 +52,7 @@ public class OrganizationLeaveController
     return ResponseEntity.ok(response);
   }
 
-  @PostMapping(value = "/services/api/web/hrms/organization_leaves")
+  @PostMapping(value = "/services/api/web/hrms/organization-leaves")
   public ResponseEntity<Response> createOrganizationLeave(
       @Valid @RequestBody @NotNull OrganizationLeaveCreateRequest organizationLeaveCreateRequest)
       throws ServiceException
@@ -66,7 +66,7 @@ public class OrganizationLeaveController
     return ResponseEntity.status(HttpStatus.CREATED).body(response);
   }
 
-  @PatchMapping(value = "/services/api/web/hrms/organization_leaves/{organization_id}")
+  @PatchMapping(value = "/services/api/web/hrms/organization-leaves/{organization_id}")
   public ResponseEntity<Response> updateOrganizationLeaveById(
       @PathVariable("organization_id") Long organizationId,
       @NotNull @Valid @RequestBody
@@ -81,7 +81,7 @@ public class OrganizationLeaveController
     return ResponseEntity.ok(response);
   }
 
-  @DeleteMapping(value = "/services/api/web/hrms/organization_leaves/{organization_id}")
+  @DeleteMapping(value = "/services/api/web/hrms/organization-leaves/{organization_id}")
   public ResponseEntity<Void> deleteOrganizationLeaveById(
       @PathVariable("organization_id") Long organizationId)
       throws ServiceException
@@ -90,7 +90,7 @@ public class OrganizationLeaveController
     return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
   }
 
-  @GetMapping(value = "/services/api/web/hrms/organization_leaves")
+  @GetMapping(value = "/services/api/web/hrms/organization-leaves")
   public ResponseEntity<BatchResponse> getAllOrganizationLeaves()
   {
     BatchResponse batchResponse = new BatchResponse();
