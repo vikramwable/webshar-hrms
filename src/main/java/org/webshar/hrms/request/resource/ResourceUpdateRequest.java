@@ -17,4 +17,8 @@ public class ResourceUpdateRequest
   @Getter
   @Setter
   private String name;
+
+  @Getter
+  @Setter
+  private String [] permissions;
 }

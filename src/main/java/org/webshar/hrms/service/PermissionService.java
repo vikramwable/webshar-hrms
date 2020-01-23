@@ -18,18 +18,34 @@ import org.webshar.hrms.service.exception.EntityNotFoundException;
 @Service
 public class PermissionService
 {
+
   @Autowired
   PermissionRepository permissionRepository;
 
   public Permission getPermissionById(Long permissionId) throws EntityNotFoundException
   {
     return permissionRepository.findById(permissionId)
-        .orElseThrow(() -> new EntityNotFoundException(ErrorMessageConstants.PERMISSION_BY_ID_NOT_FOUND));
+        .orElseThrow(
+            () -> new EntityNotFoundException(ErrorMessageConstants.PERMISSION_BY_ID_NOT_FOUND));
+  }
+
+  public List<Permission> getPermissionByName(String name) throws EntityNotFoundException
+  {
+    List<Permission> permissionList = permissionRepository.findByName(name);
+    if (permissionList.isEmpty())
+    {
+      throw new EntityNotFoundException(ErrorMessageConstants.PERMISSION_WITH_GIVEN_NAME_NOT_FOUND);
+    }
+    else
+    {
+      return permissionList;
+    }
   }
 
   public List<Permission> getAllPermissions()
   {
     return permissionRepository.findAll();
   }
+
 
 }
