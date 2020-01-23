@@ -1,10 +1,12 @@
 package org.webshar.hrms.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.webshar.hrms.constants.ErrorMessageConstants;
+import org.webshar.hrms.model.db.Permission;
 import org.webshar.hrms.repository.RoleRepository;
 import org.webshar.hrms.service.exception.EntityAlreadyExistsException;
 import org.webshar.hrms.service.exception.EntityNotFoundException;
@@ -16,8 +18,12 @@ import org.webshar.hrms.request.roles.RoleUpdateRequest;
 @Service
 public class RoleService
 {
+
   @Autowired
   RoleRepository roleRepository;
+
+  @Autowired
+  PermissionService permissionService;
 
   @Autowired
   RoleBuilder roleBuilder;
@@ -29,13 +35,14 @@ public class RoleService
   }
 
   public Role createRole(RoleCreateRequest roleCreateRequest)
-      throws EntityAlreadyExistsException
+      throws EntityAlreadyExistsException, EntityNotFoundException
   {
     List<Role> roles = roleRepository.findByName(roleCreateRequest.getName());
+
     if (roles.isEmpty())
     {
-      Role roleToCreate = roleBuilder.buildFromRequest(roleCreateRequest);
-
+      List<Permission> permissionList = validatePermissions(roleCreateRequest.getPermissions());
+      Role roleToCreate = roleBuilder.buildFromRequest(roleCreateRequest, permissionList);
       return roleRepository.save(roleToCreate);
     }
     else
@@ -48,14 +55,19 @@ public class RoleService
   {
     Optional<Role> roleToUpdate = roleRepository.findById(roleUpdateRequest.getId());
 
-    if(roleToUpdate.isPresent()){
+    if (roleToUpdate.isPresent())
+    {
+      List<Permission> permissionList = validatePermissions(roleUpdateRequest.getPermissions());
       Role updatedRole = roleToUpdate.get();
       updatedRole.setName(roleUpdateRequest.getName());
+      updatedRole.setPermissions(permissionList);
       updatedRole = roleRepository.save(updatedRole);
       return updatedRole;
     }
     else
+    {
       throw new EntityNotFoundException(ErrorMessageConstants.ROLE_BY_ID_NOT_FOUND);
+    }
   }
 
   public void deleteRoleById(Long id) throws EntityNotFoundException
@@ -67,11 +79,25 @@ public class RoleService
       roleRepository.deleteById(id);
     }
     else
-    throw new EntityNotFoundException(ErrorMessageConstants.ROLE_BY_ID_NOT_FOUND);
+    {
+      throw new EntityNotFoundException(ErrorMessageConstants.ROLE_BY_ID_NOT_FOUND);
+    }
   }
 
   public List<Role> getAllRoles()
   {
     return roleRepository.findAll();
+  }
+
+  private List<Permission> validatePermissions(String[] permissions) throws EntityNotFoundException
+  {
+    List<Permission> permissionList = new ArrayList<>();
+    if(permissions != null){
+      for (String name : permissions)
+      {
+        permissionList.addAll(permissionService.getPermissionByName(name));
+      }
+    }
+    return permissionList;
   }
 }
