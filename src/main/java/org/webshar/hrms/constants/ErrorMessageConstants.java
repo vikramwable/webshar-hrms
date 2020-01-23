@@ -25,6 +25,7 @@ public class ErrorMessageConstants
    * Error messages related to Permission entity
    */
   public static final String PERMISSION_BY_ID_NOT_FOUND = "Permission with given id not found";
+  public static final String PERMISSION_WITH_GIVEN_NAME_NOT_FOUND = "Permission with given name not found";
 
   /**
    * Error messages related to Organization entity
