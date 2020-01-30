@@ -1,6 +1,6 @@
-## Spring Security Using Mysql Authorization in a Spring Boot App
+## How to run application on local
 
-This example covers the following:
-- Authentication using MySql DB Connectivity using custom user details service.
-- Authorization using GrantedAuthority roles for method level security
-- Leveraging Spring Security's login page for injecting login details
+- Checkout this repo on local from https://github.com/vikramwable/hrms.git
+- Setup postgres database on local machine and apply script src/main/resources/sql-scripts/db-setup-script.sql 
+- Open Application.java file and run 
+- Goto URL http://localhost:8020/hrms/swagger-ui.html
