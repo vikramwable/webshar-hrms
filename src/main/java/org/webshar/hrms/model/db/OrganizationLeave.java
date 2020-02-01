@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import lombok.Getter;
@@ -26,16 +27,6 @@ public class OrganizationLeave implements Serializable
   @Setter
   private Long id;
 
-  @Column(name = "leave_type_id", nullable = false, unique = true, length = 11)
-  @Getter
-  @Setter
-  private Long leaveTypeId;
-
-  @Column(name = "org_id", nullable = false, unique = true, length = 11)
-  @Getter
-  @Setter
-  private Long organizationId;
-
   @Column(name = "count", nullable = false, unique = true, length = 11)
   @Getter
   @Setter
@@ -53,6 +44,16 @@ public class OrganizationLeave implements Serializable
   @Setter
   private Date updatedAt;
 
+  @OneToOne
+  @Getter
+  @Setter
+  private LeaveType leaveType;
+
+  @OneToOne
+  @Getter
+  @Setter
+  private Organization organization;
+
   public OrganizationLeave()
   {
 
@@ -61,8 +62,8 @@ public class OrganizationLeave implements Serializable
   public OrganizationLeave(OrganizationLeave organizationLeave)
   {
     this.setId(organizationLeave.getId());
-    this.setLeaveTypeId(organizationLeave.getLeaveTypeId());
-    this.setOrganizationId(organizationLeave.getOrganizationId());
+    this.setLeaveType(organizationLeave.getLeaveType());
+    this.setOrganization(organizationLeave.getOrganization());
     this.setCount(organizationLeave.getCount());
     this.setCreatedAt(organizationLeave.getCreatedAt());
   }

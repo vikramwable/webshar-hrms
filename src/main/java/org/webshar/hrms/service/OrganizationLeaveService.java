@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.webshar.hrms.constants.ErrorMessageConstants;
 import org.webshar.hrms.model.builder.OrganizationLeaveBuilder;
+import org.webshar.hrms.model.db.LeaveType;
+import org.webshar.hrms.model.db.Organization;
 import org.webshar.hrms.model.db.OrganizationLeave;
 import org.webshar.hrms.repository.OrganizationLeaveRepository;
 import org.webshar.hrms.request.organizationleave.OrganizationLeaveCreateRequest;
@@ -36,15 +38,19 @@ public class OrganizationLeaveService
 
   public OrganizationLeave createOrganizationLeave(
       OrganizationLeaveCreateRequest organizationLeaveCreateRequest)
-      throws EntityAlreadyExistsException
+      throws EntityAlreadyExistsException, EntityNotFoundException
   {
+    LeaveType leaveType = leaveTypeService.getLeaveTypeById(organizationLeaveCreateRequest.getLeaveTypeId());
+
+    Organization organization = organizationService.getOrganizationById(organizationLeaveCreateRequest.getOrganizationId());
+
     List<OrganizationLeave> organizationLeaveList = organizationLeaveRepository
         .findByOrganizationIdAndLeaveTypeId(organizationLeaveCreateRequest.getOrganizationId(),
             organizationLeaveCreateRequest.getLeaveTypeId());
     if (organizationLeaveList.isEmpty())
     {
       OrganizationLeave organizationLeaveToCreate = organizationLeaveBuilder
-          .buildFromRequest(organizationLeaveCreateRequest);
+          .buildFromRequest(organizationLeaveCreateRequest,leaveType,organization);
       return organizationLeaveRepository
           .save(organizationLeaveToCreate);
     }
@@ -59,14 +65,17 @@ public class OrganizationLeaveService
       OrganizationLeaveUpdateRequest organizationLeaveUpdateRequest)
       throws EntityNotFoundException
   {
+    Organization organization = null;
+
+    LeaveType leaveType = null;
 
     if (organizationLeaveUpdateRequest.getOrganizationId() != null)
     {
-      organizationService.getOrganizationById(organizationLeaveUpdateRequest.getOrganizationId());
+       organization = organizationService.getOrganizationById(organizationLeaveUpdateRequest.getOrganizationId());
     }
     if (organizationLeaveUpdateRequest.getLeaveTypeId() != null)
     {
-      leaveTypeService.getLeaveTypeById(organizationLeaveUpdateRequest.getLeaveTypeId());
+       leaveType = leaveTypeService.getLeaveTypeById(organizationLeaveUpdateRequest.getLeaveTypeId());
     }
 
     Optional<OrganizationLeave> organizationLeaveToUpdate = organizationLeaveRepository
@@ -75,7 +84,7 @@ public class OrganizationLeaveService
     if (organizationLeaveToUpdate.isPresent())
     {
       OrganizationLeave organizationLeaveAfterUpdate = organizationLeaveBuilder
-          .buildFromRequest(organizationLeaveToUpdate.get(), organizationLeaveUpdateRequest);
+          .buildFromRequest(organizationLeaveToUpdate.get(), organizationLeaveUpdateRequest,leaveType,organization);
       return organizationLeaveRepository.save(organizationLeaveAfterUpdate);
     }
     else
