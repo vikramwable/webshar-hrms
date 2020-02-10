@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+  <changeSet id="09" author="nikhil">
+    <createTable tableName="leave"
+      remarks="Table containing details of leave">
+      <column name="id" type="BIGINT" autoIncrement="true">
+        <constraints nullable="false" unique="true" primaryKey="true"/>
+      </column>
+      <column name="emp_id" type="BIGINT">
+        <constraints nullable="false"/>
+      </column>
+      <column name="leave_type_id" type="BIGINT">
+        <constraints nullable="false"/>
+      </column>
+      <column name="leave_status_id" type="BIGINT">
+        <constraints nullable="false"/>
+      </column>
+      <column name="created_at" type="datetime">
+        <constraints nullable="false"/>
+      </column>
+      <column name="updated_at" type="datetime">
+        <constraints nullable="false"/>
+      </column>
+    </createTable>
+
+    <addForeignKeyConstraint baseColumnNames="emp_id" baseTableName="leave"
+      constraintName="fk_leave_emp_id" onDelete="RESTRICT" referencedColumnNames="id"
+      referencedTableName="employee"/>
+    <addForeignKeyConstraint baseColumnNames="leave_type_id" baseTableName="leave"
+      constraintName="fk_leave_leave_type_id" onDelete="RESTRICT" referencedColumnNames="id"
+      referencedTableName="leave_type"/>
+    <addForeignKeyConstraint baseColumnNames="leave_status_id" baseTableName="leave"
+      constraintName="fk_leave_leave_status_id" onDelete="RESTRICT" referencedColumnNames="id"
+      referencedTableName="leave_status"/>
+
+  </changeSet>
+</databaseChangeLog>

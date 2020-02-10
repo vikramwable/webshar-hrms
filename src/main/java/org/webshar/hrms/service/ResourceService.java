@@ -1,11 +1,13 @@
 package org.webshar.hrms.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.webshar.hrms.constants.ErrorMessageConstants;
 import org.webshar.hrms.model.builder.ResourceBuilder;
+import org.webshar.hrms.model.db.Permission;
 import org.webshar.hrms.repository.ResourceRepository;
 import org.webshar.hrms.request.resource.ResourceCreateRequest;
 import org.webshar.hrms.request.resource.ResourceUpdateRequest;
@@ -22,6 +24,9 @@ public class ResourceService
   @Autowired
   ResourceBuilder resourceBuilder;
 
+  @Autowired
+  PermissionService permissionService;
+
   public Resource getResourceById(Long resourceId) throws EntityNotFoundException
   {
     return resourceRepository.findById(resourceId)
@@ -29,12 +34,13 @@ public class ResourceService
   }
 
   public Resource createResource(ResourceCreateRequest resourceCreateRequest)
-      throws EntityAlreadyExistsException
+      throws EntityAlreadyExistsException, EntityNotFoundException
   {
     List<Resource> resources = resourceRepository.findByName(resourceCreateRequest.getName());
     if (resources.isEmpty())
     {
-      Resource resourceToCreate = resourceBuilder.buildFromRequest(resourceCreateRequest);
+      List<Permission> permissionList = validatePermissions(resourceCreateRequest.getPermissions());
+      Resource resourceToCreate = resourceBuilder.buildFromRequest(resourceCreateRequest,permissionList);
 
       return resourceRepository.save(resourceToCreate);
     }
@@ -49,8 +55,10 @@ public class ResourceService
     Optional<Resource> resourceToUpdate = resourceRepository.findById(resourceUpdateRequest.getId());
 
     if(resourceToUpdate.isPresent()){
+      List<Permission> permissionList = validatePermissions(resourceUpdateRequest.getPermissions());
       Resource updatedResource = resourceToUpdate.get();
       updatedResource.setName(resourceUpdateRequest.getName());
+      updatedResource.setPermissions(permissionList);
       updatedResource = resourceRepository.save(updatedResource);
       return updatedResource;
     }
@@ -75,4 +83,15 @@ public class ResourceService
     return resourceRepository.findAll();
   }
 
+  private List<Permission> validatePermissions(String[] permissions) throws EntityNotFoundException
+  {
+    List<Permission> permissionList = new ArrayList<>();
+    if(permissions != null){
+      for (String name : permissions)
+      {
+        permissionList.addAll(permissionService.getPermissionByName(name));
+      }
+    }
+    return permissionList;
+  }
 }

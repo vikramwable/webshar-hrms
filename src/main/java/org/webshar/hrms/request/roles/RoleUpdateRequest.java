@@ -19,4 +19,8 @@ public class RoleUpdateRequest
   @Getter
   @Setter
   private String name;
+
+  @Getter
+  @Setter
+  private String [] permissions;
 }

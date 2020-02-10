@@ -2,7 +2,6 @@ package org.webshar.hrms.model.db;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 import javax.persistence.Column;
@@ -10,19 +9,16 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
-import lombok.Getter;
-import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-@Entity
-@Table(name = "role", uniqueConstraints = {@UniqueConstraint(columnNames = {"id"})})
-public class Role implements Serializable
-{
 
+@Entity
+@Table(name = "permission", uniqueConstraints = {@UniqueConstraint(columnNames = {"id"})})
+public class Permission implements Serializable
+{
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "id", nullable = false, unique = true, length = 11)
@@ -31,7 +27,7 @@ public class Role implements Serializable
   @Column(name = "guid", nullable = false, unique = true, length = 11)
   private UUID guid;
 
-  @Column(name = "name", nullable = false, unique = true, length = 200)
+  @Column(name = "name", nullable = false,  unique = true,length = 200)
   private String name;
 
   @CreationTimestamp
@@ -41,11 +37,6 @@ public class Role implements Serializable
   @UpdateTimestamp
   @Column(name = "updated_at", nullable = false)
   private Date updatedAt;
-
-  @OneToMany
-  @Getter
-  @Setter
-  private List<Permission> permissions;
 
   public Long getId()
   {
@@ -118,8 +109,8 @@ public class Role implements Serializable
     {
       return false;
     }
-    Role role = (Role) o;
-    return name.equals(role.name);
+    Permission resource = (Permission) o;
+    return name.equals(resource.name);
   }
 
   @Override

@@ -13,5 +13,8 @@ public class ResourceCreateRequest
   @Getter
   @Setter
   private String name;
-  private Boolean isActive;
+
+  @Getter
+  @Setter
+  private String [] permissions;
 }

@@ -22,6 +22,12 @@ public class ErrorMessageConstants
   public static final String RESOURCE_BY_ID_NOT_FOUND = "Resource with given id not found";
 
   /**
+   * Error messages related to Permission entity
+   */
+  public static final String PERMISSION_BY_ID_NOT_FOUND = "Permission with given id not found";
+  public static final String PERMISSION_WITH_GIVEN_NAME_NOT_FOUND = "Permission with given name not found";
+
+  /**
    * Error messages related to Organization entity
    */
   public static final String ORGANIZATION_NAME_NOT_BLANK = "Organization name cannot be blank";
@@ -64,4 +70,35 @@ public class ErrorMessageConstants
   public static final String EMPLOYEE_BY_ID_NOT_FOUND = "Employee with given id not found";
   public static final String EMPLOYEE_INVALID_STATAUS = "Employee isActive value is "
       + "should be true or false";
+
+  /**
+   * Error messages related to Role_Permission entity
+   */
+  public static final String ROLE_PERMISSION_ID_NOT_NULL = "RolePermission id cannot be null";
+  public static final String ROLE_PERMISSION_ROLE_ID_NOT_NULL = "Role id cannot be null";
+  public static final String ROLE_PERMISSION_PERMISSION_ID_NOT_NULL = "Permission id cannot be null";
+  public static final String ROLE_PERMISSION_BY_ID_NOT_FOUND = "RolePermission with given id not found";
+
+  /**
+   * Error messages related to Resource_Permission entity
+   */
+  public static final String RESOURCE_PERMISSION_ID_NOT_NULL = "ResourcePermission id cannot be null";
+  public static final String RESOURCE_PERMISSION_RESOURCE_ID_NOT_NULL = "Resource id cannot be null";
+  public static final String RESOURCE_PERMISSION_PERMISSION_ID_NOT_NULL = "Permission id cannot be null";
+  public static final String RESOURCE_PERMISSION_BY_ID_NOT_FOUND = "ResourcePermission with given id not found";
+
+  /**
+   * Error messages related to Organization_Leave entity
+   */
+
+  public static final String ORGANIZATION_LEAVE_LEAVE_TYPE_ID_NOT_NULL = "LeaveTypeId cannot be null";
+  public static final String ORGANIZATION_LEAVE_ORGANIZATION_ID_NOT_NULL = "OrganizationId cannot be null";
+  public static final String ORGANIZATION_LEAVE_COUNT_NOT_NULL = "LeaveTypeId cannot be null";
+  public static final String ORGANIZATION_LEAVE_WITH_ORGANIZATION_AND_LEAVE_ID_EXISTS = "OrganizationLeave record with given organizationId and leaveTypeId is already exits";
+  public static final String ORGANIZATION_LEAVE_BY_ID_NOT_NULL = "OrganizationLeave with given Id not found";
+
+  /**
+   * Error messages related to Leave_Type entity
+   */
+  public static final String LEAVE_TYPE_BY_ID_NOT_FOUND = "Leave type with given id not found";
 }
