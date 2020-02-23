@@ -93,12 +93,55 @@ public class ErrorMessageConstants
 
   public static final String ORGANIZATION_LEAVE_LEAVE_TYPE_ID_NOT_NULL = "LeaveTypeId cannot be null";
   public static final String ORGANIZATION_LEAVE_ORGANIZATION_ID_NOT_NULL = "OrganizationId cannot be null";
-  public static final String ORGANIZATION_LEAVE_COUNT_NOT_NULL = "LeaveTypeId cannot be null";
+  public static final String ORGANIZATION_LEAVE_COUNT_NOT_NULL = "Leave count cannot be null";
+  public static final String ORGANIZATION_LEAVE_COUNT_CAN_NOT_BE_LESS_THAN_ONE = "Leave count must be greater than zero";
   public static final String ORGANIZATION_LEAVE_WITH_ORGANIZATION_AND_LEAVE_ID_EXISTS = "OrganizationLeave record with given organizationId and leaveTypeId is already exits";
   public static final String ORGANIZATION_LEAVE_BY_ID_NOT_NULL = "OrganizationLeave with given Id not found";
 
   /**
    * Error messages related to Leave_Type entity
    */
-  public static final String LEAVE_TYPE_BY_ID_NOT_FOUND = "Leave type with given id not found";
+  public static final String LEAVE_TYPE_BY_ID_NOT_FOUND = "LeaveType with given id not found";
+  /**
+   * Error messages related to Leave entity
+   */
+  public static final String LEAVE_BY_ID_NOT_FOUND = "LeaveApplication with given id not found";
+  public static final String LEAVE_EMPLOYEE_ID_NOT_NULL = "EmployeeId cannot be null";
+  public static final String LEAVE_LEAVE_TYPE_ID_NOT_NULL = "LeaveTypeId cannot be null";
+  public static final String LEAVE_LEAVE_STATUS_NOT_NULL = "LeaveStatusId value cannot be null";
+  public static final String LEAVE_START_DATE_NOT_NULL = "StartDate cannot be null";
+  public static final String LEAVE_END_DATE_NOT_NULL = "EndDate cannot be null";
+  public static final String LEAVE_START_DATE_CANNOT_LESS_THAN_TODAY = "StartDate can not be less than today";
+  public static final String LEAVE_END_DATE_CANNOT_LESS_THAN_START_DATE = "EndDate can not be less than StartDate";
+  public static final String LEAVE_WITH_GIVEN_TYPE_AND_STATUS_EXISTS = "Leave with given start and end date already exists for the provided employee Id";
+  public static final String LEAVE_INSUFFICIENT_LEAVE_COUNT_OF_GIVEN_LEAVE_TYPE = "Insufficient leaves are available of given type of leave";
+
+  /**
+   * Error messages related to Leave_Status entity
+   */
+  public static final String LEAVE_STATUS_BY_ID_NOT_FOUND = "LeaveStatus with given id not found";
+  public static final String LEAVE_STATUS_BY_STATUS_NAME_NOT_FOUND = "LeaveStatus with given status value not found";
+
+
+  /**
+   * Error messages related to employee_leave_allocation entity
+   */
+  public static final String EMPLOYEE_LEAVE_ALLOCATED_BY_ID_NOT_FOUND = "Employee allocated leave with given id not found ";
+  public static final String EMPLOYEE_LEAVE_ALLOCATED_ID_CAN_NOT_BE_NUll = "Employee allocated leave id can not be null ";
+  public static final String EMPLOYEE_LEAVE_ALLOTTED_LEAVES_NOT_NULL = "Allotted leaves value can not be null";
+  public static final String EMPLOYEE_LEAVE_CARRIED_LEAVES_NOT_NULL = "Carried leaves value can not be null";
+  public static final String EMPLOYEE_LEAVE_ADDITIONAL_LEAVES_NOT_NULL = "Additional leaves value can not be null";
+  public static final String EMPLOYEE_LEAVE_TOTAL_LEAVES_NOT_NULL = "Total leaves value can not be null";
+  public static final String EMPLOYEE_LEAVE_BY_ID_NOT_FOUND = "Employee leave allocation with given id not found";
+  public static final String EMPLOYEE_LEAVE_ALLOCATED_WITH_GIVEN_LEAVE_TYPE_AND_START_DATE_AND_END_DATE_OVERLAPPING = "Employee has already allocated leave with given start and end date overlapping with existing records";
+  public static final String EMPLOYEE_LEAVE_ALLOCATED_START_AND_END_DATE_ARE_REQUIRED = "Start and end dates are required";
+  public static final String EMPLOYEE_LEAVE_ALLOCATED_LEAVES_CAN_NOT_BE_NEGATIVE = "Allotted leaves can not be less than zero";
+  public static final String EMPLOYEE_LEAVE_ADDITIONAL_LEAVES_CAN_NOT_BE_NEGATIVE = "Additional leaves can not be less than zero";
+  public static final String EMPLOYEE_LEAVE_APPLIED_LEAVES_CAN_NOT_BE_NEGATIVE = "Applied leaves can not be less than zero";
+  public static final String EMPLOYEE_LEAVE_TOTAL_LEAVES_CAN_NOT_BE_NEGATIVE = "Applied leaves can not be less than zero";
+  public static final String EMPLOYEE_LEAVE_CARRIED_LEAVES_CAN_NOT_BE_NEGATIVE = "Carried leaves can not be less than zero";
+  public static final String EMPLOYEE_LEAVE_GIVEN_TYPE_OF_LEAVE_NOT_ALLOCATED_FOR_GIVEN_EMPLOYEE = "Given type of leave is not allocated for given  employee";
+
+
+
 }

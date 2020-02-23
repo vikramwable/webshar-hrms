@@ -71,14 +71,14 @@ public class OrganizationController
     return ResponseEntity.status(HttpStatus.CREATED).body(response);
   }
 
-  @PatchMapping(value = "/services/api/web/hrms/organizations/{organization_id}")
+  @PatchMapping(value = "/services/api/web/hrms/organizations")
   public ResponseEntity<Response> updateOrganizationById(
-      @PathVariable("organization_id") Long organizationId,
       @NotNull @Valid @RequestBody
           OrganizationUpdateRequest organizationUpdateRequest) throws ServiceException
   {
     Response response = new Response();
-    response.setEntity(organizationService.updateOrganization(organizationUpdateRequest));
+    Organization organization = organizationService.updateOrganization(organizationUpdateRequest);
+    response.setEntity(organization);
     response.setMessage("Organization updated");
     response.setStatus("OK");
     return ResponseEntity.ok(response);
@@ -115,13 +115,13 @@ public class OrganizationController
     List<OrganizationLeave> organizationLeaveList = organizationLeaveService
         .getOrganizationLeaveByOrganizationId(organizationId);
     response.setEntities(Collections.singletonList(organizationLeaveList));
-    response.setMessage("Organization leaves fetched");
+    response.setMessage("Organization's leaves fetched");
     response.setStatus("OK");
     return ResponseEntity.ok(response);
   }
 
   @PostMapping(value = "/services/api/web/hrms/organizations/leaves")
-  public ResponseEntity<Response> createOrganizationLeave(
+  public ResponseEntity<Response> addOrganizationLeave(
       @Valid @RequestBody @NotNull OrganizationLeaveCreateRequest organizationLeaveCreateRequest)
       throws ServiceException
   {

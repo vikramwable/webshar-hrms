@@ -1,6 +1,5 @@
 package org.webshar.hrms.request.organizationleave;
 
-import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
@@ -24,5 +23,6 @@ public class OrganizationLeaveUpdateRequest
   @Getter
   @Setter
   private Long count;
+
 
 }
