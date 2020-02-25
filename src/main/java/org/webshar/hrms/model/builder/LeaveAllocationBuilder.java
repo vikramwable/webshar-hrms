@@ -12,8 +12,8 @@ public class LeaveAllocationBuilder
 {
 
   public LeaveAllocation buildFromRequest(
-      EmployeeLeaveAllocationCreateRequest employeeLeaveAllocationCreateRequest,
-      Employee employee, LeaveType leaveType)
+      final EmployeeLeaveAllocationCreateRequest employeeLeaveAllocationCreateRequest,
+      final Employee employee, final LeaveType leaveType)
   {
     LeaveAllocation leaveAllocation = new LeaveAllocation();
     leaveAllocation.setEmployee(employee);
@@ -31,9 +31,9 @@ public class LeaveAllocationBuilder
   }
 
   public LeaveAllocation buildFromRequest(
-      EmployeeLeaveAllocationUpdateRequest employeeLeaveAllocationUpdateRequest,
-      LeaveAllocation leaveAllocationToBeUpdated, Employee employee,
-      LeaveType leaveType)
+      final EmployeeLeaveAllocationUpdateRequest employeeLeaveAllocationUpdateRequest,
+      final LeaveAllocation leaveAllocationToBeUpdated, final Employee employee,
+      final LeaveType leaveType)
   {
     LeaveAllocation leaveAllocationAfterUpdate = new LeaveAllocation(
         leaveAllocationToBeUpdated);
@@ -83,7 +83,7 @@ public class LeaveAllocationBuilder
     return leaveAllocationAfterUpdate;
   }
 
-  private Long getTotalLeaves(LeaveAllocation leaveAllocation)
+  private Long getTotalLeaves(final LeaveAllocation leaveAllocation)
   {
     return leaveAllocation.getAdditionalLeaves() + leaveAllocation
         .getCarriedLeaves() + leaveAllocation.getAllottedLeaves();

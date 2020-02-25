@@ -1,4 +1,4 @@
-package org.webshar.hrms.response.employee.leave.application;
+package org.webshar.hrms.response.employee.leave.allocation;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import java.util.Date;
@@ -6,11 +6,20 @@ import javax.persistence.Column;
 import lombok.Getter;
 import lombok.Setter;
 
-public class EmployeeLeaveApplicationResponse
+public class LeaveAllocationResponse
 {
+
   @Getter
   @Setter
   private Long id;
+
+  @Getter
+  @Setter
+  Employee employee;
+
+  @Getter
+  @Setter
+  LeaveType leaveType;
 
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
   @Getter
@@ -22,6 +31,22 @@ public class EmployeeLeaveApplicationResponse
   @Setter
   private Date endDate;
 
+  @Getter
+  @Setter
+  private Long allottedLeaves;
+
+  @Getter
+  @Setter
+  private Long carriedLeaves;
+
+  @Getter
+  @Setter
+  private Long additionalLeaves;
+
+  @Getter
+  @Setter
+  private Long totalLeaves;
+
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
   @Getter
   @Setter
@@ -31,22 +56,8 @@ public class EmployeeLeaveApplicationResponse
   @Getter
   @Setter
   private Date updatedAt;
-
-
-  @Getter
-  @Setter
-  private Employee employee;
-
-
-  @Getter
-  @Setter
-  private LeaveType leaveType;
-
-  @Getter
-  @Setter
-  private LeaveStatus leaveStatus;
-
 }
+
 class Employee
 {
 
@@ -109,16 +120,4 @@ class LeaveType
   @Getter
   @Setter
   private String type;
-}
-
-class LeaveStatus
-{
-
-  @Getter
-  @Setter
-  private Long id;
-
-  @Getter
-  @Setter
-  private String status;
 }

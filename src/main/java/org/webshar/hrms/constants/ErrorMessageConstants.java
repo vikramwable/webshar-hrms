@@ -115,6 +115,7 @@ public class ErrorMessageConstants
   public static final String LEAVE_END_DATE_CANNOT_LESS_THAN_START_DATE = "EndDate can not be less than StartDate";
   public static final String LEAVE_WITH_GIVEN_TYPE_AND_STATUS_EXISTS = "Leave with given start and end date already exists for the provided employee Id";
   public static final String LEAVE_INSUFFICIENT_LEAVE_COUNT_OF_GIVEN_LEAVE_TYPE = "Insufficient leaves are available of given type of leave";
+  public static final String LEAVE_ALLOCATED_WITH_GIVEN_LEAVE_TYPE_AND_START_DATE_AND_END_DATE_OVERLAPPING = "Employee has already applied leave with given start and end date overlapping with existing records";
 
   /**
    * Error messages related to Leave_Status entity

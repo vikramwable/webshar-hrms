@@ -12,8 +12,8 @@ public class LeaveApplicationBuilder
 {
 
   public LeaveApplication buildFromRequest(
-      EmployeeLeaveApplicationCreateRequest employeeLeaveApplicationCreateRequest,
-      LeaveType leaveType, Employee employee, LeaveStatus leaveStatus)
+      final EmployeeLeaveApplicationCreateRequest employeeLeaveApplicationCreateRequest,
+      final LeaveType leaveType, final Employee employee, final LeaveStatus leaveStatus)
   {
     LeaveApplication leaveApplication = new LeaveApplication();
     leaveApplication.setLeaveType(leaveType);
@@ -25,7 +25,8 @@ public class LeaveApplicationBuilder
   }
 
   public LeaveApplication buildFromRequest(
-      LeaveApplication leaveApplicationToBeUpdated, Employee employee, LeaveStatus leaveStatus)
+      final LeaveApplication leaveApplicationToBeUpdated, final Employee employee,
+      final LeaveStatus leaveStatus)
   {
     LeaveApplication leaveApplicationAfterUpdate = new LeaveApplication(
         leaveApplicationToBeUpdated);

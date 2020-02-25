@@ -10,38 +10,53 @@ public interface LeaveAllocationRepository extends
     JpaRepository<LeaveAllocation, Long>
 {
 
-  public List<LeaveAllocation> findByEmployeeId(@Param("employee_id") Long employee_id);
+  public List<LeaveAllocation> findByEmployeeId(@Param("employee_id") final Long employee_id);
 
   public List<LeaveAllocation> findByEmployeeIdAndLeaveTypeIdAndStartDateAndEndDate(
-      @Param("employee_id") Long employee_id,
-      @Param("leave_type_id") Long leave_type_id,
-      @Param("start_date") Date start_date,
-      @Param("end_date") Date end_date
-  );
-
-  public List<LeaveAllocation> findAllByEmployeeIdAndLeaveTypeIdAndStartDateLessThanEqualAndEndDateGreaterThanEqual(
-      @Param("employee_id") Long employee_id,
-      @Param("leave_type_id") Long leave_type_id,
-      @Param("start_date") Date start_date,
-      @Param("end_date") Date end_date
+      @Param("employee_id") final Long employeeId,
+      @Param("leave_type_id") final Long leaveTypeId,
+      @Param("start_date") final Date startDate,
+      @Param("end_date") final Date endDate
   );
 
   public List<LeaveAllocation> findAllByEmployeeIdAndLeaveTypeIdAndStartDateGreaterThanEqualAndEndDateLessThanEqual(
-      @Param("employee_id") Long employee_id,
-      @Param("leave_type_id") Long leave_type_id,
-      @Param("start_date") Date start_date,
-      @Param("end_date") Date end_date
+      @Param("employee_id") final Long employeeId,
+      @Param("leave_type_id") final Long leaveTypeId,
+      @Param("start_date") final Date startDate,
+      @Param("end_date") final Date endDate
+  );
+
+  public List<LeaveAllocation> findAllByEmployeeIdAndLeaveTypeIdAndStartDateGreaterThanEqualAndEndDateGreaterThanEqual(
+      @Param("employee_id") final Long employeeId,
+      @Param("leave_type_id") final Long leaveTypeId,
+      @Param("start_date") final Date startDate,
+      @Param("end_date") final Date endDate
+  );
+
+
+  public List<LeaveAllocation> findAllByEmployeeIdAndLeaveTypeIdAndStartDateLessThanEqualAndEndDateGreaterThanEqual(
+      @Param("employee_id") final Long employeeId,
+      @Param("leave_type_id") final Long leaveTypeId,
+      @Param("start_date") final Date startDate,
+      @Param("end_date") final Date endDate
+  );
+
+
+  public List<LeaveAllocation> findAllByEmployeeIdAndLeaveTypeIdAndStartDateLessThanEqualAndEndDateLessThanEqual(
+      @Param("employee_id") final Long employeeId,
+      @Param("leave_type_id") final Long leaveTypeId,
+      @Param("start_date") final Date startDate,
+      @Param("end_date") final Date endDate
   );
 
   public LeaveAllocation findByEmployeeIdAndLeaveTypeId(
-      @Param("employee_id") Long employee_id,
-      @Param("leave_type_id") Long leave_type_id
+      @Param("employee_id") final Long employeeId,
+      @Param("leave_type_id") final Long leaveTypeId
   );
 
-  public void deleteByEmployeeId(@Param("employee_id") Long employee_id);
+  public void deleteByEmployeeId(@Param("employee_id") final Long employeeId);
 
-  public void deleteByEmployeeIdAndLeaveTypeId(@Param("employee_id") Long employee_id,
-      @Param("leave_type_id") Long leave_type_id);
-
+  public void deleteByEmployeeIdAndLeaveTypeId(@Param("employee_id") final Long employeeId,
+      @Param("leave_type_id") final Long leaveTypeId);
 
 }

@@ -17,11 +17,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.webshar.hrms.model.db.LeaveApplication;
 import org.webshar.hrms.request.employee.leave.application.EmployeeLeaveApplicationCreateRequest;
 import org.webshar.hrms.request.employee.leave.application.EmployeeLeaveApplicationUpdateRequest;
 import org.webshar.hrms.response.BatchResponse;
 import org.webshar.hrms.response.Response;
+import org.webshar.hrms.response.employee.leave.application.EmployeeLeaveApplicationResponse;
 import org.webshar.hrms.service.LeaveApplicationService;
 import org.webshar.hrms.service.exception.EntityAlreadyExistsException;
 import org.webshar.hrms.service.exception.EntityNotFoundException;
@@ -36,17 +36,17 @@ public class LeaveApplicationController
   @Autowired
   LeaveApplicationService leaveApplicationService;
 
-  private static final Logger LOGGER = LoggerFactory.getLogger(EmployeeController.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(LeaveApplicationController.class);
 
   @GetMapping(value = "/services/api/web/hrms/leave-applications")
   public ResponseEntity<BatchResponse> getAllAppliedLeavesOfAnEmployeeByEmployeeIdLeaveTypeAndLeaveStatus(
-      @RequestParam Long employee_id,
-      @RequestParam(required = false) Long  leave_type_id,
-      @RequestParam(required = false) Long leave_status_id)
+      @RequestParam final Long employee_id,
+      @RequestParam(required = false) final Long leave_type_id,
+      @RequestParam(required = false) final Long leave_status_id)
       throws ServiceException
   {
     BatchResponse batchResponse = new BatchResponse();
-    List<LeaveApplication> leaveList;
+    List<EmployeeLeaveApplicationResponse> leaveList;
     leaveList = leaveApplicationService
         .getLeaveApplicationByEmployeeIdLeaveTypeAndLeaveStatus(employee_id, leave_type_id,
             leave_status_id);
@@ -59,13 +59,13 @@ public class LeaveApplicationController
 
   @PostMapping(value = "/services/api/web/hrms/leave-applications")
   public ResponseEntity<Response> applyLeaveOfAnEmployee(
-      @Valid @RequestBody @NotNull EmployeeLeaveApplicationCreateRequest employeeLeaveApplicationCreateRequest)
+      @Valid @RequestBody @NotNull final EmployeeLeaveApplicationCreateRequest employeeLeaveApplicationCreateRequest)
       throws ServiceException
   {
     Response response = new Response();
-    LeaveApplication  leaveApplication= leaveApplicationService.applyLeave(
+    EmployeeLeaveApplicationResponse employeeLeaveApplicationResponse = leaveApplicationService.applyLeave(
         employeeLeaveApplicationCreateRequest);
-    response.setEntity(leaveApplication);
+    response.setEntity(employeeLeaveApplicationResponse);
     response.setMessage("Leave applied successfully");
     response.setStatus("OK");
     return ResponseEntity.status(HttpStatus.CREATED).body(response);
@@ -73,12 +73,13 @@ public class LeaveApplicationController
 
   @PatchMapping(value = "/services/api/web/hrms/leave-applications")
   public ResponseEntity<Response> updateAppliedLeaveOfAnEmployee(
-      @Valid @RequestBody @NotNull EmployeeLeaveApplicationUpdateRequest employeeLeaveApplicationUpdateRequest)
+      @Valid @RequestBody @NotNull final EmployeeLeaveApplicationUpdateRequest employeeLeaveApplicationUpdateRequest)
       throws EntityNotFoundException
   {
     Response response = new Response();
-    LeaveApplication leaveApplication = leaveApplicationService.updateLeaveApplication(employeeLeaveApplicationUpdateRequest);
-    response.setEntity(leaveApplication);
+    EmployeeLeaveApplicationResponse employeeLeaveApplicationResponse = leaveApplicationService
+        .updateLeaveApplication(employeeLeaveApplicationUpdateRequest);
+    response.setEntity(employeeLeaveApplicationResponse);
     response.setMessage("Employee leave application is updated");
     response.setStatus("OK");
     return ResponseEntity.ok(response);
@@ -88,7 +89,7 @@ public class LeaveApplicationController
   public ResponseEntity<BatchResponse> getAllAppliedLeavesOfAllEmployees()
   {
     BatchResponse batchResponse = new BatchResponse();
-    List<LeaveApplication> leaveApplicationList;
+    List<EmployeeLeaveApplicationResponse> leaveApplicationList;
     leaveApplicationList = leaveApplicationService.getAllAppliedLeavesOfAllEmployees();
     batchResponse.setEntities(Collections.singletonList(leaveApplicationList));
     batchResponse.setTotalEntries(leaveApplicationList.size());
