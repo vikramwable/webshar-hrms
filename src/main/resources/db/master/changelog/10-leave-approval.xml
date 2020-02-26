@@ -15,7 +15,7 @@
 
     <addForeignKeyConstraint baseColumnNames="leave_id" baseTableName="leave_approval"
       constraintName="fk_leave_leave_approval" onDelete="RESTRICT" referencedColumnNames="id"
-      referencedTableName="leave"/>
+      referencedTableName="leave_application"/>
     <addForeignKeyConstraint baseColumnNames="approved_by_emp_id" baseTableName="leave_approval"
       constraintName="fk_employee_leave_approval" onDelete="RESTRICT" referencedColumnNames="emp_id"
       referencedTableName="employee"/>

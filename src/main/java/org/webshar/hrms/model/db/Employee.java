@@ -1,5 +1,7 @@
 package org.webshar.hrms.model.db;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
@@ -20,6 +22,7 @@ import org.springframework.stereotype.Component;
 @Component
 @Entity
 @Table(name = "employee", uniqueConstraints = @UniqueConstraint(columnNames = {"id"}))
+@JsonInclude(Include.NON_NULL)
 public class Employee implements Serializable
 {
 

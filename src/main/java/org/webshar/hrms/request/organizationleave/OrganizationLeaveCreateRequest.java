@@ -1,6 +1,6 @@
 package org.webshar.hrms.request.organizationleave;
 
-import javax.persistence.Column;
+import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
@@ -23,5 +23,18 @@ public class OrganizationLeaveCreateRequest
   @Setter
   @NotNull(message = ErrorMessageConstants.ORGANIZATION_LEAVE_COUNT_NOT_NULL)
   private Long count;
+
+  @AssertTrue(message = ErrorMessageConstants.ORGANIZATION_LEAVE_COUNT_CAN_NOT_BE_LESS_THAN_ONE)
+  private boolean isValidCount()
+  {
+    if (count <= 0)
+    {
+      return false;
+    }
+    else
+    {
+      return true;
+    }
+  }
 
 }

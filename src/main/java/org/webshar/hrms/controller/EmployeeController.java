@@ -26,6 +26,7 @@ import org.webshar.hrms.response.Response;
 import org.webshar.hrms.service.EmployeeService;
 import org.webshar.hrms.service.exception.EntityAlreadyExistsException;
 import org.webshar.hrms.service.exception.EntityNotFoundException;
+import org.webshar.hrms.service.exception.InsufficientLeaveException;
 import org.webshar.hrms.service.exception.ServiceException;
 
 @RestController
@@ -35,6 +36,7 @@ public class EmployeeController
 
   @Autowired
   EmployeeService employeeService;
+
   private static final Logger LOGGER = LoggerFactory.getLogger(EmployeeController.class);
 
   @GetMapping(value = "/services/api/web/hrms/employees/{employee_id}")
@@ -63,9 +65,8 @@ public class EmployeeController
     return ResponseEntity.status(HttpStatus.CREATED).body(response);
   }
 
-  @PatchMapping(value = "/services/api/web/hrms/employees/{employee_id}")
+  @PatchMapping(value = "/services/api/web/hrms/employees")
   public ResponseEntity<Response> updateEmployeeById(
-      @PathVariable("employee_id") Long employeeId,
       @NotNull @Valid @RequestBody
           EmployeeUpdateRequest employeeUpdateRequest) throws ServiceException
   {
@@ -82,7 +83,7 @@ public class EmployeeController
       @PathVariable("employee_id") Long employeeId)
       throws ServiceException
   {
-    employeeService.deleteEmployeeById(employeeId);
+    employeeService.deleteEmployeeByEmployeeId(employeeId);
     return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
   }
 
@@ -98,6 +99,7 @@ public class EmployeeController
     batchResponse.setStatus("OK");
     return ResponseEntity.ok(batchResponse);
   }
+
 
   @ExceptionHandler(EntityAlreadyExistsException.class)
   public ResponseEntity<Response> handleException(EntityAlreadyExistsException e)
@@ -117,5 +119,15 @@ public class EmployeeController
     response.setStatus("Entity Not found");
     response.setMessage(e.getMessage());
     return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+  }
+
+  @ExceptionHandler(InsufficientLeaveException.class)
+  public ResponseEntity<Response> handleException(InsufficientLeaveException e)
+  {
+    LOGGER.error(e.getMessage(), e);
+    Response response = new Response();
+    response.setStatus("Insufficient leaves are available");
+    response.setMessage(e.getMessage());
+    return ResponseEntity.status(HttpStatus.PRECONDITION_FAILED).body(response);
   }
 }

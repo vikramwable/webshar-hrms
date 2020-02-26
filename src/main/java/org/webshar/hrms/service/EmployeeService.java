@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.webshar.hrms.constants.ErrorMessageConstants;
 import org.webshar.hrms.model.builder.EmployeeBuilder;
 import org.webshar.hrms.model.db.Employee;
+import org.webshar.hrms.model.db.Organization;
 import org.webshar.hrms.repository.EmployeeRepository;
 import org.webshar.hrms.request.employee.EmployeeCreateRequest;
 import org.webshar.hrms.request.employee.EmployeeUpdateRequest;
@@ -18,22 +19,38 @@ public class EmployeeService
 {
 
   @Autowired
+  OrganizationService organizationService;
+
+  @Autowired
   EmployeeRepository employeeRepository;
 
   @Autowired
   EmployeeBuilder employeeBuilder;
 
-  public Employee getEmployeeById(Long employeeId) throws EntityNotFoundException
+  public Employee getEmployeeById(Long id) throws EntityNotFoundException
   {
-    return employeeRepository.findById(employeeId)
+    return employeeRepository.findById(id)
         .orElseThrow(
             () -> new EntityNotFoundException(ErrorMessageConstants.EMPLOYEE_BY_ID_NOT_FOUND));
   }
 
+
+  public Employee getEmployeeByEmployeeId(Long employeeId) throws EntityNotFoundException
+  {
+    Employee employee = employeeRepository.findByEmployeeId(
+        employeeId);
+    if(employee == null)
+        throw new EntityNotFoundException(ErrorMessageConstants.EMPLOYEE_BY_ID_NOT_FOUND);
+    else
+      return employee;
+  }
+
   public Employee createEmployee(EmployeeCreateRequest employeeCreateRequest)
-      throws EntityAlreadyExistsException
+      throws EntityAlreadyExistsException, EntityNotFoundException
 
   {
+    Organization organization = organizationService.getOrganizationById(employeeCreateRequest.getOrganizationId());
+
     List<Employee> employees = employeeRepository
         .findByEmail(employeeCreateRequest.getEmail());
     if (employees.isEmpty())
@@ -67,18 +84,11 @@ public class EmployeeService
     }
   }
 
-  public void deleteEmployeeById(Long id) throws EntityNotFoundException
+  public void deleteEmployeeByEmployeeId(Long employeeId) throws EntityNotFoundException
   {
-    Optional<Employee> employeeToDelete = employeeRepository.findById(id);
+    Employee employeeToDelete = getEmployeeByEmployeeId(employeeId);
 
-    if (employeeToDelete.isPresent())
-    {
-      employeeRepository.deleteById(id);
-    }
-    else
-    {
-      throw new EntityNotFoundException(ErrorMessageConstants.EMPLOYEE_BY_ID_NOT_FOUND);
-    }
+    employeeRepository.deleteById(employeeToDelete.getId());
   }
 
   public List<Employee> getAllEmployees()

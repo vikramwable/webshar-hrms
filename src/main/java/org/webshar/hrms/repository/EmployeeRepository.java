@@ -10,5 +10,8 @@ import org.webshar.hrms.model.db.Employee;
 public interface EmployeeRepository extends JpaRepository<Employee, Long>
 {
 
-  List<Employee> findByEmail(@Param("email") String email);
+  public List<Employee> findByEmail(@Param("email") String email);
+
+  public Employee findByEmployeeId(@Param("emp_id") Long employeeId);
+
 }
