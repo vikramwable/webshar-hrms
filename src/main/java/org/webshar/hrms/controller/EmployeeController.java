@@ -30,7 +30,7 @@ import org.webshar.hrms.service.exception.InsufficientLeaveException;
 import org.webshar.hrms.service.exception.ServiceException;
 
 @RestController
-@RequestMapping("/")
+@RequestMapping("/services/api/employees")
 public class EmployeeController
 {
 
@@ -39,20 +39,20 @@ public class EmployeeController
 
   private static final Logger LOGGER = LoggerFactory.getLogger(EmployeeController.class);
 
-  @GetMapping(value = "/services/api/web/hrms/employees/{employee_id}")
-  public ResponseEntity<Response> getEmployeeById(
+  @GetMapping(value = "/{employee_id}")
+  public ResponseEntity<Response> getEmployeeByEmployeeId(
       @PathVariable("employee_id") Long employeeId)
       throws ServiceException
   {
     Response response = new Response();
-    Employee employee = employeeService.getEmployeeById(employeeId);
+    Employee employee = employeeService.getEmployeeByEmployeeId(employeeId);
     response.setEntity(employee);
     response.setMessage("Employee fetched");
     response.setStatus("OK");
     return ResponseEntity.ok(response);
   }
 
-  @PostMapping(value = "/services/api/web/hrms/employees")
+  @PostMapping(value = "")
   public ResponseEntity<Response> createEmployee(
       @Valid @RequestBody @NotNull EmployeeCreateRequest employeeCreateRequest)
       throws ServiceException
@@ -65,7 +65,7 @@ public class EmployeeController
     return ResponseEntity.status(HttpStatus.CREATED).body(response);
   }
 
-  @PatchMapping(value = "/services/api/web/hrms/employees")
+  @PatchMapping(value = "")
   public ResponseEntity<Response> updateEmployeeById(
       @NotNull @Valid @RequestBody
           EmployeeUpdateRequest employeeUpdateRequest) throws ServiceException
@@ -78,16 +78,16 @@ public class EmployeeController
     return ResponseEntity.ok(response);
   }
 
-  @DeleteMapping(value = "/services/api/web/hrms/employees/{employee_id}")
+  @DeleteMapping(value = "/{employee_id}")
   public ResponseEntity<Void> deleteEmployeeById(
       @PathVariable("employee_id") Long employeeId)
       throws ServiceException
   {
     employeeService.deleteEmployeeByEmployeeId(employeeId);
-    return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+    return new ResponseEntity<>(HttpStatus.NO_CONTENT);
   }
 
-  @GetMapping(value = "/services/api/web/hrms/employees")
+  @GetMapping(value = "")
   public ResponseEntity<BatchResponse> getAllEmployees()
   {
     BatchResponse batchResponse = new BatchResponse();
