@@ -34,34 +34,24 @@ public interface LeaveApplicationRepository extends JpaRepository<LeaveApplicati
       @Param("leave_status_id") final Collection<Long> leaveStatusIds
   );
 
-  public List<LeaveApplication> findAllByEmployeeIdAndLeaveTypeIdAndStartDateGreaterThanEqualAndEndDateLessThanEqual(
-      @Param("employee_id") final Long employeeId,
-      @Param("leave_type_id") final Long leaveTypeId,
+
+//  public List<LeaveApplication> findAllByStartDateGreaterThanEqualAndStartDateLessThanEqualOrEndDateGreaterThanEqualAndEndDateLessThanEqualOrStartDateLessThanEqualAndEndDateGreaterThanEqual(
+//      @Param("start_date") final Date startDate,
+//      @Param("end_date") final Date endDate
+//  );
+
+  public List<LeaveApplication> findAllByStartDateGreaterThanEqualAndStartDateLessThanEqual(
       @Param("start_date") final Date startDate,
       @Param("end_date") final Date endDate
   );
 
-  public List<LeaveApplication> findAllByEmployeeIdAndLeaveTypeIdAndStartDateGreaterThanEqualAndEndDateGreaterThanEqual(
-      @Param("employee_id") final Long employeeId,
-      @Param("leave_type_id") final Long leaveTypeId,
+  public List<LeaveApplication> findAllByEndDateGreaterThanEqualAndEndDateLessThanEqual(
       @Param("start_date") final Date startDate,
       @Param("end_date") final Date endDate
   );
 
-
-  public List<LeaveApplication> findAllByEmployeeIdAndLeaveTypeIdAndStartDateLessThanEqualAndEndDateGreaterThanEqual(
-      @Param("employee_id") final Long employeeId,
-      @Param("leave_type_id") final Long leaveTypeId,
+  public List<LeaveApplication> findAllByStartDateLessThanEqualAndEndDateGreaterThanEqual(
       @Param("start_date") final Date startDate,
       @Param("end_date") final Date endDate
   );
-
-
-  public List<LeaveApplication> findAllByEmployeeIdAndLeaveTypeIdAndStartDateLessThanEqualAndEndDateLessThanEqual(
-      @Param("employee_id") final Long employeeId,
-      @Param("leave_type_id") final Long leaveTypeId,
-      @Param("start_date") final Date startDate,
-      @Param("end_date") final Date endDate
-  );
-
 }
