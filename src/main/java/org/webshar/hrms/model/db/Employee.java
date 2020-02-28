@@ -2,118 +2,61 @@ package org.webshar.hrms.model.db;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import java.io.Serializable;
-import java.util.Date;
-import java.util.Objects;
-import java.util.UUID;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.stereotype.Component;
 
-@Component
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import java.util.Date;
+import java.util.Objects;
+
 @Entity
-@Table(name = "employee", uniqueConstraints = @UniqueConstraint(columnNames = {"id"}))
+@Table(name = "employee")
+@Getter
+@Setter
 @JsonInclude(Include.NON_NULL)
-public class Employee implements Serializable
+public class Employee extends BaseModel
 {
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "id", nullable = false, unique = true, length = 11)
-  @Getter
-  @Setter
-  private Long id;
-
-  @Column(name = "guid", nullable = false, unique = true, length = 11)
-  @Getter
-  @Setter
-  private UUID guid;
-
-  @Column(name = "emp_id", nullable = false, unique = true, length = 11)
-  @Getter
-  @Setter
+  @Column(name = "employee_id", nullable = false, unique = true, length = 11)
   private Long employeeId;
 
-  @Column(name = "org_id", nullable = false, unique = true, length = 11)
-  @Getter
-  @Setter
+  @Column(name = "organization_id", nullable = false, unique = true, length = 11)
   private Long organizationId;
 
   @Column(name = "first_name", nullable = false, length = 100)
-  @Getter
-  @Setter
   private String firstName;
 
   @Column(name = "middle_name", nullable = true, length = 100)
-  @Getter
-  @Setter
   private String middleName;
 
   @Column(name = "last_name", nullable = false, length = 100)
-  @Getter
-  @Setter
   private String lastName;
 
   @Column(name = "date_of_birth", nullable = false)
-  @Getter
-  @Setter
   private Date dateOfBirth;
 
   @Column(name = "is_active", nullable = false)
-  @Getter
-  @Setter
   private Boolean isActive;
 
   @Column(name = "email", nullable = false, length = 100)
-  @Getter
-  @Setter
   private String email;
 
   @Column(name = "joining_date", nullable = false, updatable = false)
-  @Getter
-  @Setter
   private Date joiningDate;
 
   @Column(name = "exit_date", nullable = true)
-  @Getter
-  @Setter
   private Date exitDate;
 
   @Column(name = "address", nullable = true, length = 300)
-  @Getter
-  @Setter
   private String address;
 
   @Column(name = "contact", nullable = false, length = 100)
-  @Getter
-  @Setter
   private String contact;
 
   @Column(name = "designation", nullable = false, length = 200)
-  @Getter
-  @Setter
   private String designation;
-
-  @CreationTimestamp
-  @Column(name = "created_at", nullable = false, updatable = false)
-  @Getter
-  @Setter
-  private Date createdAt;
-
-  @UpdateTimestamp
-  @Column(name = "updated_at", nullable = false)
-  @Getter
-  @Setter
-  private Date updatedAt;
 
   public Employee()
   {

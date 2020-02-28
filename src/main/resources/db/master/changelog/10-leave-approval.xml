@@ -8,7 +8,7 @@
       <column name="leave_id" type="BIGINT">
         <constraints nullable="false"/>
       </column>
-      <column name="approved_by_emp_id" type="BIGINT">
+      <column name="approved_by_employee_id" type="BIGINT">
         <constraints nullable="false"/>
       </column>
     </createTable>
@@ -16,8 +16,8 @@
     <addForeignKeyConstraint baseColumnNames="leave_id" baseTableName="leave_approval"
       constraintName="fk_leave_leave_approval" onDelete="RESTRICT" referencedColumnNames="id"
       referencedTableName="leave_application"/>
-    <addForeignKeyConstraint baseColumnNames="approved_by_emp_id" baseTableName="leave_approval"
-      constraintName="fk_employee_leave_approval" onDelete="RESTRICT" referencedColumnNames="emp_id"
+    <addForeignKeyConstraint baseColumnNames="approved_by_employee_id" baseTableName="leave_approval"
+      constraintName="fk_employee_leave_approval" onDelete="RESTRICT" referencedColumnNames="employee_id"
       referencedTableName="employee"/>
 
   </changeSet>

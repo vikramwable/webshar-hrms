@@ -7,6 +7,8 @@ import org.webshar.hrms.model.db.LeaveType;
 import org.webshar.hrms.request.employee.leave.allocation.EmployeeLeaveAllocationCreateRequest;
 import org.webshar.hrms.request.employee.leave.allocation.EmployeeLeaveAllocationUpdateRequest;
 
+import java.util.UUID;
+
 @Component
 public class LeaveAllocationBuilder
 {
@@ -16,6 +18,7 @@ public class LeaveAllocationBuilder
       final Employee employee, final LeaveType leaveType)
   {
     LeaveAllocation leaveAllocation = new LeaveAllocation();
+    leaveAllocation.setGuid(UUID.randomUUID());
     leaveAllocation.setEmployee(employee);
     leaveAllocation.setLeaveType(leaveType);
     leaveAllocation.setStartDate(employeeLeaveAllocationCreateRequest.getStartDate());

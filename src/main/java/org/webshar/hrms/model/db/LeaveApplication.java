@@ -1,73 +1,37 @@
 package org.webshar.hrms.model.db;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import java.util.Date;
-import java.util.Objects;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.stereotype.Component;
 
-@Component
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import java.util.Date;
+import java.util.Objects;
+
 @Entity
-@Table(name = "leave_application", uniqueConstraints = @UniqueConstraint(columnNames = {"id"}))
-public class LeaveApplication
+@Table(name = "leave_application")
+@Getter
+@Setter
+public class LeaveApplication extends BaseModel
 {
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "id", nullable = false, unique = true, length = 11)
-  @Getter
-  @Setter
-  private Long id;
-
   @Column(name = "start_date", nullable = false)
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-  @Getter
-  @Setter
   private Date startDate;
 
   @Column(name = "end_date", nullable = false)
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-  @Getter
-  @Setter
   private Date endDate;
 
-  @CreationTimestamp
-  @Column(name = "created_at", nullable = false, updatable = false)
-  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
-  @Getter
-  @Setter
-  private Date createdAt;
-
-  @UpdateTimestamp
-  @Column(name = "updated_at", nullable = false)
-  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
-  @Getter
-  @Setter
-  private Date updatedAt;
-
   @OneToOne
-  @Getter
-  @Setter
   private Employee employee;
 
   @OneToOne
-  @Getter
-  @Setter
   private LeaveType leaveType;
 
   @OneToOne
-  @Getter
-  @Setter
   private LeaveStatus leaveStatus;
 
   public LeaveApplication(){
@@ -96,7 +60,7 @@ public class LeaveApplication
       return false;
     }
     LeaveApplication leaveApplication = (LeaveApplication) o;
-    return id.equals(leaveApplication.id) &&
+    return this.getId().equals(leaveApplication.getId()) &&
         startDate.equals(leaveApplication.startDate) &&
         endDate.equals(leaveApplication.endDate) &&
         leaveType.equals(leaveApplication.leaveType);
@@ -105,6 +69,6 @@ public class LeaveApplication
   @Override
   public int hashCode()
   {
-    return Objects.hash(id, startDate, endDate, leaveType);
+    return Objects.hash(this.getId(), startDate, endDate, leaveType);
   }
 }
