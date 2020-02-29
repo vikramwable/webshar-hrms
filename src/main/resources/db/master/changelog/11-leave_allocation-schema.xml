@@ -32,6 +32,12 @@
       <column name="updated_at" type="datetime">
         <constraints nullable="false"/>
       </column>
+      <column name="created_by" type="varchar(200)">
+        <constraints nullable="false" />
+      </column>
+      <column name="updated_by" type="varchar(200)">
+        <constraints nullable="false" />
+      </column>
     </createTable>
   </changeSet>
 </databaseChangeLog>

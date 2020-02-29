@@ -1,15 +1,13 @@
 package org.webshar.hrms.model.builder;
 
-import java.util.UUID;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 import org.webshar.hrms.model.db.LeaveType;
 import org.webshar.hrms.model.db.Organization;
 import org.webshar.hrms.model.db.OrganizationLeave;
-import org.webshar.hrms.request.organization.OrganizationCreateRequest;
-import org.webshar.hrms.request.organization.OrganizationUpdateRequest;
 import org.webshar.hrms.request.organizationleave.OrganizationLeaveCreateRequest;
 import org.webshar.hrms.request.organizationleave.OrganizationLeaveUpdateRequest;
+
+import java.util.UUID;
 
 @Component
 public class OrganizationLeaveBuilder
@@ -19,6 +17,7 @@ public class OrganizationLeaveBuilder
       OrganizationLeaveCreateRequest organizationLeaveCreateRequest, LeaveType leaveType, Organization organization)
   {
     OrganizationLeave organizationLeave = new OrganizationLeave();
+    organizationLeave.setGuid(UUID.randomUUID());
     organizationLeave.setLeaveType(leaveType);
     organizationLeave.setOrganization(organization);
     organizationLeave.setCount(organizationLeaveCreateRequest.getCount());

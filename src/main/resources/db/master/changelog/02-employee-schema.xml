@@ -8,10 +8,10 @@
       <column name="guid" type="uuid" defaultValue="uuid_generate_v4()">
         <constraints nullable="false" unique="true" />
       </column>
-      <column name="emp_id" type="BIGINT">
+      <column name="employee_id" type="BIGINT">
         <constraints nullable="false" unique="true" />
       </column>
-      <column name="org_id" type="BIGINT">
+      <column name="organization_id" type="BIGINT">
         <constraints nullable="false" />
       </column>
       <column name="first_name" type="varchar(100)">
@@ -53,7 +53,13 @@
       <column name="updated_at" type="datetime">
         <constraints nullable="false" />
       </column>
+      <column name="created_by" type="varchar(200)">
+        <constraints nullable="false" />
+      </column>
+      <column name="updated_by" type="varchar(200)">
+        <constraints nullable="false" />
+      </column>
     </createTable>
-    <addForeignKeyConstraint baseColumnNames="org_id" baseTableName="employee" constraintName="fk_emp_org_id" onDelete="RESTRICT" referencedColumnNames="id" referencedTableName="organization" />
+    <addForeignKeyConstraint baseColumnNames="organization_id" baseTableName="employee" constraintName="fk_emp_org_id" onDelete="RESTRICT" referencedColumnNames="id" referencedTableName="organization" />
   </changeSet>
 </databaseChangeLog>

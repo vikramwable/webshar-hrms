@@ -7,6 +7,8 @@ import org.webshar.hrms.model.db.LeaveStatus;
 import org.webshar.hrms.model.db.LeaveType;
 import org.webshar.hrms.request.employee.leave.application.EmployeeLeaveApplicationCreateRequest;
 
+import java.util.UUID;
+
 @Component
 public class LeaveApplicationBuilder
 {
@@ -16,6 +18,7 @@ public class LeaveApplicationBuilder
       final LeaveType leaveType, final Employee employee, final LeaveStatus leaveStatus)
   {
     LeaveApplication leaveApplication = new LeaveApplication();
+    leaveApplication.setGuid(UUID.randomUUID());
     leaveApplication.setLeaveType(leaveType);
     leaveApplication.setEmployee(employee);
     leaveApplication.setLeaveStatus(leaveStatus);

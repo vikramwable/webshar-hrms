@@ -3,93 +3,48 @@ package org.webshar.hrms.model.db;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import java.util.Date;
-import java.util.Objects;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-import org.springframework.stereotype.Component;
 
-@Component
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import java.util.Date;
+import java.util.Objects;
+
 @Entity
-@Table(name = "leave_allocation", uniqueConstraints = @UniqueConstraint(columnNames = {
-    "id"}))
-
+@Table(name = "leave_allocation")
 @JsonInclude(Include.NON_NULL)
-public class LeaveAllocation
+@Getter
+@Setter
+public class LeaveAllocation extends BaseModel
 {
-
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "id", nullable = false, unique = true, length = 11)
-  @Getter
-  @Setter
-  private Long id;
-
   @OneToOne
-  @Getter
-  @Setter
   Employee employee;
 
   @OneToOne
-  @Getter
-  @Setter
   LeaveType leaveType;
 
   @Column(name = "start_date", nullable = false)
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-  @Getter
-  @Setter
   private Date startDate;
 
   @Column(name = "end_date", nullable = false)
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-  @Getter
-  @Setter
   private Date endDate;
 
   @Column(name = "allotted_leaves", nullable = false)
-  @Getter
-  @Setter
   private Long allottedLeaves;
 
   @Column(name = "carried_leaves", nullable = false)
-  @Getter
-  @Setter
   private Long carriedLeaves;
 
   @Column(name = "additional_leaves", nullable = false)
-  @Getter
-  @Setter
   private Long additionalLeaves;
 
   @Column(name = "total_leaves", nullable = false)
-  @Getter
-  @Setter
   private Long totalLeaves;
-
-  @CreationTimestamp
-  @Column(name = "created_at", nullable = false, updatable = false)
-  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
-  @Getter
-  @Setter
-  private Date createdAt;
-
-  @UpdateTimestamp
-  @Column(name = "updated_at", nullable = false)
-  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
-  @Getter
-  @Setter
-  private Date updatedAt;
 
   public LeaveAllocation()
   {
@@ -121,7 +76,7 @@ public class LeaveAllocation
       return false;
     }
     LeaveAllocation that = (LeaveAllocation) o;
-    return id.equals(that.id) &&
+    return this.getId().equals(that.getId()) &&
         employee.equals(that.employee) &&
         leaveType.equals(that.leaveType) &&
         startDate.equals(that.startDate) &&
@@ -131,7 +86,7 @@ public class LeaveAllocation
   @Override
   public int hashCode()
   {
-    return Objects.hash(id, employee, leaveType, startDate, endDate);
+    return Objects.hash(this.getId(), employee, leaveType, startDate, endDate);
   }
 
 }
