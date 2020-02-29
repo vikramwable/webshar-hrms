@@ -19,36 +19,20 @@ public interface LeaveAllocationRepository extends
       @Param("end_date") final Date endDate
   );
 
-  public List<LeaveAllocation> findAllByEmployeeIdAndLeaveTypeIdAndStartDateGreaterThanEqualAndEndDateLessThanEqual(
-      @Param("employee_id") final Long employeeId,
-      @Param("leave_type_id") final Long leaveTypeId,
+  public List<LeaveAllocation> findAllByStartDateGreaterThanEqualAndStartDateLessThanEqual(
       @Param("start_date") final Date startDate,
       @Param("end_date") final Date endDate
   );
 
-  public List<LeaveAllocation> findAllByEmployeeIdAndLeaveTypeIdAndStartDateGreaterThanEqualAndEndDateGreaterThanEqual(
-      @Param("employee_id") final Long employeeId,
-      @Param("leave_type_id") final Long leaveTypeId,
+  public List<LeaveAllocation> findAllByEndDateGreaterThanEqualAndEndDateLessThanEqual(
       @Param("start_date") final Date startDate,
       @Param("end_date") final Date endDate
   );
 
-
-  public List<LeaveAllocation> findAllByEmployeeIdAndLeaveTypeIdAndStartDateLessThanEqualAndEndDateGreaterThanEqual(
-      @Param("employee_id") final Long employeeId,
-      @Param("leave_type_id") final Long leaveTypeId,
+  public List<LeaveAllocation> findAllByStartDateLessThanEqualAndEndDateGreaterThanEqual(
       @Param("start_date") final Date startDate,
       @Param("end_date") final Date endDate
   );
-
-
-  public List<LeaveAllocation> findAllByEmployeeIdAndLeaveTypeIdAndStartDateLessThanEqualAndEndDateLessThanEqual(
-      @Param("employee_id") final Long employeeId,
-      @Param("leave_type_id") final Long leaveTypeId,
-      @Param("start_date") final Date startDate,
-      @Param("end_date") final Date endDate
-  );
-
   public LeaveAllocation findByEmployeeIdAndLeaveTypeId(
       @Param("employee_id") final Long employeeId,
       @Param("leave_type_id") final Long leaveTypeId

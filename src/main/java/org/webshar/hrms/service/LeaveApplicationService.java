@@ -197,36 +197,24 @@ public class LeaveApplicationService
     return (int) ChronoUnit.DAYS.between(ldStartDate, ldEndDate) + 1;
   }
 
-  private boolean isStartAndEndDateAreOverlappingWithExistingRecordForGivenEmployeeAndLeaveTypeId(
+  private void isStartAndEndDateAreOverlappingWithExistingRecordForGivenEmployeeAndLeaveTypeId(
       final Long employeeId, final Long leaveTypeId, final Date startDate, final Date endDate)
       throws EntityAlreadyExistsException
   {
-    List<LeaveApplication> leaveApplicationsList = leaveApplicationRepository
-        .findAllByEmployeeIdAndLeaveTypeIdAndStartDateLessThanEqualAndEndDateGreaterThanEqual(
-            employeeId, leaveTypeId, startDate, endDate);
-    //Need to improve this logic
-    leaveApplicationsList.addAll(
-        leaveApplicationRepository
-            .findAllByEmployeeIdAndLeaveTypeIdAndStartDateGreaterThanEqualAndEndDateLessThanEqual(
-                employeeId, leaveTypeId, startDate, endDate));
-    //Need to optimize this currently just ignore this implementation
-//    leaveApplicationsList.addAll(
-//        leaveApplicationRepository
-//            .findAllByEmployeeIdAndLeaveTypeIdAndStartDateGreaterThanEqualAndEndDateGreaterThanEqual(
-//                employeeId, leaveTypeId, startDate, endDate));
-//    leaveApplicationsList.addAll(
-//        leaveApplicationRepository
-//            .findAllByEmployeeIdAndLeaveTypeIdAndStartDateLessThanEqualAndEndDateLessThanEqual(
-//                employeeId, leaveTypeId, startDate, endDate));
+    List<LeaveApplication> leaveApplicationList = leaveApplicationRepository.findAllByStartDateGreaterThanEqualAndStartDateLessThanEqual(startDate,endDate);
 
-    if (!leaveApplicationsList.isEmpty())
+    leaveApplicationList.addAll(leaveApplicationRepository.findAllByEndDateGreaterThanEqualAndEndDateLessThanEqual(startDate,endDate));
+    leaveApplicationList.addAll(leaveApplicationRepository.findAllByStartDateLessThanEqualAndEndDateGreaterThanEqual(startDate,endDate));
+
+    Optional<LeaveApplication>  leaveApplicationResult = leaveApplicationList
+        .stream()
+        .filter(leaveApplication -> (leaveApplication.getEmployee().getId() == employeeId) && (leaveApplication.getLeaveType().getId() == leaveTypeId))
+        .findFirst();
+
+    if (leaveApplicationResult.isPresent())
     {
       throw new EntityAlreadyExistsException(
           ErrorMessageConstants.LEAVE_ALLOCATED_WITH_GIVEN_LEAVE_TYPE_AND_START_DATE_AND_END_DATE_OVERLAPPING);
-    }
-    else
-    {
-      return true;
     }
   }
 }

@@ -160,26 +160,19 @@ public class LeaveAllocationService
       throws EntityAlreadyExistsException
   {
     List<LeaveAllocation> leaveAllocationList = leaveAllocationRepository
-        .findAllByEmployeeIdAndLeaveTypeIdAndStartDateLessThanEqualAndEndDateGreaterThanEqual(
-            employeeId, leaveTypeId, startDate, endDate);
+        .findAllByStartDateGreaterThanEqualAndStartDateLessThanEqual(startDate, endDate);
 
     leaveAllocationList.addAll(
         leaveAllocationRepository
-            .findAllByEmployeeIdAndLeaveTypeIdAndStartDateGreaterThanEqualAndEndDateLessThanEqual(
-                employeeId, leaveTypeId, startDate, endDate));
+            .findAllByEndDateGreaterThanEqualAndEndDateLessThanEqual(startDate, endDate));
+    leaveAllocationList.addAll(leaveAllocationRepository.findAllByStartDateLessThanEqualAndEndDateGreaterThanEqual(startDate,endDate));
 
-    //Need to optimize this currently just ignore this implementation
-//    leaveAllocationList.addAll(
-//        leaveAllocationRepository
-//            .findAllByEmployeeIdAndLeaveTypeIdAndStartDateGreaterThanEqualAndEndDateGreaterThanEqual(
-//                employeeId, leaveTypeId, startDate, endDate));
-//
-//    leaveAllocationList.addAll(
-//        leaveAllocationRepository
-//            .findAllByEmployeeIdAndLeaveTypeIdAndStartDateLessThanEqualAndEndDateLessThanEqual(
-//                employeeId, leaveTypeId, startDate, endDate));
+    Optional<LeaveAllocation>  leaveApplicationResult = leaveAllocationList
+        .stream()
+        .filter(leaveApplication -> (leaveApplication.getEmployee().getId() == employeeId) && (leaveApplication.getLeaveType().getId() == leaveTypeId))
+        .findFirst();
 
-    if (!leaveAllocationList.isEmpty())
+    if (leaveApplicationResult.isPresent())
     {
       throw new EntityAlreadyExistsException(
           ErrorMessageConstants.EMPLOYEE_LEAVE_ALLOCATED_WITH_GIVEN_LEAVE_TYPE_AND_START_DATE_AND_END_DATE_OVERLAPPING);
