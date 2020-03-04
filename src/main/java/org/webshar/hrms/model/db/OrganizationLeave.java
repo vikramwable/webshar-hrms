@@ -32,6 +32,7 @@ public class OrganizationLeave extends BaseModel
   public OrganizationLeave(OrganizationLeave organizationLeave)
   {
     this.setId(organizationLeave.getId());
+    this.setGuid(organizationLeave.getGuid());
     this.setLeaveType(organizationLeave.getLeaveType());
     this.setOrganization(organizationLeave.getOrganization());
     this.setCount(organizationLeave.getCount());
