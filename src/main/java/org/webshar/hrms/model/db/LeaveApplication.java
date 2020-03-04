@@ -40,6 +40,7 @@ public class LeaveApplication extends BaseModel
 
   public  LeaveApplication(LeaveApplication leaveApplication){
     this.setId(leaveApplication.getId());
+    this.setGuid(leaveApplication.getGuid());
     this.setStartDate(leaveApplication.getStartDate());
     this.setEndDate(leaveApplication.getEndDate());
     this.setCreatedAt(leaveApplication.getCreatedAt());
