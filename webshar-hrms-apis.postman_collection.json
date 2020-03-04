@@ -1,0 +1,935 @@
+{
+	"info": {
+		"_postman_id": "e4210566-1235-40c9-8f26-e1e9a213f089",
+		"name": "webshar-hrms-apis",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "/hrms/api/organizations/{organizationId}",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8020/hrms/api/organizations/7",
+					"host": [
+						"localhost"
+					],
+					"port": "8020",
+					"path": [
+						"hrms",
+						"api",
+						"organizations",
+						"7"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/hrms/api/organizations",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\":\"Test_Org2\"\n}"
+				},
+				"url": {
+					"raw": "localhost:8020/hrms/api/organizations",
+					"host": [
+						"localhost"
+					],
+					"port": "8020",
+					"path": [
+						"hrms",
+						"api",
+						"organizations"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/hrms/api/organizations/{organizationId}",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"id\":\"2\",\n\t\"name\":\"Test_org\",\n\t\"isActive\":true\n}"
+				},
+				"url": {
+					"raw": "localhost:8020/hrms/api/organizations/3",
+					"host": [
+						"localhost"
+					],
+					"port": "8020",
+					"path": [
+						"hrms",
+						"api",
+						"organizations",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/hrms/api/organizations/{organizationId}",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:8020/hrms/api/organizations/3",
+					"host": [
+						"localhost"
+					],
+					"port": "8020",
+					"path": [
+						"hrms",
+						"api",
+						"organizations",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/hrms/api/organizations",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8020/hrms/api/organizations",
+					"host": [
+						"localhost"
+					],
+					"port": "8020",
+					"path": [
+						"hrms",
+						"api",
+						"organizations"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/hrms/api/organization-leaves?organizationId={organizationId}",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8020/hrms/api/organization-leaves?organizationId=1",
+					"host": [
+						"localhost"
+					],
+					"port": "8020",
+					"path": [
+						"hrms",
+						"api",
+						"organization-leaves"
+					],
+					"query": [
+						{
+							"key": "organizationId",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/hrms/api/organization-leaves",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"organizationId\":2,\n\t\"leaveTypeId\":1,\n\t\"count\":1\n\t\n}"
+				},
+				"url": {
+					"raw": "localhost:8020/hrms/api/organization-leaves",
+					"host": [
+						"localhost"
+					],
+					"port": "8020",
+					"path": [
+						"hrms",
+						"api",
+						"organization-leaves"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/hrms/api/organization-leaves/{organizationLeaveId}",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"id\":1,\n\t\"organizationId\":1,\n\t\"leaveTypeId\":1,\n\t\"count\":5\n}"
+				},
+				"url": {
+					"raw": "localhost:8020/hrms/api/organization-leaves/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8020",
+					"path": [
+						"hrms",
+						"api",
+						"organization-leaves",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/hrms/api/organization-leaves/{organizationLeaveId}",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:8020/hrms/api/organization-leaves/2",
+					"host": [
+						"localhost"
+					],
+					"port": "8020",
+					"path": [
+						"hrms",
+						"api",
+						"organization-leaves",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/hrms/api/organization-leaves",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8020/hrms/api/organization-leaves",
+					"host": [
+						"localhost"
+					],
+					"port": "8020",
+					"path": [
+						"hrms",
+						"api",
+						"organization-leaves"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/hrms/api/employees/{id}",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8020/hrms/api/employees/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8020",
+					"path": [
+						"hrms",
+						"api",
+						"employees",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/hrms/api/employees",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"employeeId\":105,\n\t\"organizationId\":1,\n\t\"firstName\":\"NIkhil\",\n\t\"middleName\":\"Dattatray\",\n\t\"lastName\":\"Shinde\",\n\t\"dateOfBirth\":\"1992-10-31\",\n\t\"email\":\"nikhil.shinde+5@webshar.com\",\n\t\"joiningDate\":\"2018-02-25\",\n\t\"contact\":\"9999999999\",\n\t\"designation\":\"Developer\"\n\t\n}"
+				},
+				"url": {
+					"raw": "localhost:8020/hrms/api/employees",
+					"host": [
+						"localhost"
+					],
+					"port": "8020",
+					"path": [
+						"hrms",
+						"api",
+						"employees"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/hrms/api/employees/{id}",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"id\":1,\n\t\"firstName\":\"Niks\"\n}"
+				},
+				"url": {
+					"raw": "localhost:8020/hrms/api/employees/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8020",
+					"path": [
+						"hrms",
+						"api",
+						"employees",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/hrms/api/employees/{id}",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:8020/hrms/api/employees/3",
+					"host": [
+						"localhost"
+					],
+					"port": "8020",
+					"path": [
+						"hrms",
+						"api",
+						"employees",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/hrms/api/employees",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8020/hrms/api/employees",
+					"host": [
+						"localhost"
+					],
+					"port": "8020",
+					"path": [
+						"hrms",
+						"api",
+						"employees"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/hrms/api/permissions/{id}",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8020/hrms/api/permissions/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8020",
+					"path": [
+						"hrms",
+						"api",
+						"permissions",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/hrms/api/permissions",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8020/hrms/api/permissions",
+					"host": [
+						"localhost"
+					],
+					"port": "8020",
+					"path": [
+						"hrms",
+						"api",
+						"permissions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/hrms/api/resources/{id}",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8020/hrms/api/resources/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8020",
+					"path": [
+						"hrms",
+						"api",
+						"resources",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/hrms/api/resources",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8020/hrms/api/resources",
+					"host": [
+						"localhost"
+					],
+					"port": "8020",
+					"path": [
+						"hrms",
+						"api",
+						"resources"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/hrms/api/resources",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\":\"Tests1\",\n\t\"permissions\":[\"READ\"]\n}"
+				},
+				"url": {
+					"raw": "localhost:8020/hrms/api/resources",
+					"host": [
+						"localhost"
+					],
+					"port": "8020",
+					"path": [
+						"hrms",
+						"api",
+						"resources"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/hrms/api/resources/{id}",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:8020/hrms/api/resources/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8020",
+					"path": [
+						"hrms",
+						"api",
+						"resources",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/hrms/api/resources/{id}",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"id\":1,\n\t\"name\":\"Test1\",\n\t\"permissions\":[\"READ\",\"DELETE\"]\n}"
+				},
+				"url": {
+					"raw": "localhost:8020/hrms/api/resources/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8020",
+					"path": [
+						"hrms",
+						"api",
+						"resources",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/hrms/api/roles/{id}",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8020/hrms/api/roles/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8020",
+					"path": [
+						"hrms",
+						"api",
+						"roles",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/hrms/api/roles",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n        \"name\":\"TL\",\n        \"permissions\":[\"READ\"]\n}"
+				},
+				"url": {
+					"raw": "localhost:8020/hrms/api/roles",
+					"host": [
+						"localhost"
+					],
+					"port": "8020",
+					"path": [
+						"hrms",
+						"api",
+						"roles"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/hrms/api/roles/{1}",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n \"id\":1,\n        \"name\":\"TL\",\n        \"permissions\":[\"WRITE\",\"READ\"]\n\n}"
+				},
+				"url": {
+					"raw": "localhost:8020/hrms/api/roles/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8020",
+					"path": [
+						"hrms",
+						"api",
+						"roles",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/hrms/api/roles/{id}",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:8020/hrms/api/roles/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8020",
+					"path": [
+						"hrms",
+						"api",
+						"roles",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/hrms/api/roles",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8020/hrms/api/roles",
+					"host": [
+						"localhost"
+					],
+					"port": "8020",
+					"path": [
+						"hrms",
+						"api",
+						"roles"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/hrms/api/leave-allocations",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"employeeId\":104,\n\t\"leaveTypeId\":1,\n\t\"allottedLeaves\":3,\n\t\"carriedLeaves\":1,\n\t\"additionalLeaves\":1,\n\t\"startDate\":\"2020-02-21\",\n\t\"endDate\":\"2020-02-22\"\n}"
+				},
+				"url": {
+					"raw": "localhost:8020/hrms/api/leave-allocations",
+					"host": [
+						"localhost"
+					],
+					"port": "8020",
+					"path": [
+						"hrms",
+						"api",
+						"leave-allocations"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/hrms/api/leave-allocations?employeeId={employeeId}",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8020/hrms/api/leave-allocations?employeeId=105",
+					"host": [
+						"localhost"
+					],
+					"port": "8020",
+					"path": [
+						"hrms",
+						"api",
+						"leave-allocations"
+					],
+					"query": [
+						{
+							"key": "employeeId",
+							"value": "105"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/hrms/api/leave-allocations",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8020/hrms/api/leave-allocations",
+					"host": [
+						"localhost"
+					],
+					"port": "8020",
+					"path": [
+						"hrms",
+						"api",
+						"leave-allocations"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/hrms/api/leave-allocations/{id}",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"id\":1,\n\t\"employeeId\":104,\n\t\"leaveTypeId\":2,\n\t\"startDate\":\"2020-01-03\",\n\t\"endDate\":\"2020-01-08\",\n\t\"allottedLeaves\":4,\n\t\"carriedLeaves\":10,\n\t\"additionalLeaves\":1\n}"
+				},
+				"url": {
+					"raw": "localhost:8020/hrms/api/leave-allocations/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8020",
+					"path": [
+						"hrms",
+						"api",
+						"leave-allocations",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/hrms/api/leave-applications",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8020/hrms/api/leave-applications",
+					"host": [
+						"localhost"
+					],
+					"port": "8020",
+					"path": [
+						"hrms",
+						"api",
+						"leave-applications"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/hrms/api/leave-applications",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"employeeId\":\"104\",\n\t\"leaveTypeId\":\"1\",\n\t\"startDate\":\"2020-2-13\",\n\t\"endDate\":\"2020-2-14\"\n}"
+				},
+				"url": {
+					"raw": "localhost:8020/hrms/api/leave-applications",
+					"host": [
+						"localhost"
+					],
+					"port": "8020",
+					"path": [
+						"hrms",
+						"api",
+						"leave-applications"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/hrms/api/leave-applications",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"id\":\"1\",\n\t\"employeeId\":104,\n\t\"leaveStatusId\":2\n}\n"
+				},
+				"url": {
+					"raw": "localhost:8020/hrms/api/leave-applications/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8020",
+					"path": [
+						"hrms",
+						"api",
+						"leave-applications",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/hrms/api/leave-allocations?employeeId=104&leaveTypeId=2",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:8020/hrms/api/leave-allocations?leaveTypeId=2&=&employeeId=104",
+					"host": [
+						"localhost"
+					],
+					"port": "8020",
+					"path": [
+						"hrms",
+						"api",
+						"leave-allocations"
+					],
+					"query": [
+						{
+							"key": "leaveTypeId",
+							"value": "2"
+						},
+						{
+							"key": "",
+							"value": ""
+						},
+						{
+							"key": "employeeId",
+							"value": "104"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/hrms/api/leave-applications?employeeId={}&leaveTypeId={}&leaveStatusId={}",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8020/hrms/api/leave-applications?leaveStatusId=1&employeeId=104&leaveTypeId=2",
+					"host": [
+						"localhost"
+					],
+					"port": "8020",
+					"path": [
+						"hrms",
+						"api",
+						"leave-applications"
+					],
+					"query": [
+						{
+							"key": "leaveStatusId",
+							"value": "1"
+						},
+						{
+							"key": "employeeId",
+							"value": "104"
+						},
+						{
+							"key": "leaveTypeId",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "0bd81cc8-d0bd-401d-8115-e82165bf70c6",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "045d315a-79aa-4736-94e0-720453524d89",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
