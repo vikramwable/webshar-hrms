@@ -49,8 +49,6 @@ public class EmployeeService
       throws EntityAlreadyExistsException, EntityNotFoundException
 
   {
-    Organization organization = organizationService.getOrganizationById(employeeCreateRequest.getOrganizationId());
-
     List<Employee> employees = employeeRepository
         .findByEmail(employeeCreateRequest.getEmail());
     if (employees.isEmpty())
@@ -84,9 +82,9 @@ public class EmployeeService
     }
   }
 
-  public void deleteEmployeeByEmployeeId(Long employeeId) throws EntityNotFoundException
+  public void deleteEmployeeById(Long id) throws EntityNotFoundException
   {
-    Employee employeeToDelete = getEmployeeByEmployeeId(employeeId);
+    Employee employeeToDelete = getEmployeeById(id);
 
     employeeRepository.deleteById(employeeToDelete.getId());
   }

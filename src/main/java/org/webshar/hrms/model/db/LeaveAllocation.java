@@ -53,6 +53,7 @@ public class LeaveAllocation extends BaseModel
   public LeaveAllocation(LeaveAllocation leaveAllocation)
   {
     this.setId(leaveAllocation.getId());
+    this.setGuid(leaveAllocation.getGuid());
     this.setLeaveType(leaveAllocation.getLeaveType());
     this.setEmployee(leaveAllocation.getEmployee());
     this.setAdditionalLeaves(leaveAllocation.getAdditionalLeaves());
