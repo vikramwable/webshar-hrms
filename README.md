@@ -5,6 +5,10 @@
 - Open Application.java file and run 
 - Goto URL http://localhost:8020/hrms/swagger-ui.html
 
+## Code style recommendation
+- Use following code style `code-style-intellij-version-1.0.0.xml` present in root directory.
+- Import this code style at project level in Intellij IDEA.
+- To know more about how to import, please refer https://www.jetbrains.com/help/idea/copying-code-style-settings.html
 
 ## Model design recommendation
 - Whenever new model is introduced, make sure that it is extending `BaseModel`
