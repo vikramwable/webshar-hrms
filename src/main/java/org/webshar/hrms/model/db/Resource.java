@@ -16,7 +16,7 @@ import java.util.Objects;
 @Table(name = "resource")
 @Getter
 @Setter
-@ToString
+@ToString(callSuper = true)
 public class Resource extends BaseModel
 {
   @Column(name = "name", nullable = false,  unique = true,length = 200)
