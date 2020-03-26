@@ -10,11 +10,13 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import java.util.Date;
 import java.util.Objects;
+import lombok.ToString;
 
 @Entity
 @Table(name = "employee")
 @Getter
 @Setter
+@ToString(callSuper = true)
 @JsonInclude(Include.NON_NULL)
 public class Employee extends BaseModel
 {
