@@ -3,17 +3,18 @@ package org.webshar.hrms.service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.webshar.hrms.constants.ErrorMessageConstants;
-import org.webshar.hrms.model.db.Permission;
-import org.webshar.hrms.repository.RoleRepository;
-import org.webshar.hrms.service.exception.EntityAlreadyExistsException;
-import org.webshar.hrms.service.exception.EntityNotFoundException;
 import org.webshar.hrms.model.builder.RoleBuilder;
+import org.webshar.hrms.model.db.Permission;
 import org.webshar.hrms.model.db.Role;
+import org.webshar.hrms.repository.RoleRepository;
 import org.webshar.hrms.request.roles.RoleCreateRequest;
 import org.webshar.hrms.request.roles.RoleUpdateRequest;
+import org.webshar.hrms.service.exception.EntityAlreadyExistsException;
+import org.webshar.hrms.service.exception.EntityNotFoundException;
 
 @Service
 public class RoleService
@@ -27,6 +28,9 @@ public class RoleService
 
   @Autowired
   RoleBuilder roleBuilder;
+
+  @Autowired
+  private ModelMapper modelMapper;
 
   public Role getRoleById(Long roleId) throws EntityNotFoundException
   {
@@ -51,23 +55,13 @@ public class RoleService
     }
   }
 
-  public Role updateRole(RoleUpdateRequest roleUpdateRequest) throws EntityNotFoundException
-  {
-    Optional<Role> roleToUpdate = roleRepository.findById(roleUpdateRequest.getId());
+  public Role updateRole(Long roleId, RoleUpdateRequest roleUpdateRequest) throws EntityNotFoundException {
+    Role roleToUpdate = roleRepository.findById(roleId)
+        .orElseThrow(() -> new EntityNotFoundException(ErrorMessageConstants.ROLE_BY_ID_NOT_FOUND));
 
-    if (roleToUpdate.isPresent())
-    {
-      List<Permission> permissionList = validatePermissions(roleUpdateRequest.getPermissions());
-      Role updatedRole = roleToUpdate.get();
-      updatedRole.setName(roleUpdateRequest.getName());
-      updatedRole.setPermissions(permissionList);
-      updatedRole = roleRepository.save(updatedRole);
-      return updatedRole;
-    }
-    else
-    {
-      throw new EntityNotFoundException(ErrorMessageConstants.ROLE_BY_ID_NOT_FOUND);
-    }
+    modelMapper.map(roleUpdateRequest, roleToUpdate);
+
+    return roleRepository.save(roleToUpdate);
   }
 
   public void deleteRoleById(Long id) throws EntityNotFoundException
