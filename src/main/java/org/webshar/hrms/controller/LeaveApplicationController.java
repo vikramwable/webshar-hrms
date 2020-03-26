@@ -51,11 +51,8 @@ public class LeaveApplicationController
   public EmployeeLeaveApplicationResponse updateAppliedLeaveOfAnEmployee(
       @PathVariable Long id,
       @Valid @RequestBody @NotNull final EmployeeLeaveApplicationUpdateRequest employeeLeaveApplicationUpdateRequest)
-      throws EntityNotFoundException
-  {
-    Assert.isTrue(id.equals(employeeLeaveApplicationUpdateRequest.getId()),
-            "id and employeeLeaveApplicationUpdateRequest.id must be same");
-    return leaveApplicationService.updateLeaveApplication(employeeLeaveApplicationUpdateRequest);
+      throws EntityNotFoundException {
+    return leaveApplicationService.updateLeaveApplication(id, employeeLeaveApplicationUpdateRequest);
   }
 
   @GetMapping(value = "")
