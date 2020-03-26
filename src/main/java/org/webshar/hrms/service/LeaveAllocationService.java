@@ -100,9 +100,8 @@ public class LeaveAllocationService
   }
 
   public LeaveAllocationResponse updateEmployeesAllocatedLeavesByEmployeeIdAndLeaveType(
-      final EmployeeLeaveAllocationUpdateRequest employeeLeaveAllocationUpdateRequest)
-      throws EntityNotFoundException, EntityAlreadyExistsException
-  {
+      final Long id, final EmployeeLeaveAllocationUpdateRequest employeeLeaveAllocationUpdateRequest)
+      throws EntityNotFoundException, EntityAlreadyExistsException {
     Employee employee = employeeService
         .getEmployeeByEmployeeId(employeeLeaveAllocationUpdateRequest.getEmployeeId());
     LeaveType leaveType = leaveTypeService
@@ -111,23 +110,19 @@ public class LeaveAllocationService
     isStartAndEndDateAreOverlappingWithExistingRecordForGivenEmployeeAndLeaveTypeId(
         employee.getId(), leaveType.getId(), employeeLeaveAllocationUpdateRequest.getStartDate(),
         employeeLeaveAllocationUpdateRequest.getEndDate());
-    Optional<LeaveAllocation> employeeLeaveAllocationToUpdate =
-        leaveAllocationRepository
-            .findById(employeeLeaveAllocationUpdateRequest.getId());
-    if (employeeLeaveAllocationToUpdate.isPresent())
-    {
-      LeaveAllocation updatedLeaveAllocation =
-          leaveAllocationBuilder.buildFromRequest(employeeLeaveAllocationUpdateRequest,
-              employeeLeaveAllocationToUpdate.get(), employee, leaveType);
 
-      return leaveAllocationResponseBuilder
-          .buildFromResult(leaveAllocationRepository.save(updatedLeaveAllocation));
-    }
-    else
-    {
-      throw new EntityNotFoundException(
-          ErrorMessageConstants.EMPLOYEE_LEAVE_ALLOCATED_BY_ID_NOT_FOUND);
-    }
+    LeaveAllocation employeeLeaveAllocationToUpdate =
+        leaveAllocationRepository.findById(id)
+            .orElseThrow(
+                () -> new EntityNotFoundException(ErrorMessageConstants.EMPLOYEE_LEAVE_ALLOCATED_BY_ID_NOT_FOUND));
+
+    LeaveAllocation updatedLeaveAllocation =
+        leaveAllocationBuilder.buildFromRequest(employeeLeaveAllocationUpdateRequest,
+            employeeLeaveAllocationToUpdate, employee, leaveType);
+
+    return leaveAllocationResponseBuilder
+        .buildFromResult(leaveAllocationRepository.save(updatedLeaveAllocation));
+
   }
 
   public void deleteAllocatedLeavesOfAnEmployeeByEmployeeIdAndLeaveType(final Long employeeId,

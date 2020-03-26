@@ -6,46 +6,31 @@ import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import org.webshar.hrms.constants.ErrorMessageConstants;
 
+@Getter
+@Setter
+@ToString
 public class EmployeeLeaveAllocationUpdateRequest
 {
 
-  @Getter
-  @Setter
-  @NotNull(message = ErrorMessageConstants.EMPLOYEE_LEAVE_ALLOCATED_ID_CAN_NOT_BE_NUll)
-  private Long id;
-
-  @Getter
-  @Setter
   @NotNull(message = ErrorMessageConstants.EMPLOYEE_EMP_ID_NOT_NULL)
   private Long employeeId;
 
-  @Getter
-  @Setter
   @NotNull(message = ErrorMessageConstants.LEAVE_LEAVE_TYPE_ID_NOT_NULL)
   private Long leaveTypeId;
 
-  @Getter
-  @Setter
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
   private Date startDate;
 
-  @Getter
-  @Setter
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
   private Date endDate;
 
-  @Getter
-  @Setter
   private Long allottedLeaves;
 
-  @Getter
-  @Setter
   private Long carriedLeaves;
 
-  @Getter
-  @Setter
   private Long additionalLeaves;
 
   @AssertTrue(message =
