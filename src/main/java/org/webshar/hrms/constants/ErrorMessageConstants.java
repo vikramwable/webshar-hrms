@@ -1,7 +1,6 @@
 package org.webshar.hrms.constants;
 
-public class ErrorMessageConstants
-{
+public class ErrorMessageConstants {
 
   /**
    * Error messages related to Role entity
@@ -70,6 +69,15 @@ public class ErrorMessageConstants
   public static final String EMPLOYEE_BY_ID_NOT_FOUND = "Employee with given id not found";
   public static final String EMPLOYEE_INVALID_STATAUS = "Employee isActive value is "
       + "should be true or false";
+
+  /**
+   * Employee search related constants
+   */
+  public static final String EMPLOYEE_INVALID_ORDER_BY_VAlUE = "Invalid order by value.";
+  public static final String EMPLOYEE_INVALID_INVALID_SORT_BY_COLUMN = "Invalid sort by value.";
+  public static final String INVALID_PER_PAGE_VALUE = "Invalid per page value.";
+  public static final String INVALID_PAGE_PARAMETER_ERROR = "Invalid page value.";
+
 
   /**
    * Error messages related to Role_Permission entity
@@ -142,7 +150,6 @@ public class ErrorMessageConstants
   public static final String EMPLOYEE_LEAVE_TOTAL_LEAVES_CAN_NOT_BE_NEGATIVE = "Applied leaves can not be less than zero";
   public static final String EMPLOYEE_LEAVE_CARRIED_LEAVES_CAN_NOT_BE_NEGATIVE = "Carried leaves can not be less than zero";
   public static final String EMPLOYEE_LEAVE_GIVEN_TYPE_OF_LEAVE_NOT_ALLOCATED_FOR_GIVEN_EMPLOYEE = "Given type of leave is not allocated for given  employee";
-
 
 
 }

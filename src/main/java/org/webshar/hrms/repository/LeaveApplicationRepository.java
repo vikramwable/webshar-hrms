@@ -34,12 +34,6 @@ public interface LeaveApplicationRepository extends JpaRepository<LeaveApplicati
       @Param("leave_status_id") final Collection<Long> leaveStatusIds
   );
 
-
-//  public List<LeaveApplication> findAllByStartDateGreaterThanEqualAndStartDateLessThanEqualOrEndDateGreaterThanEqualAndEndDateLessThanEqualOrStartDateLessThanEqualAndEndDateGreaterThanEqual(
-//      @Param("start_date") final Date startDate,
-//      @Param("end_date") final Date endDate
-//  );
-
   public List<LeaveApplication> findAllByStartDateGreaterThanEqualAndStartDateLessThanEqual(
       @Param("start_date") final Date startDate,
       @Param("end_date") final Date endDate
