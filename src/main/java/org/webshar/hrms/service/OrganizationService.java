@@ -48,23 +48,17 @@ public class OrganizationService
     }
   }
 
-  public Organization updateOrganization(OrganizationUpdateRequest organizationUpdateRequest)
-      throws EntityNotFoundException
-  {
-    Optional<Organization> organizationToUpdate = organizationRepository
-        .findById(organizationUpdateRequest.getId());
+  public Organization updateOrganization(Long organizationId,
+      OrganizationUpdateRequest organizationUpdateRequest)
+      throws EntityNotFoundException {
+    Organization organizationToUpdate = organizationRepository
+        .findById(organizationId)
+        .orElseThrow(() -> new EntityNotFoundException(ErrorMessageConstants.ORGANIZATION_BY_ID_NOT_FOUND));
 
-    if (organizationToUpdate.isPresent())
-    {
-      Organization updatedOrganization = organizationBuilder
-          .buildFromRequest(organizationToUpdate.get(), organizationUpdateRequest);
-      updatedOrganization = organizationRepository.save(updatedOrganization);
-      return updatedOrganization;
-    }
-    else
-    {
-      throw new EntityNotFoundException(ErrorMessageConstants.ORGANIZATION_BY_ID_NOT_FOUND);
-    }
+    Organization updatedOrganization = organizationBuilder
+        .buildFromRequest(organizationToUpdate, organizationUpdateRequest);
+    updatedOrganization = organizationRepository.save(updatedOrganization);
+    return updatedOrganization;
   }
 
   public void deleteOrganizationById(Long id) throws EntityNotFoundException

@@ -1,27 +1,24 @@
 package org.webshar.hrms.model.db;
 
-import lombok.Getter;
-import lombok.Setter;
-
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import java.util.Objects;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 @Entity
 @Getter
 @Setter
+@ToString(callSuper = true)
 @Table(name = "organization")
 public class Organization extends BaseModel
 {
   @Column(name = "name", nullable = false, unique = true, length = 200)
-  @Getter
-  @Setter
   private String name;
 
   @Column(name = "is_active", nullable = false)
-  @Getter
-  @Setter
   private Boolean isActive;
 
   public Organization()

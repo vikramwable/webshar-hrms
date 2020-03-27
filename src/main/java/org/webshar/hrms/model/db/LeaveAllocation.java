@@ -12,12 +12,14 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.util.Date;
 import java.util.Objects;
+import lombok.ToString;
 
 @Entity
 @Table(name = "leave_allocation")
 @JsonInclude(Include.NON_NULL)
 @Getter
 @Setter
+@ToString(callSuper = true)
 public class LeaveAllocation extends BaseModel
 {
   @OneToOne

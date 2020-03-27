@@ -1,13 +1,11 @@
 package org.webshar.hrms.service;
 
 import java.util.List;
-import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.webshar.hrms.constants.ErrorMessageConstants;
 import org.webshar.hrms.model.builder.EmployeeBuilder;
 import org.webshar.hrms.model.db.Employee;
-import org.webshar.hrms.model.db.Organization;
 import org.webshar.hrms.repository.EmployeeRepository;
 import org.webshar.hrms.request.employee.EmployeeCreateRequest;
 import org.webshar.hrms.request.employee.EmployeeUpdateRequest;
@@ -46,7 +44,7 @@ public class EmployeeService
   }
 
   public Employee createEmployee(EmployeeCreateRequest employeeCreateRequest)
-      throws EntityAlreadyExistsException, EntityNotFoundException
+      throws EntityAlreadyExistsException
 
   {
     List<Employee> employees = employeeRepository
@@ -63,23 +61,14 @@ public class EmployeeService
     }
   }
 
-  public Employee updateEmployee(EmployeeUpdateRequest employeeUpdateRequest)
-      throws EntityNotFoundException
-  {
-    Optional<Employee> employeeToUpdate = employeeRepository
-        .findById(employeeUpdateRequest.getId());
+  public Employee updateEmployee(final Long id, EmployeeUpdateRequest employeeUpdateRequest)
+      throws EntityNotFoundException {
+    Employee employeeToUpdate = employeeRepository.findById(id)
+        .orElseThrow(() -> new EntityNotFoundException(ErrorMessageConstants.EMPLOYEE_BY_ID_NOT_FOUND));
 
-    if (employeeToUpdate.isPresent())
-    {
-      Employee updatedEmployee = employeeBuilder
-          .buildFromRequest(employeeToUpdate.get(), employeeUpdateRequest);
-      updatedEmployee = employeeRepository.save(updatedEmployee);
-      return updatedEmployee;
-    }
-    else
-    {
-      throw new EntityNotFoundException(ErrorMessageConstants.EMPLOYEE_BY_ID_NOT_FOUND);
-    }
+    Employee updatedEmployee = employeeBuilder.buildFromRequest(employeeToUpdate, employeeUpdateRequest);
+
+    return employeeRepository.save(updatedEmployee);
   }
 
   public void deleteEmployeeById(Long id) throws EntityNotFoundException

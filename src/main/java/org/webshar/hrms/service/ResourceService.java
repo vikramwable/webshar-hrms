@@ -3,17 +3,18 @@ package org.webshar.hrms.service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.webshar.hrms.constants.ErrorMessageConstants;
 import org.webshar.hrms.model.builder.ResourceBuilder;
 import org.webshar.hrms.model.db.Permission;
+import org.webshar.hrms.model.db.Resource;
 import org.webshar.hrms.repository.ResourceRepository;
 import org.webshar.hrms.request.resource.ResourceCreateRequest;
 import org.webshar.hrms.request.resource.ResourceUpdateRequest;
 import org.webshar.hrms.service.exception.EntityAlreadyExistsException;
 import org.webshar.hrms.service.exception.EntityNotFoundException;
-import org.webshar.hrms.model.db.Resource;
 
 @Service
 public class ResourceService
@@ -26,6 +27,9 @@ public class ResourceService
 
   @Autowired
   PermissionService permissionService;
+
+  @Autowired
+  private ModelMapper modelMapper;
 
   public Resource getResourceById(Long resourceId) throws EntityNotFoundException
   {
@@ -50,20 +54,13 @@ public class ResourceService
     }
   }
 
-  public Resource updateResource(ResourceUpdateRequest resourceUpdateRequest) throws EntityNotFoundException
-  {
-    Optional<Resource> resourceToUpdate = resourceRepository.findById(resourceUpdateRequest.getId());
+  public Resource updateResource(Long id, ResourceUpdateRequest resourceUpdateRequest) throws EntityNotFoundException {
+    Resource resourceToUpdate = resourceRepository.findById(id)
+        .orElseThrow(() -> new EntityNotFoundException(ErrorMessageConstants.RESOURCE_BY_ID_NOT_FOUND));
 
-    if(resourceToUpdate.isPresent()){
-      List<Permission> permissionList = validatePermissions(resourceUpdateRequest.getPermissions());
-      Resource updatedResource = resourceToUpdate.get();
-      updatedResource.setName(resourceUpdateRequest.getName());
-      updatedResource.setPermissions(permissionList);
-      updatedResource = resourceRepository.save(updatedResource);
-      return updatedResource;
-    }
-    else
-      throw new EntityNotFoundException(ErrorMessageConstants.RESOURCE_BY_ID_NOT_FOUND);
+    modelMapper.map(resourceUpdateRequest, resourceToUpdate);
+
+    return resourceRepository.save(resourceToUpdate);
   }
 
   public void deleteResourceById(Long id) throws EntityNotFoundException

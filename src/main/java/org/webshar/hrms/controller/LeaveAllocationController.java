@@ -52,14 +52,10 @@ public class LeaveAllocationController
   @PatchMapping(value = "/{id}")
   public LeaveAllocationResponse updateAllocatedLeavesOfAnEmployeeByEmployeeIdAndLeaveTypeId(
       @PathVariable Long id,
-      @NotNull @Valid @RequestBody final
-          EmployeeLeaveAllocationUpdateRequest employeeLeaveAllocationUpdateRequest)
-      throws ServiceException
-  {
-    Assert.isTrue(id.equals(employeeLeaveAllocationUpdateRequest.getId()),
-            "id and employeeLeaveAllocationUpdateRequest.id must be same");
+      @NotNull @Valid @RequestBody final EmployeeLeaveAllocationUpdateRequest employeeLeaveAllocationUpdateRequest)
+      throws ServiceException {
     return leaveAllocationService
-        .updateEmployeesAllocatedLeavesByEmployeeIdAndLeaveType(employeeLeaveAllocationUpdateRequest);
+        .updateEmployeesAllocatedLeavesByEmployeeIdAndLeaveType(id, employeeLeaveAllocationUpdateRequest);
   }
 
   @DeleteMapping(value = "", params = {"employeeId", "leaveTypeId"})
