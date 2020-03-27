@@ -3,17 +3,11 @@ package org.webshar.hrms.request.employee;
 import java.util.Date;
 import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.Data;
 import org.apache.commons.lang3.StringUtils;
 import org.webshar.hrms.constants.ErrorMessageConstants;
 
-@Getter
-@Setter
-@ToString
+@Data
 public class EmployeeUpdateRequest
 {
 

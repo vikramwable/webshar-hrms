@@ -1,14 +1,10 @@
 package org.webshar.hrms.request.employee.leave.application;
 
 import javax.validation.constraints.NotNull;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.Data;
 import org.webshar.hrms.constants.ErrorMessageConstants;
 
-@Getter
-@Setter
-@ToString
+@Data
 public class EmployeeLeaveApplicationUpdateRequest {
 
   @NotNull(message = ErrorMessageConstants.LEAVE_EMPLOYEE_ID_NOT_NULL)

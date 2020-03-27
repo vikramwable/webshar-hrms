@@ -1,15 +1,11 @@
 package org.webshar.hrms.request.organization;
 
 import javax.validation.constraints.AssertTrue;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.Data;
 import org.apache.commons.lang3.StringUtils;
 import org.webshar.hrms.constants.ErrorMessageConstants;
 
-@Getter
-@Setter
-@ToString
+@Data
 public class OrganizationUpdateRequest {
 
   private String name;

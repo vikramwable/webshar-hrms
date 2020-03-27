@@ -4,14 +4,10 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import java.util.Date;
 import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.NotNull;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.Data;
 import org.webshar.hrms.constants.ErrorMessageConstants;
 
-@Getter
-@Setter
-@ToString
+@Data
 public class EmployeeLeaveAllocationUpdateRequest
 {
 

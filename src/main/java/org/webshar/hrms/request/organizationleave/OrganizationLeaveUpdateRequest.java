@@ -1,12 +1,8 @@
 package org.webshar.hrms.request.organizationleave;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.Data;
 
-@Getter
-@Setter
-@ToString
+@Data
 public class OrganizationLeaveUpdateRequest {
 
   private Long leaveTypeId;
