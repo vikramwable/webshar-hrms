@@ -41,13 +41,10 @@ public class OrganizationLeaveController {
     }
 
     @PatchMapping(value = "/{organizationLeaveId}")
-    public OrganizationLeave updateOrganizationLeave(
-            @PathVariable Long organizationLeaveId,
-            @NotNull @Valid @RequestBody OrganizationLeaveUpdateRequest organizationLeaveUpdateRequest)
-            throws ServiceException {
-        Assert.isTrue(organizationLeaveId.equals(organizationLeaveUpdateRequest.getId()),
-                "organizationLeaveId and organizationLeaveUpdateRequest.id must be same");
-        return organizationLeaveService.updateOrganizationLeave(organizationLeaveUpdateRequest);
+    public OrganizationLeave updateOrganizationLeave(@PathVariable Long organizationLeaveId,
+        @NotNull @Valid @RequestBody OrganizationLeaveUpdateRequest organizationLeaveUpdateRequest)
+        throws ServiceException {
+        return organizationLeaveService.updateOrganizationLeave(organizationLeaveId, organizationLeaveUpdateRequest);
     }
 
     @DeleteMapping(value = "/{organizationLeaveId}")

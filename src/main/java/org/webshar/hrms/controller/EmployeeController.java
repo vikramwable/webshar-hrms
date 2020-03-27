@@ -7,7 +7,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -58,11 +57,8 @@ public class EmployeeController {
   @PatchMapping(value = "/{id}")
   public Employee updateEmployeeById(
       @PathVariable Long id,
-      @NotNull @Valid @RequestBody
-          EmployeeUpdateRequest employeeUpdateRequest) throws ServiceException {
-    Assert.isTrue(id.equals(employeeUpdateRequest.getId()),
-        "id and employeeUpdateRequest.id must be same");
-    return employeeService.updateEmployee(employeeUpdateRequest);
+      @NotNull @Valid @RequestBody EmployeeUpdateRequest employeeUpdateRequest) throws ServiceException {
+    return employeeService.updateEmployee(id, employeeUpdateRequest);
   }
 
   @DeleteMapping(value = "/{id}")

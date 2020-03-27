@@ -1,21 +1,20 @@
 package org.webshar.hrms.model.db;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
-
+import java.util.List;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import java.util.List;
-import java.util.Objects;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 @Entity
 @Table(name = "role")
 @Getter
 @Setter
-@ToString
+@ToString(callSuper = true)
 public class Role extends BaseModel
 {
 

@@ -45,8 +45,7 @@ public class RoleController
                              @NotNull @Valid @RequestBody
           RoleUpdateRequest roleUpdateRequest) throws ServiceException
   {
-    Assert.isTrue(roleId.equals(roleUpdateRequest.getId()), "roleId and roleUpdateRequest.id must be same");
-    return roleService.updateRole(roleUpdateRequest);
+    return roleService.updateRole(roleId, roleUpdateRequest);
   }
 
   @DeleteMapping(value = "/{roleId}")
