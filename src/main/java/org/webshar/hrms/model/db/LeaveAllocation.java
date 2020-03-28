@@ -3,6 +3,7 @@ package org.webshar.hrms.model.db;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import java.time.LocalDate;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,7 +11,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import java.util.Date;
 import java.util.Objects;
 
 @Entity
@@ -28,11 +28,11 @@ public class LeaveAllocation extends BaseModel
 
   @Column(name = "start_date", nullable = false)
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-  private Date startDate;
+  private LocalDate startDate;
 
   @Column(name = "end_date", nullable = false)
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-  private Date endDate;
+  private LocalDate endDate;
 
   @Column(name = "allotted_leaves", nullable = false)
   private Long allottedLeaves;
@@ -63,6 +63,7 @@ public class LeaveAllocation extends BaseModel
     this.setStartDate(leaveAllocation.getStartDate());
     this.setEndDate(leaveAllocation.getEndDate());
     this.setCreatedAt(leaveAllocation.getCreatedAt());
+    this.setUpdatedAt(leaveAllocation.getUpdatedAt());
   }
 
   @Override
