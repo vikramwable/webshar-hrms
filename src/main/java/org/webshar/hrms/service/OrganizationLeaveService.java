@@ -62,35 +62,25 @@ public class OrganizationLeaveService
   }
 
   public OrganizationLeave updateOrganizationLeave(
-      OrganizationLeaveUpdateRequest organizationLeaveUpdateRequest)
-      throws EntityNotFoundException
-  {
+      Long organizationLeaveId, OrganizationLeaveUpdateRequest organizationLeaveUpdateRequest)
+      throws EntityNotFoundException {
     Organization organization = null;
-
     LeaveType leaveType = null;
 
-    if (organizationLeaveUpdateRequest.getOrganizationId() != null)
-    {
-       organization = organizationService.getOrganizationById(organizationLeaveUpdateRequest.getOrganizationId());
+    if (organizationLeaveUpdateRequest.getOrganizationId() != null) {
+      organization = organizationService.getOrganizationById(organizationLeaveUpdateRequest.getOrganizationId());
     }
-    if (organizationLeaveUpdateRequest.getLeaveTypeId() != null)
-    {
-       leaveType = leaveTypeService.getLeaveTypeById(organizationLeaveUpdateRequest.getLeaveTypeId());
+    if (organizationLeaveUpdateRequest.getLeaveTypeId() != null) {
+      leaveType = leaveTypeService.getLeaveTypeById(organizationLeaveUpdateRequest.getLeaveTypeId());
     }
 
-    Optional<OrganizationLeave> organizationLeaveToUpdate = organizationLeaveRepository
-        .findById(organizationLeaveUpdateRequest.getId());
+    OrganizationLeave organizationLeaveToUpdate = organizationLeaveRepository.findById(organizationLeaveId)
+        .orElseThrow(() -> new EntityNotFoundException(ErrorMessageConstants.ORGANIZATION_LEAVE_BY_ID_NOT_NULL));
 
-    if (organizationLeaveToUpdate.isPresent())
-    {
-      OrganizationLeave organizationLeaveAfterUpdate = organizationLeaveBuilder
-          .buildFromRequest(organizationLeaveToUpdate.get(), organizationLeaveUpdateRequest,leaveType,organization);
-      return organizationLeaveRepository.save(organizationLeaveAfterUpdate);
-    }
-    else
-    {
-      throw new EntityNotFoundException(ErrorMessageConstants.ORGANIZATION_LEAVE_BY_ID_NOT_NULL);
-    }
+    OrganizationLeave organizationLeaveAfterUpdate = organizationLeaveBuilder
+        .buildFromRequest(organizationLeaveToUpdate, organizationLeaveUpdateRequest, leaveType, organization);
+
+    return organizationLeaveRepository.save(organizationLeaveAfterUpdate);
   }
 
   public void deleteOrganizationLeaveById(Long id) throws EntityNotFoundException

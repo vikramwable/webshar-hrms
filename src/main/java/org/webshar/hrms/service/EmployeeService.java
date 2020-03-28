@@ -1,7 +1,6 @@
 package org.webshar.hrms.service;
 
 import java.util.List;
-import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.webshar.hrms.constants.ErrorMessageConstants;
@@ -65,23 +64,14 @@ public class EmployeeService
     }
   }
 
-  public Employee updateEmployee(EmployeeUpdateRequest employeeUpdateRequest)
-      throws EntityNotFoundException
-  {
-    Optional<Employee> employeeToUpdate = employeeRepository
-        .findById(employeeUpdateRequest.getId());
+  public Employee updateEmployee(final Long id, EmployeeUpdateRequest employeeUpdateRequest)
+      throws EntityNotFoundException {
+    Employee employeeToUpdate = employeeRepository.findById(id)
+        .orElseThrow(() -> new EntityNotFoundException(ErrorMessageConstants.EMPLOYEE_BY_ID_NOT_FOUND));
 
-    if (employeeToUpdate.isPresent())
-    {
-      Employee updatedEmployee = employeeBuilder
-          .buildFromRequest(employeeToUpdate.get(), employeeUpdateRequest);
-      updatedEmployee = employeeRepository.save(updatedEmployee);
-      return updatedEmployee;
-    }
-    else
-    {
-      throw new EntityNotFoundException(ErrorMessageConstants.EMPLOYEE_BY_ID_NOT_FOUND);
-    }
+    Employee updatedEmployee = employeeBuilder.buildFromRequest(employeeToUpdate, employeeUpdateRequest);
+
+    return employeeRepository.save(updatedEmployee);
   }
 
   public void deleteEmployeeById(Long id) throws EntityNotFoundException

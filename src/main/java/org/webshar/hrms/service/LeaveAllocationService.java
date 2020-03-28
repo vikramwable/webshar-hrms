@@ -100,7 +100,7 @@ public class LeaveAllocationService
   }
 
   public LeaveAllocationResponse updateEmployeesAllocatedLeavesByEmployeeIdAndLeaveType(
-      final EmployeeLeaveAllocationUpdateRequest employeeLeaveAllocationUpdateRequest)
+      final Long id, final EmployeeLeaveAllocationUpdateRequest employeeLeaveAllocationUpdateRequest)
       throws EntityNotFoundException, EntityAlreadyExistsException
   {
     Employee employee = employeeService
@@ -118,7 +118,7 @@ public class LeaveAllocationService
 
     Optional<LeaveAllocation> employeeLeaveAllocationToUpdate =
         leaveAllocationRepository
-            .findById(employeeLeaveAllocationUpdateRequest.getId());
+            .findById(employeeLeaveAllocationUpdateRequest.getEmployeeId());
     if (employeeLeaveAllocationToUpdate.isPresent())
     {
       LeaveAllocation updatedLeaveAllocation =

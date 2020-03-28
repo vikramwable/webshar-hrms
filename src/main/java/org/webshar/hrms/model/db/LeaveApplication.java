@@ -2,19 +2,19 @@ package org.webshar.hrms.model.db;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import java.time.LocalDate;
-import lombok.Getter;
-import lombok.Setter;
-
+import java.util.Objects;
+import lombok.Data;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import java.util.Objects;
+
+import lombok.ToString;
 
 @Entity
 @Table(name = "leave_application")
-@Getter
-@Setter
+@Data
+@ToString(callSuper = true)
 public class LeaveApplication extends BaseModel
 {
   @Column(name = "start_date", nullable = false)

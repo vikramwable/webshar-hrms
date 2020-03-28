@@ -44,12 +44,8 @@ public class ResourceController
 
   @PatchMapping(value = "/{id}")
   public Resource updateResourceById(@PathVariable("id") Long id,
-                                     @NotNull @Valid @RequestBody
-          ResourceUpdateRequest resourceUpdateRequest) throws ServiceException
-  {
-    Assert.isTrue(id.equals(resourceUpdateRequest.getId()),
-            "id and resourceUpdateRequest.id must be same");
-    return resourceService.updateResource(resourceUpdateRequest);
+      @NotNull @Valid @RequestBody ResourceUpdateRequest resourceUpdateRequest) throws ServiceException {
+    return resourceService.updateResource(id, resourceUpdateRequest);
   }
 
   @DeleteMapping(value = "/{id}")

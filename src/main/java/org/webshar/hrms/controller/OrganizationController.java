@@ -46,11 +46,8 @@ public class OrganizationController
   public Organization updateOrganizationById(
       @PathVariable Long organizationId,
       @NotNull @Valid @RequestBody OrganizationUpdateRequest organizationUpdateRequest)
-          throws ServiceException
-  {
-    Assert.isTrue(organizationId.equals(organizationUpdateRequest.getId()),
-            "organizationId and organizationUpdateRequest.id must be same");
-    return organizationService.updateOrganization(organizationUpdateRequest);
+      throws ServiceException {
+    return organizationService.updateOrganization(organizationId, organizationUpdateRequest);
   }
 
   @DeleteMapping(value = "{organizationId}")

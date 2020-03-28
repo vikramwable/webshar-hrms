@@ -4,10 +4,10 @@ import static org.webshar.hrms.enums.LeaveStatus.CANCELED;
 import static org.webshar.hrms.enums.LeaveStatus.PENDING;
 import static org.webshar.hrms.enums.LeaveStatus.REJECTED;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.time.temporal.ChronoUnit;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,8 +25,8 @@ import org.webshar.hrms.request.employee.leave.application.EmployeeLeaveApplicat
 import org.webshar.hrms.response.builder.LeaveApplicationResponseBuilder;
 import org.webshar.hrms.response.employee.leave.application.EmployeeLeaveApplicationResponse;
 import org.webshar.hrms.service.exception.EntityAlreadyExistsException;
-import org.webshar.hrms.service.exception.InsufficientLeaveException;
 import org.webshar.hrms.service.exception.EntityNotFoundException;
+import org.webshar.hrms.service.exception.InsufficientLeaveException;
 
 @Service
 @Transactional
@@ -158,33 +158,23 @@ public class LeaveApplicationService
   }
 
   public EmployeeLeaveApplicationResponse updateLeaveApplication(
-      final EmployeeLeaveApplicationUpdateRequest employeeLeaveApplicationUpdateRequest)
-      throws EntityNotFoundException
-  {
+      final Long id, final EmployeeLeaveApplicationUpdateRequest employeeLeaveApplicationUpdateRequest)
+      throws EntityNotFoundException {
 
     Employee employee = employeeService
         .getEmployeeById(employeeLeaveApplicationUpdateRequest.getEmployeeId());
     LeaveStatus leaveStatus = leaveStatusService
         .getLeaveStatusById(employeeLeaveApplicationUpdateRequest.getLeaveStatusId());
 
-    Optional<LeaveApplication> leaveApplicationToUpdate = leaveApplicationRepository
-        .findById(employeeLeaveApplicationUpdateRequest.getId());
+    LeaveApplication leaveApplicationToUpdate = leaveApplicationRepository.findById(id)
+        .orElseThrow(() -> new EntityNotFoundException(ErrorMessageConstants.LEAVE_BY_ID_NOT_FOUND));
 
-    if (leaveApplicationToUpdate.isPresent())
-    {
-      LeaveApplication updatedLeaveApplication = leaveApplicationBuilder
-          .buildFromRequest(leaveApplicationToUpdate.get(),
-              employee, leaveStatus);
+    LeaveApplication updatedLeaveApplication = leaveApplicationBuilder
+        .buildFromRequest(leaveApplicationToUpdate, employee, leaveStatus);
 
-      updatedLeaveApplication = leaveApplicationRepository.save(updatedLeaveApplication);
+    updatedLeaveApplication = leaveApplicationRepository.save(updatedLeaveApplication);
 
-      return leaveApplicationResponseBuilder.buildFromResult(updatedLeaveApplication);
-    }
-    else
-    {
-      throw new EntityNotFoundException(
-          ErrorMessageConstants.LEAVE_BY_ID_NOT_FOUND);
-    }
+    return leaveApplicationResponseBuilder.buildFromResult(updatedLeaveApplication);
   }
 
   private int getNoOfDaysLeaveApplied(final LocalDate startDate, final LocalDate endDate)

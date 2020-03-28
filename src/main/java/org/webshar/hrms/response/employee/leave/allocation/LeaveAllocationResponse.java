@@ -3,11 +3,9 @@ package org.webshar.hrms.response.employee.leave.allocation;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
-@Getter
-@Setter
+@Data
 public class LeaveAllocationResponse
 {
 
@@ -38,8 +36,7 @@ public class LeaveAllocationResponse
   private LocalDateTime updatedAt;
 }
 
-@Getter
-@Setter
+@Data
 class Employee
 {
   private Long id;
@@ -63,8 +60,7 @@ class Employee
   private String designation;
 }
 
-@Getter
-@Setter
+@Data
 class LeaveType
 {
   private Long id;

@@ -4,69 +4,42 @@ import java.util.Date;
 import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 import org.apache.commons.lang3.StringUtils;
 import org.webshar.hrms.constants.ErrorMessageConstants;
 
+@Data
 public class EmployeeUpdateRequest
 {
 
   @NotNull(message = ErrorMessageConstants.EMPLOYEE_ID_NOT_NULL)
-  @Getter
   private Long id;
 
-  @Getter
-  @Setter
   private String empId;
 
-  @Getter
-  @Setter
   private Long organizationId;
 
-  @Getter
-  @Setter
   private String firstName;
 
-  @Getter
-  @Setter
   private String middleName;
 
-  @Getter
-  @Setter
   private String lastName;
 
-  @Getter
-  @Setter
   private Date dateOfBirth;
 
-  @Getter
-  @Setter
   private Boolean isActive;
 
-  @Getter
-  @Setter
   @Email(message = ErrorMessageConstants.EMPLOYEE_EMAIL_ID_NOT_PROPER)
   private String email;
 
-  @Getter
-  @Setter
   private Date joiningDate;
 
-  @Getter
-  @Setter
   private Date exitDate;
 
-  @Getter
-  @Setter
   private String address;
 
-  @Getter
-  @Setter
   private String contact;
 
-  @Getter
-  @Setter
   private String designation;
 
   @AssertTrue(message = ErrorMessageConstants.EMPLOYEE_EMP_ID_NOT_NULL)
