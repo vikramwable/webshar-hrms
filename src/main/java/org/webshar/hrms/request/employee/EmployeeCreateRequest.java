@@ -15,7 +15,7 @@ public class EmployeeCreateRequest
   @Getter
   @Setter
   @NotNull(message = ErrorMessageConstants.EMPLOYEE_EMP_ID_NOT_NULL)
-  private Long employeeId;
+  private String empId;
 
   @Getter
   @Setter

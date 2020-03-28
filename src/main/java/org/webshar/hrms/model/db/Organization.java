@@ -36,6 +36,7 @@ public class Organization extends BaseModel
     this.setGuid(organization.getGuid());
     this.setIsActive(organization.getIsActive());
     this.setCreatedAt(organization.getCreatedAt());
+    this.setCreatedBy(organization.getCreatedBy());
   }
 
   @Override

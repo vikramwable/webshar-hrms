@@ -34,7 +34,7 @@ public class LeaveAllocationController
 
   @GetMapping(value = "", params = "employeeId")
   public List<LeaveAllocationResponse> getAllocatedLeavesOfAnEmployee(
-      @RequestParam("employeeId") final Long employeeId)
+      @RequestParam("employeeId") final long employeeId)
       throws ServiceException
   {
     return leaveAllocationService.getEmployeesAllocatedLeavesByEmployeeId(employeeId);
@@ -53,13 +53,14 @@ public class LeaveAllocationController
   public LeaveAllocationResponse updateAllocatedLeavesOfAnEmployeeByEmployeeIdAndLeaveTypeId(
       @PathVariable Long id,
       @NotNull @Valid @RequestBody final
-          EmployeeLeaveAllocationUpdateRequest employeeLeaveAllocationUpdateRequest)
+      EmployeeLeaveAllocationUpdateRequest employeeLeaveAllocationUpdateRequest)
       throws ServiceException
   {
     Assert.isTrue(id.equals(employeeLeaveAllocationUpdateRequest.getId()),
-            "id and employeeLeaveAllocationUpdateRequest.id must be same");
+        "id and employeeLeaveAllocationUpdateRequest.id must be same");
     return leaveAllocationService
-        .updateEmployeesAllocatedLeavesByEmployeeIdAndLeaveType(employeeLeaveAllocationUpdateRequest);
+        .updateEmployeesAllocatedLeavesByEmployeeIdAndLeaveType(
+            employeeLeaveAllocationUpdateRequest);
   }
 
   @DeleteMapping(value = "", params = {"employeeId", "leaveTypeId"})

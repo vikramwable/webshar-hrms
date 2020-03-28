@@ -27,7 +27,7 @@ public class EmployeeController
   private static final Logger LOGGER = LoggerFactory.getLogger(EmployeeController.class);
 
   @GetMapping(value = "/{id}")
-  public Employee getEmployeeByEmployeeId(
+  public Employee getEmployeeById(
       @PathVariable Long id)
       throws ServiceException
   {

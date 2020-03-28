@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import org.webshar.hrms.constants.ErrorMessageConstants;
 import org.webshar.hrms.model.builder.EmployeeBuilder;
 import org.webshar.hrms.model.db.Employee;
-import org.webshar.hrms.model.db.Organization;
 import org.webshar.hrms.repository.EmployeeRepository;
 import org.webshar.hrms.request.employee.EmployeeCreateRequest;
 import org.webshar.hrms.request.employee.EmployeeUpdateRequest;
@@ -35,9 +34,9 @@ public class EmployeeService
   }
 
 
-  public Employee getEmployeeByEmployeeId(Long employeeId) throws EntityNotFoundException
+  public Employee getEmployeeByEmployeeId(String employeeId) throws EntityNotFoundException
   {
-    Employee employee = employeeRepository.findByEmployeeId(
+    Employee employee = employeeRepository.findByEmpId(
         employeeId);
     if(employee == null)
         throw new EntityNotFoundException(ErrorMessageConstants.EMPLOYEE_BY_ID_NOT_FOUND);
@@ -50,7 +49,10 @@ public class EmployeeService
 
   {
     List<Employee> employees = employeeRepository
-        .findByEmail(employeeCreateRequest.getEmail());
+        .findByEmpIdOrEmail(employeeCreateRequest.getEmpId(),employeeCreateRequest.getEmail());
+
+    organizationService.getOrganizationById(employeeCreateRequest.getOrganizationId());
+
     if (employees.isEmpty())
     {
       Employee employeeToCreate = employeeBuilder
@@ -59,7 +61,7 @@ public class EmployeeService
     }
     else
     {
-      throw new EntityAlreadyExistsException(ErrorMessageConstants.EMPLOYEE_DUPLICATE_EMAIL);
+      throw new EntityAlreadyExistsException(ErrorMessageConstants.EMPLOYEE_DUPLICATE_EMAIL_OR_ID);
     }
   }
 

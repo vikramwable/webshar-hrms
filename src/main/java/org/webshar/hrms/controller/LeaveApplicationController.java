@@ -35,7 +35,7 @@ public class LeaveApplicationController
       throws ServiceException
   {
     return leaveApplicationService.getLeaveApplicationByEmployeeIdLeaveTypeAndLeaveStatus(
-            employeeId, leaveTypeId, leaveStatusId);
+        employeeId, leaveTypeId, leaveStatusId);
   }
 
   @PostMapping(value = "")

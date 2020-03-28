@@ -1,7 +1,8 @@
 package org.webshar.hrms.request.employee.leave.allocation;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.NotNull;
 import lombok.Getter;
@@ -10,6 +11,7 @@ import org.webshar.hrms.constants.ErrorMessageConstants;
 
 public class EmployeeLeaveAllocationCreateRequest
 {
+
   @Getter
   @Setter
   @NotNull(message = ErrorMessageConstants.EMPLOYEE_EMP_ID_NOT_NULL)
@@ -24,13 +26,13 @@ public class EmployeeLeaveAllocationCreateRequest
   @Setter
   @NotNull(message = ErrorMessageConstants.LEAVE_START_DATE_NOT_NULL)
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-  private Date startDate;
+  private LocalDate startDate;
 
   @Getter
   @Setter
   @NotNull(message = ErrorMessageConstants.LEAVE_END_DATE_NOT_NULL)
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-  private Date endDate;
+  private LocalDate endDate;
 
   @Getter
   @Setter
@@ -50,15 +52,55 @@ public class EmployeeLeaveAllocationCreateRequest
   @AssertTrue(message = ErrorMessageConstants.LEAVE_END_DATE_CANNOT_LESS_THAN_START_DATE)
   private boolean isValidEndDate()
   {
-    if (endDate == null)
+    if (endDate == null || endDate.isBefore(startDate) )
     {
       return false;
     }
-    else if (endDate.before(startDate))
+    else
     {
+      return true;
+    }
+  }
+
+  @AssertTrue(message =
+      ErrorMessageConstants.LEAVE_ALLOCATED_LEAVES_ARE_MORE_THAN_ALLOCATED_TIME_PERIOD)
+  private boolean isAllottedLeavesCountValid()
+  {
+    if(allottedLeaves != null && allottedLeaves < 0)
+    {
+      return false;
+    }
+    else if(ChronoUnit.DAYS.between(startDate, endDate)+1 < allottedLeaves){
       return false;
     }
     return true;
   }
 
+  @AssertTrue(message =
+      ErrorMessageConstants.LEAVE_CARRIED_LEAVES_ARE_MORE_THAN_ALLOCATED_TIME_PERIOD)
+  private boolean isCarriedLeavesCountValid()
+  {
+    if(carriedLeaves != null && carriedLeaves < 0)
+    {
+      return false;
+    }
+    else if(ChronoUnit.DAYS.between(startDate, endDate)+1 < carriedLeaves){
+      return false;
+    }
+    return true;
+  }
+
+  @AssertTrue(message =
+      ErrorMessageConstants.LEAVE_ADDITIONAL_LEAVES_ARE_MORE_THAN_ALLOCATED_TIME_PERIOD)
+  private boolean isAdditionalLeavesCountValid()
+  {
+    if(additionalLeaves != null && additionalLeaves < 0)
+    {
+      return false;
+    }
+    else if(ChronoUnit.DAYS.between(startDate, endDate)+1 < additionalLeaves){
+      return false;
+    }
+    return true;
+  }
 }

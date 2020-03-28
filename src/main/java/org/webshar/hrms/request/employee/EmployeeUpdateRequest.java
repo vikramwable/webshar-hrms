@@ -3,7 +3,6 @@ package org.webshar.hrms.request.employee;
 import java.util.Date;
 import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,7 +18,7 @@ public class EmployeeUpdateRequest
 
   @Getter
   @Setter
-  private Long employeeId;
+  private String empId;
 
   @Getter
   @Setter
@@ -73,7 +72,7 @@ public class EmployeeUpdateRequest
   @AssertTrue(message = ErrorMessageConstants.EMPLOYEE_EMP_ID_NOT_NULL)
   private boolean isValidEmployeeId()
   {
-    return employeeId == null;
+    return empId == null;
   }
 
   @AssertTrue(message = ErrorMessageConstants.EMPLOYEE_ORGANIZATION_ID_NOT_NULL)
