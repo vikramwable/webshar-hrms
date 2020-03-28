@@ -8,8 +8,7 @@ import lombok.Data;
 import org.webshar.hrms.constants.ErrorMessageConstants;
 
 @Data
-public class EmployeeLeaveApplicationCreateRequest
-{
+public class EmployeeLeaveApplicationCreateRequest {
 
   @NotNull(message = ErrorMessageConstants.LEAVE_EMPLOYEE_ID_NOT_NULL)
   private Long employeeId;
@@ -26,16 +25,7 @@ public class EmployeeLeaveApplicationCreateRequest
   private Date endDate;
 
   @AssertTrue(message = ErrorMessageConstants.LEAVE_END_DATE_CANNOT_LESS_THAN_START_DATE)
-  private boolean isValidEndDate()
-  {
-    if (endDate == null)
-    {
-      return false;
-    }
-    else if (endDate.before(startDate))
-    {
-      return false;
-    }
-    return true;
+  private boolean isValidEndDate() {
+    return endDate != null && !endDate.before(startDate);
   }
 }

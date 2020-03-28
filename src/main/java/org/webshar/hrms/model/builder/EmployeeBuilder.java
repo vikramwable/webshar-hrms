@@ -8,11 +8,9 @@ import org.webshar.hrms.request.employee.EmployeeCreateRequest;
 import org.webshar.hrms.request.employee.EmployeeUpdateRequest;
 
 @Component
-public class EmployeeBuilder
-{
+public class EmployeeBuilder {
 
-  public Employee buildFromRequest(EmployeeCreateRequest employeeCreateRequest)
-  {
+  public Employee buildFromRequest(EmployeeCreateRequest employeeCreateRequest) {
     Employee employee = new Employee();
     employee.setEmployeeId(employeeCreateRequest.getEmployeeId());
     employee.setOrganizationId(employeeCreateRequest.getOrganizationId());
@@ -21,7 +19,7 @@ public class EmployeeBuilder
     employee.setLastName(employeeCreateRequest.getLastName());
     employee.setDateOfBirth(employeeCreateRequest.getDateOfBirth());
     employee.setIsActive(
-        employeeCreateRequest.getIsActive() != null ? employeeCreateRequest.getIsActive() : true);
+        !(employeeCreateRequest.getIsActive() != null && !employeeCreateRequest.getIsActive()));
     employee.setEmail(employeeCreateRequest.getEmail());
     employee.setJoiningDate(employeeCreateRequest.getJoiningDate());
     employee.setExitDate(employeeCreateRequest.getExitDate());
@@ -33,75 +31,56 @@ public class EmployeeBuilder
   }
 
   public Employee buildFromRequest(Employee employeeToBeUpdated,
-      EmployeeUpdateRequest employeeUpdateRequest)
-  {
+      EmployeeUpdateRequest employeeUpdateRequest) {
     Employee employeeAfterUpdate = new Employee(employeeToBeUpdated);
-    if (employeeUpdateRequest.getEmployeeId() != null)
-    {
+    if (employeeUpdateRequest.getEmployeeId() != null) {
       employeeAfterUpdate.setEmployeeId(employeeUpdateRequest.getEmployeeId());
     }
-    if (employeeUpdateRequest.getOrganizationId() != null)
-    {
+    if (employeeUpdateRequest.getOrganizationId() != null) {
       employeeAfterUpdate.setOrganizationId(employeeUpdateRequest.getOrganizationId());
     }
-    if (employeeUpdateRequest.getFirstName() != null && StringUtils
-        .isNotBlank(employeeUpdateRequest.getFirstName()))
-    {
+    if (StringUtils.isNotBlank(employeeUpdateRequest.getFirstName())) {
       employeeAfterUpdate.setFirstName(employeeUpdateRequest.getFirstName());
     }
-    if (employeeUpdateRequest.getMiddleName() != null && StringUtils
-        .isNotBlank(employeeUpdateRequest.getMiddleName()))
-    {
+    if (StringUtils.isNotBlank(employeeUpdateRequest.getMiddleName())) {
       employeeAfterUpdate.setMiddleName(employeeUpdateRequest.getMiddleName());
     }
 
-    if (employeeUpdateRequest.getLastName() != null && StringUtils
-        .isNotBlank(employeeUpdateRequest.getLastName()))
-    {
+    if (StringUtils.isNotBlank(employeeUpdateRequest.getLastName())) {
       employeeAfterUpdate.setLastName(employeeUpdateRequest.getLastName());
     }
 
-    if (employeeUpdateRequest.getDateOfBirth() != null)
-    {
+    if (employeeUpdateRequest.getDateOfBirth() != null) {
       employeeAfterUpdate.setDateOfBirth(employeeUpdateRequest.getDateOfBirth());
     }
 
-    if (employeeUpdateRequest.getIsActive() != null)
-    {
+    if (employeeUpdateRequest.getIsActive() != null) {
       employeeAfterUpdate.setIsActive(employeeUpdateRequest.getIsActive());
     }
 
-    if (employeeUpdateRequest.getEmail() != null && StringUtils
-        .isNotBlank(employeeUpdateRequest.getEmail()))
-    {
+    if (StringUtils.isNotBlank(employeeUpdateRequest.getEmail())) {
       employeeAfterUpdate.setEmail(employeeUpdateRequest.getEmail());
     }
 
-    if (employeeUpdateRequest.getJoiningDate() != null)
-    {
+    if (employeeUpdateRequest.getJoiningDate() != null) {
       employeeAfterUpdate.setJoiningDate(employeeUpdateRequest.getJoiningDate());
     }
 
-    if (employeeUpdateRequest.getExitDate() != null)
-    {
+    if (employeeUpdateRequest.getExitDate() != null) {
       employeeAfterUpdate.setExitDate(employeeUpdateRequest.getExitDate());
     }
 
-    if (employeeUpdateRequest.getAddress() != null && StringUtils
-        .isNotBlank(employeeUpdateRequest.getAddress()))
-    {
+    if (StringUtils.isNotBlank(employeeUpdateRequest.getAddress())) {
       employeeAfterUpdate.setAddress(employeeUpdateRequest.getAddress());
     }
 
-    if (employeeUpdateRequest.getContact() != null && StringUtils
-        .isNotBlank(employeeUpdateRequest.getContact()))
-    {
+    if (StringUtils
+        .isNotBlank(employeeUpdateRequest.getContact())) {
       employeeAfterUpdate.setContact(employeeUpdateRequest.getContact());
     }
 
-    if (employeeUpdateRequest.getDesignation() != null && StringUtils
-        .isNotBlank(employeeUpdateRequest.getDesignation()))
-    {
+    if (StringUtils
+        .isNotBlank(employeeUpdateRequest.getDesignation())) {
       employeeAfterUpdate.setDesignation(employeeUpdateRequest.getDesignation()
       );
     }

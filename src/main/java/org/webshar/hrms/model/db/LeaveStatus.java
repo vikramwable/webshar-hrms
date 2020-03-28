@@ -1,19 +1,17 @@
 package org.webshar.hrms.model.db;
 
-import lombok.Getter;
-import lombok.Setter;
-
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import java.util.Objects;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Table(name = "leave_status")
 @Getter
 @Setter
-public class LeaveStatus extends BaseModel
-{
+public class LeaveStatus extends BaseModel {
 
   @Column(name = "status", nullable = false, unique = true, length = 200)
   @Getter
@@ -21,14 +19,11 @@ public class LeaveStatus extends BaseModel
   private String status;
 
   @Override
-  public boolean equals(Object o)
-  {
-    if (this == o)
-    {
+  public boolean equals(Object o) {
+    if (this == o) {
       return true;
     }
-    if (o == null || getClass() != o.getClass())
-    {
+    if (o == null || getClass() != o.getClass()) {
       return false;
     }
     LeaveStatus that = (LeaveStatus) o;
@@ -38,8 +33,7 @@ public class LeaveStatus extends BaseModel
   }
 
   @Override
-  public int hashCode()
-  {
+  public int hashCode() {
     return Objects.hash(this.getId(), this.getGuid(), status);
   }
 }

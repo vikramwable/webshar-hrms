@@ -30,7 +30,7 @@ public class EmployeeSearchRequest {
   private Boolean active;
 
 
-  @AssertTrue(message = ErrorMessageConstants.EMPLOYEE_INVALID_ORDER_BY_VAlUE)
+  @AssertTrue(message = ErrorMessageConstants.EMPLOYEE_INVALID_ORDER_BY_VALUE)
   private boolean isValidOrder() {
     if (StringUtils.isEmpty(order)) {
       setOrder("DESC");
@@ -59,18 +59,12 @@ public class EmployeeSearchRequest {
 
   @AssertTrue(message = ErrorMessageConstants.INVALID_PER_PAGE_VALUE)
   private boolean isValidPerPageParameter() {
-    final Set<Integer> perPageParameterSet = new HashSet<Integer>(Arrays.asList(10, 25, 50));
-    if (getPerPage() != null && !perPageParameterSet.contains(getPerPage())) {
-      return false;
-    }
-    return true;
+    final Set<Integer> perPageParameterSet = new HashSet<>(Arrays.asList(10, 25, 50));
+    return getPerPage() == null || perPageParameterSet.contains(getPerPage());
   }
 
   @AssertTrue(message = ErrorMessageConstants.INVALID_PAGE_PARAMETER_ERROR)
   private boolean isValidPageParameter() {
-    if (getPage() != null && getPage() < 1) {
-      return false;
-    }
-    return true;
+    return getPage() == null || getPage() >= 1;
   }
 }

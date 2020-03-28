@@ -17,8 +17,7 @@ import org.webshar.hrms.service.exception.EntityAlreadyExistsException;
 import org.webshar.hrms.service.exception.EntityNotFoundException;
 
 @Service
-public class RoleService
-{
+public class RoleService {
 
   @Autowired
   RoleRepository roleRepository;
@@ -32,25 +31,20 @@ public class RoleService
   @Autowired
   private ModelMapper modelMapper;
 
-  public Role getRoleById(Long roleId) throws EntityNotFoundException
-  {
+  public Role getRoleById(Long roleId) throws EntityNotFoundException {
     return roleRepository.findById(roleId)
         .orElseThrow(() -> new EntityNotFoundException(ErrorMessageConstants.ROLE_BY_ID_NOT_FOUND));
   }
 
   public Role createRole(RoleCreateRequest roleCreateRequest)
-      throws EntityAlreadyExistsException, EntityNotFoundException
-  {
+      throws EntityAlreadyExistsException, EntityNotFoundException {
     List<Role> roles = roleRepository.findByName(roleCreateRequest.getName());
 
-    if (roles.isEmpty())
-    {
+    if (roles.isEmpty()) {
       List<Permission> permissionList = validatePermissions(roleCreateRequest.getPermissions());
       Role roleToCreate = roleBuilder.buildFromRequest(roleCreateRequest, permissionList);
       return roleRepository.save(roleToCreate);
-    }
-    else
-    {
+    } else {
       throw new EntityAlreadyExistsException(ErrorMessageConstants.ROLE_DUPLICATE_NAME);
     }
   }
@@ -64,31 +58,24 @@ public class RoleService
     return roleRepository.save(roleToUpdate);
   }
 
-  public void deleteRoleById(Long id) throws EntityNotFoundException
-  {
+  public void deleteRoleById(Long id) throws EntityNotFoundException {
     Optional<Role> roleToDelete = roleRepository.findById(id);
 
-    if (roleToDelete.isPresent())
-    {
+    if (roleToDelete.isPresent()) {
       roleRepository.deleteById(id);
-    }
-    else
-    {
+    } else {
       throw new EntityNotFoundException(ErrorMessageConstants.ROLE_BY_ID_NOT_FOUND);
     }
   }
 
-  public List<Role> getAllRoles()
-  {
+  public List<Role> getAllRoles() {
     return roleRepository.findAll();
   }
 
-  private List<Permission> validatePermissions(String[] permissions) throws EntityNotFoundException
-  {
+  private List<Permission> validatePermissions(String[] permissions) throws EntityNotFoundException {
     List<Permission> permissionList = new ArrayList<>();
-    if(permissions != null){
-      for (String name : permissions)
-      {
+    if (permissions != null) {
+      for (String name : permissions) {
         permissionList.addAll(permissionService.getPermissionByName(name));
       }
     }

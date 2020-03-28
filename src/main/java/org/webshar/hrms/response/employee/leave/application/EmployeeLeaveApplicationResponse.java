@@ -1,15 +1,12 @@
 package org.webshar.hrms.response.employee.leave.application;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
-
 import java.util.Date;
+import lombok.Data;
 
 @Data
-public class EmployeeLeaveApplicationResponse
-{
+public class EmployeeLeaveApplicationResponse {
+
   private Long id;
 
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
@@ -33,8 +30,7 @@ public class EmployeeLeaveApplicationResponse
 }
 
 @Data
-class Employee
-{
+class Employee {
 
   private Long id;
 
@@ -58,16 +54,16 @@ class Employee
 }
 
 @Data
-class LeaveType
-{
+class LeaveType {
+
   private Long id;
 
   private String type;
 }
 
 @Data
-class LeaveStatus
-{
+class LeaveStatus {
+
   private Long id;
 
   private String status;

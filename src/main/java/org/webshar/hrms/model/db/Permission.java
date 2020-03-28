@@ -1,32 +1,28 @@
 package org.webshar.hrms.model.db;
 
-import lombok.Getter;
-import lombok.Setter;
-
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import java.util.Objects;
+import lombok.Getter;
+import lombok.Setter;
 
 
 @Entity
 @Table(name = "permission")
 @Getter
 @Setter
-public class Permission extends BaseModel
-{
-  @Column(name = "name", nullable = false,  unique = true,length = 200)
+public class Permission extends BaseModel {
+
+  @Column(name = "name", nullable = false, unique = true, length = 200)
   private String name;
 
   @Override
-  public boolean equals(Object o)
-  {
-    if (this == o)
-    {
+  public boolean equals(Object o) {
+    if (this == o) {
       return true;
     }
-    if (o == null || getClass() != o.getClass())
-    {
+    if (o == null || getClass() != o.getClass()) {
       return false;
     }
     Permission resource = (Permission) o;
@@ -34,8 +30,7 @@ public class Permission extends BaseModel
   }
 
   @Override
-  public int hashCode()
-  {
+  public int hashCode() {
     return Objects.hash(name);
   }
 }

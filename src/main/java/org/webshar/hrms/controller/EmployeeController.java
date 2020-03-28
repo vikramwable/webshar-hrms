@@ -3,8 +3,6 @@ package org.webshar.hrms.controller;
 import java.util.List;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -29,8 +27,6 @@ public class EmployeeController {
 
   @Autowired
   EmployeeService employeeService;
-
-  private static final Logger LOGGER = LoggerFactory.getLogger(EmployeeController.class);
 
   @GetMapping(value = "/{id}")
   public Employee getEmployeeByEmployeeId(

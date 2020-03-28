@@ -6,8 +6,8 @@ import lombok.Getter;
 import lombok.Setter;
 import org.webshar.hrms.constants.ErrorMessageConstants;
 
-public class ResourceCreateRequest
-{
+public class ResourceCreateRequest {
+
   @NotNull(message = ErrorMessageConstants.RESOURCE_ID_NOT_NULL)
   @NotBlank(message = ErrorMessageConstants.RESOURCE_NAME_NOT_BLANK)
   @Getter
@@ -16,5 +16,5 @@ public class ResourceCreateRequest
 
   @Getter
   @Setter
-  private String [] permissions;
+  private String[] permissions;
 }

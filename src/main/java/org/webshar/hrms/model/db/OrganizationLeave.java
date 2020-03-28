@@ -13,25 +13,24 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString(callSuper = true)
-public class OrganizationLeave extends BaseModel
-{
+public class OrganizationLeave extends BaseModel {
 
+  /**
+   *
+   */
+  private static final long serialVersionUID = 1L;
   @Column(name = "count", nullable = false, unique = true, length = 11)
   private Long count;
-
   @OneToOne
   private LeaveType leaveType;
-
   @OneToOne
   private Organization organization;
 
-  public OrganizationLeave()
-  {
+  public OrganizationLeave() {
 
   }
 
-  public OrganizationLeave(OrganizationLeave organizationLeave)
-  {
+  public OrganizationLeave(OrganizationLeave organizationLeave) {
     this.setId(organizationLeave.getId());
     this.setGuid(organizationLeave.getGuid());
     this.setLeaveType(organizationLeave.getLeaveType());
@@ -39,9 +38,4 @@ public class OrganizationLeave extends BaseModel
     this.setCount(organizationLeave.getCount());
     this.setCreatedAt(organizationLeave.getCreatedAt());
   }
-
-  /**
-   *
-   */
-  private static final long serialVersionUID = 1L;
 }

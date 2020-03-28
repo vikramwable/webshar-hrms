@@ -6,8 +6,7 @@ import lombok.Data;
 import org.webshar.hrms.constants.ErrorMessageConstants;
 
 @Data
-public class OrganizationLeaveCreateRequest
-{
+public class OrganizationLeaveCreateRequest {
 
   @NotNull(message = ErrorMessageConstants.ORGANIZATION_LEAVE_LEAVE_TYPE_ID_NOT_NULL)
   private Long leaveTypeId;
@@ -19,16 +18,8 @@ public class OrganizationLeaveCreateRequest
   private Long count;
 
   @AssertTrue(message = ErrorMessageConstants.ORGANIZATION_LEAVE_COUNT_CAN_NOT_BE_LESS_THAN_ONE)
-  private boolean isValidCount()
-  {
-    if (count <= 0)
-    {
-      return false;
-    }
-    else
-    {
-      return true;
-    }
+  private boolean isValidCount() {
+    return count > 0;
   }
 
 }

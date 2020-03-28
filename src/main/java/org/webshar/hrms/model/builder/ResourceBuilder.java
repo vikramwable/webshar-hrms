@@ -8,14 +8,13 @@ import org.webshar.hrms.model.db.Resource;
 import org.webshar.hrms.request.resource.ResourceCreateRequest;
 
 @Component
-public class ResourceBuilder
-{
-  public Resource buildFromRequest(ResourceCreateRequest resourceCreateRequest, List<Permission> permissionList)
-  {
+public class ResourceBuilder {
+
+  public Resource buildFromRequest(ResourceCreateRequest resourceCreateRequest, List<Permission> permissionList) {
     Resource resourceToCreate = new Resource();
     resourceToCreate.setName(resourceCreateRequest.getName());
     resourceToCreate.setGuid(UUID.randomUUID());
     resourceToCreate.setPermissions(permissionList);
-    return  resourceToCreate;
+    return resourceToCreate;
   }
 }

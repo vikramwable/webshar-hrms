@@ -7,8 +7,7 @@ import lombok.Data;
 import org.webshar.hrms.constants.ErrorMessageConstants;
 
 @Data
-public class OrganizationCreateRequest
-{
+public class OrganizationCreateRequest {
 
   @NotNull(message = ErrorMessageConstants.ORGANIZATION_NAME_NOT_NULL)
   @NotBlank(message = ErrorMessageConstants.ORGANIZATION_NAME_NOT_BLANK)
@@ -17,16 +16,7 @@ public class OrganizationCreateRequest
   private Boolean isActive;
 
   @AssertTrue(message = ErrorMessageConstants.ORGANIZATION_INVALID_STATAUS)
-  private boolean isValidStatus()
-  {
-    if (isActive == null)
-    {
-      return true;
-    }
-    else if (isActive != true && isActive != false)
-    {
-      return false;
-    }
-    return true;
+  private boolean isValidStatus() {
+    return isActive == null || isActive || !isActive;
   }
 }

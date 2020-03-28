@@ -7,8 +7,7 @@ import org.springframework.data.repository.query.Param;
 import org.webshar.hrms.model.db.LeaveAllocation;
 
 public interface LeaveAllocationRepository extends
-    JpaRepository<LeaveAllocation, Long>
-{
+    JpaRepository<LeaveAllocation, Long> {
 
   public List<LeaveAllocation> findByEmployeeId(@Param("employee_id") final Long employee_id);
 
@@ -33,6 +32,7 @@ public interface LeaveAllocationRepository extends
       @Param("start_date") final Date startDate,
       @Param("end_date") final Date endDate
   );
+
   public LeaveAllocation findByEmployeeIdAndLeaveTypeId(
       @Param("employee_id") final Long employeeId,
       @Param("leave_type_id") final Long leaveTypeId

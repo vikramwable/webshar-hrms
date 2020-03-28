@@ -1,4 +1,4 @@
-package org.webshar.hrms.repository.Impl;
+package org.webshar.hrms.repository.impl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,9 +19,25 @@ import org.webshar.hrms.request.employee.EmployeeSearchRequest;
 
 @Repository
 public class EmployeeRepositoryImpl implements EmployeeRepositoryCustom {
-  
+
   @Autowired
   EntityManager entityManager;
+
+  public static String getSortByValue(final EmployeeSearchRequest employeeSearchRequest) {
+    String sortBy = "employeeId";
+    switch (EmployeeSortBy.valueOf(employeeSearchRequest.getSortBy())) {
+      case EMPLOYEE_ID:
+        sortBy = "employeeId";
+        break;
+      case EMPLOYEE_FIRST_NAME:
+        sortBy = "firstName";
+        break;
+      case JOINING_DATE:
+        sortBy = "joiningDate";
+        break;
+    }
+    return sortBy;
+  }
 
   @Override
   public List<Employee> searchEmployee(final EmployeeSearchRequest employeeSearchRequest) {
@@ -37,11 +53,10 @@ public class EmployeeRepositoryImpl implements EmployeeRepositoryCustom {
     buildCommonQuery(employeeSearchRequest,
         criteriaBuilder, employeeCriteriaQuery, employeeRoot);
     CriteriaQuery<Employee> criteriaQuery = employeeCriteriaQuery.select(employeeRoot);
-    TypedQuery<Employee> typedQuery = entityManager.createQuery(criteriaQuery)
+    return entityManager.createQuery(criteriaQuery)
         .setFirstResult(
             (employeeSearchRequest.getPage() - 1) * employeeSearchRequest.getPerPage())
         .setMaxResults(employeeSearchRequest.getPerPage());
-    return typedQuery;
   }
 
   private void buildCommonQuery(EmployeeSearchRequest employeeSearchRequest, CriteriaBuilder criteriaBuilder,
@@ -62,26 +77,22 @@ public class EmployeeRepositoryImpl implements EmployeeRepositoryCustom {
               "%s" + employeeSearchRequest.getQueryString().toLowerCase() + "%"));
     }
 
-    if (employeeSearchRequest.getActive() != null) {
-      if (employeeSearchRequest.getActive()) {
-        andPredicates.add(criteriaBuilder.isTrue(employeeRoot.get("isActive")));
-      } else {
-        andPredicates.add(criteriaBuilder.isFalse(employeeRoot.get("isActive")));
-      }
+    if (employeeSearchRequest.getActive() != null && !employeeSearchRequest.getActive()) {
+      andPredicates.add(criteriaBuilder.isFalse(employeeRoot.get("isActive")));
+    } else if (employeeSearchRequest.getActive() != null && employeeSearchRequest.getActive()) {
+      andPredicates.add(criteriaBuilder.isTrue(employeeRoot.get("isActive")));
     }
 
     String sortBy = getSortByValue(employeeSearchRequest);
 
-    switch (Order.valueOf(employeeSearchRequest.getOrder())) {
-      case ASC:
-        employeeCriteriaQuery.orderBy(criteriaBuilder.asc(employeeRoot.get(sortBy)));
-        break;
-      case DESC:
-        employeeCriteriaQuery.orderBy(criteriaBuilder.desc(employeeRoot.get(sortBy)));
-        break;
+    Order order = Order.valueOf(employeeSearchRequest.getOrder());
+    if (order == Order.ASC) {
+      employeeCriteriaQuery.orderBy(criteriaBuilder.asc(employeeRoot.get(sortBy)));
+    } else if (order == Order.DESC) {
+      employeeCriteriaQuery.orderBy(criteriaBuilder.desc(employeeRoot.get(sortBy)));
     }
 
-    if (orPredicates.size() == 0) {
+    if (orPredicates.isEmpty()) {
       Predicate andPredicate = criteriaBuilder
           .and(andPredicates.toArray(new Predicate[andPredicates.size()]));
       employeeCriteriaQuery.where(andPredicate);
@@ -91,18 +102,6 @@ public class EmployeeRepositoryImpl implements EmployeeRepositoryCustom {
       Predicate orPredicate = criteriaBuilder.or(orPredicates.toArray(new Predicate[orPredicates.size()]));
       employeeCriteriaQuery.where(andPredicate, orPredicate);
     }
-  }
 
-  public static String getSortByValue(final EmployeeSearchRequest employeeSearchRequest) {
-    String sortBy = "employeeId";
-    switch (EmployeeSortBy.valueOf(employeeSearchRequest.getSortBy())) {
-      case EMPLOYEE_FIRST_NAME:
-        sortBy = "firstName";
-        break;
-      case JOINING_DATE:
-        sortBy = "joiningDate";
-        break;
-    }
-    return sortBy;
   }
 }
