@@ -5,15 +5,11 @@ import java.util.Date;
 import lombok.Data;
 
 @Data
-public class LeaveAllocationResponse
-{
-
-  private Long id;
+public class LeaveAllocationResponse {
 
   Employee employee;
-
   LeaveType leaveType;
-
+  private Long id;
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
   private Date startDate;
 
@@ -36,8 +32,8 @@ public class LeaveAllocationResponse
 }
 
 @Data
-class Employee
-{
+class Employee {
+
   private Long id;
 
   private Long employeeId;
@@ -60,8 +56,8 @@ class Employee
 }
 
 @Data
-class LeaveType
-{
+class LeaveType {
+
   private Long id;
 
   private String type;

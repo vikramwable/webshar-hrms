@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import org.webshar.hrms.model.db.Organization;
 
 @Repository
-public interface OrganizationRepository extends JpaRepository<Organization,Long>
-{
+public interface OrganizationRepository extends JpaRepository<Organization, Long> {
+
   List<Organization> findByName(@Param("name") String name);
 }

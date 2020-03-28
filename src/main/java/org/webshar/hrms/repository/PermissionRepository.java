@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import org.webshar.hrms.model.db.Permission;
 
 @Repository
-public interface PermissionRepository extends JpaRepository<Permission, Long>
-{
+public interface PermissionRepository extends JpaRepository<Permission, Long> {
+
   List<Permission> findByName(@Param("name") String name);
 }

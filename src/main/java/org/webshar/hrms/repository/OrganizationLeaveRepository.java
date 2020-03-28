@@ -7,8 +7,7 @@ import org.springframework.stereotype.Repository;
 import org.webshar.hrms.model.db.OrganizationLeave;
 
 @Repository
-public interface OrganizationLeaveRepository extends JpaRepository<OrganizationLeave, Long>
-{
+public interface OrganizationLeaveRepository extends JpaRepository<OrganizationLeave, Long> {
 
   List<OrganizationLeave> findByOrganizationId(@Param("org_id") Long organizationId);
 

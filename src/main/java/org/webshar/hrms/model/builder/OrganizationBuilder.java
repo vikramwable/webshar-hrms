@@ -8,31 +8,26 @@ import org.webshar.hrms.request.organization.OrganizationCreateRequest;
 import org.webshar.hrms.request.organization.OrganizationUpdateRequest;
 
 @Component
-public class OrganizationBuilder
-{
+public class OrganizationBuilder {
 
-  public Organization buildFromRequest(OrganizationCreateRequest organizationCreateRequest)
-  {
+  public Organization buildFromRequest(OrganizationCreateRequest organizationCreateRequest) {
     Organization organization = new Organization();
     organization.setName(organizationCreateRequest.getName());
     organization.setGuid(UUID.randomUUID());
     organization.setIsActive(
         organizationCreateRequest.getIsActive() != null ? organizationCreateRequest.getIsActive()
-                                                        : true);
+            : Boolean.TRUE);
     return organization;
   }
 
   public Organization buildFromRequest(Organization organizationToBeUpdated,
-      OrganizationUpdateRequest organizationUpdateRequest)
-  {
+      OrganizationUpdateRequest organizationUpdateRequest) {
     Organization organizationAfterUpdate = new Organization(organizationToBeUpdated);
     if (organizationUpdateRequest.getName() != null && StringUtils
-        .isNotBlank(organizationUpdateRequest.getName()))
-    {
+        .isNotBlank(organizationUpdateRequest.getName())) {
       organizationAfterUpdate.setName(organizationUpdateRequest.getName());
     }
-    if (organizationUpdateRequest.getIsActive() != null)
-    {
+    if (organizationUpdateRequest.getIsActive() != null) {
       organizationAfterUpdate.setIsActive(organizationUpdateRequest.getIsActive());
     }
     return organizationAfterUpdate;

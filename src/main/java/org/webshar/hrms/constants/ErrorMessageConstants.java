@@ -1,7 +1,6 @@
 package org.webshar.hrms.constants;
 
-public class ErrorMessageConstants
-{
+public class ErrorMessageConstants {
 
   /**
    * Error messages related to Role entity
@@ -11,7 +10,6 @@ public class ErrorMessageConstants
   public static final String ROLE_ID_NOT_NULL = "Role id cannot be null";
   public static final String ROLE_DUPLICATE_NAME = "Role with given name already exists";
   public static final String ROLE_BY_ID_NOT_FOUND = "Role with given id not found";
-
   /**
    * Error messages related to Resource entity
    */
@@ -20,13 +18,11 @@ public class ErrorMessageConstants
   public static final String RESOURCE_ID_NOT_NULL = "Resource id cannot be null";
   public static final String RESOURCE_DUPLICATE_NAME = "Resource with given name already exists";
   public static final String RESOURCE_BY_ID_NOT_FOUND = "Resource with given id not found";
-
   /**
    * Error messages related to Permission entity
    */
   public static final String PERMISSION_BY_ID_NOT_FOUND = "Permission with given id not found";
   public static final String PERMISSION_WITH_GIVEN_NAME_NOT_FOUND = "Permission with given name not found";
-
   /**
    * Error messages related to Organization entity
    */
@@ -38,7 +34,6 @@ public class ErrorMessageConstants
   public static final String ORGANIZATION_BY_ID_NOT_FOUND = "Organization with given id not found";
   public static final String ORGANIZATION_INVALID_STATAUS = "Organization isActive value is "
       + "should be true or false";
-
   /**
    * Error messages related to Employee entity
    */
@@ -59,18 +54,22 @@ public class ErrorMessageConstants
   public static final String EMPLOYEE_CONTACT_NOT_BLANK = "Employee contact cannot be blank";
   public static final String EMPLOYEE_ADDRESS_NOT_NULL = "Employee address cannot be null";
   public static final String EMPLOYEE_DESIGNATION_NOT_NULL = "Employee designation cannot be null";
-  public static final String EMPLOYEE_DESIGNATION__NOT_BLANK = "Employee designation cannot be blank";
+  public static final String EMPLOYEE_DESIGNATION_NOT_BLANK = "Employee designation cannot be blank";
   public static final String EMPLOYEE_ID_NOT_NULL = "Employee id cannot be null";
-
   public static final String EMPLOYEE_EMP_ID_NOT_NULL = "Employee emp_id cannot be null";
   public static final String EMPLOYEE_ORGANIZATION_ID_NOT_NULL = "Employee organization id cannot be null";
-
   public static final String EMPLOYEE_DUPLICATE_EMAIL = "Employee with given email already "
       + "exists";
   public static final String EMPLOYEE_BY_ID_NOT_FOUND = "Employee with given id not found";
   public static final String EMPLOYEE_INVALID_STATAUS = "Employee isActive value is "
       + "should be true or false";
-
+  /**
+   * Employee search related constants
+   */
+  public static final String EMPLOYEE_INVALID_ORDER_BY_VALUE = "Invalid order by value.";
+  public static final String EMPLOYEE_INVALID_INVALID_SORT_BY_COLUMN = "Invalid sort by value.";
+  public static final String INVALID_PER_PAGE_VALUE = "Invalid per page value.";
+  public static final String INVALID_PAGE_PARAMETER_ERROR = "Invalid page value.";
   /**
    * Error messages related to Role_Permission entity
    */
@@ -78,7 +77,6 @@ public class ErrorMessageConstants
   public static final String ROLE_PERMISSION_ROLE_ID_NOT_NULL = "Role id cannot be null";
   public static final String ROLE_PERMISSION_PERMISSION_ID_NOT_NULL = "Permission id cannot be null";
   public static final String ROLE_PERMISSION_BY_ID_NOT_FOUND = "RolePermission with given id not found";
-
   /**
    * Error messages related to Resource_Permission entity
    */
@@ -86,7 +84,6 @@ public class ErrorMessageConstants
   public static final String RESOURCE_PERMISSION_RESOURCE_ID_NOT_NULL = "Resource id cannot be null";
   public static final String RESOURCE_PERMISSION_PERMISSION_ID_NOT_NULL = "Permission id cannot be null";
   public static final String RESOURCE_PERMISSION_BY_ID_NOT_FOUND = "ResourcePermission with given id not found";
-
   /**
    * Error messages related to Organization_Leave entity
    */
@@ -97,7 +94,6 @@ public class ErrorMessageConstants
   public static final String ORGANIZATION_LEAVE_COUNT_CAN_NOT_BE_LESS_THAN_ONE = "Leave count must be greater than zero";
   public static final String ORGANIZATION_LEAVE_WITH_ORGANIZATION_AND_LEAVE_ID_EXISTS = "OrganizationLeave record with given organizationId and leaveTypeId is already exits";
   public static final String ORGANIZATION_LEAVE_BY_ID_NOT_NULL = "OrganizationLeave with given Id not found";
-
   /**
    * Error messages related to Leave_Type entity
    */
@@ -116,19 +112,16 @@ public class ErrorMessageConstants
   public static final String LEAVE_WITH_GIVEN_TYPE_AND_STATUS_EXISTS = "Leave with given start and end date already exists for the provided employee Id";
   public static final String LEAVE_INSUFFICIENT_LEAVE_COUNT_OF_GIVEN_LEAVE_TYPE = "Insufficient leaves are available of given type of leave";
   public static final String LEAVE_ALLOCATED_WITH_GIVEN_LEAVE_TYPE_AND_START_DATE_AND_END_DATE_OVERLAPPING = "Employee has already applied leave with given start and end date overlapping with existing records";
-
   /**
    * Error messages related to Leave_Status entity
    */
   public static final String LEAVE_STATUS_BY_ID_NOT_FOUND = "LeaveStatus with given id not found";
   public static final String LEAVE_STATUS_BY_STATUS_NAME_NOT_FOUND = "LeaveStatus with given status value not found";
-
-
   /**
    * Error messages related to employee_leave_allocation entity
    */
   public static final String EMPLOYEE_LEAVE_ALLOCATED_BY_ID_NOT_FOUND = "Employee allocated leave with given id not found ";
-  public static final String EMPLOYEE_LEAVE_ALLOCATED_ID_CAN_NOT_BE_NUll = "Employee allocated leave id can not be null ";
+  public static final String EMPLOYEE_LEAVE_ALLOCATED_ID_CAN_NOT_BE_NULL = "Employee allocated leave id can not be null ";
   public static final String EMPLOYEE_LEAVE_ALLOTTED_LEAVES_NOT_NULL = "Allotted leaves value can not be null";
   public static final String EMPLOYEE_LEAVE_CARRIED_LEAVES_NOT_NULL = "Carried leaves value can not be null";
   public static final String EMPLOYEE_LEAVE_ADDITIONAL_LEAVES_NOT_NULL = "Additional leaves value can not be null";
@@ -142,7 +135,8 @@ public class ErrorMessageConstants
   public static final String EMPLOYEE_LEAVE_TOTAL_LEAVES_CAN_NOT_BE_NEGATIVE = "Applied leaves can not be less than zero";
   public static final String EMPLOYEE_LEAVE_CARRIED_LEAVES_CAN_NOT_BE_NEGATIVE = "Carried leaves can not be less than zero";
   public static final String EMPLOYEE_LEAVE_GIVEN_TYPE_OF_LEAVE_NOT_ALLOCATED_FOR_GIVEN_EMPLOYEE = "Given type of leave is not allocated for given  employee";
-
+  private ErrorMessageConstants() {
+  }
 
 
 }

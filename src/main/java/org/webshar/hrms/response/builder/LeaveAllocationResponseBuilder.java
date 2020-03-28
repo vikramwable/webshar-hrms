@@ -8,22 +8,18 @@ import org.webshar.hrms.model.db.LeaveAllocation;
 import org.webshar.hrms.response.employee.leave.allocation.LeaveAllocationResponse;
 
 @Component
-public class LeaveAllocationResponseBuilder
-{
+public class LeaveAllocationResponseBuilder {
 
-  public LeaveAllocationResponse buildFromResult(LeaveAllocation leaveAllocation)
-  {
+  public LeaveAllocationResponse buildFromResult(LeaveAllocation leaveAllocation) {
     ModelMapper modelMapper = new ModelMapper();
-    LeaveAllocationResponse leaveAllocationResponse = modelMapper
+    return modelMapper
         .map(leaveAllocation, LeaveAllocationResponse.class);
-    return leaveAllocationResponse;
   }
 
-  public List<LeaveAllocationResponse> buildFromResult(List<LeaveAllocation> leaveAllocationList)
-  {
+  public List<LeaveAllocationResponse> buildFromResult(List<LeaveAllocation> leaveAllocationList) {
     ModelMapper modelMapper = new ModelMapper();
-    List<LeaveAllocationResponse> leaveAllocationResponseList = modelMapper
-        .map(leaveAllocationList, new TypeToken<List<LeaveAllocationResponse>>(){}.getType());
-    return leaveAllocationResponseList;
+    return modelMapper
+        .map(leaveAllocationList, new TypeToken<List<LeaveAllocationResponse>>() {
+        }.getType());
   }
 }

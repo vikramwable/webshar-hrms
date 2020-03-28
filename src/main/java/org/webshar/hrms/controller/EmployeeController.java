@@ -3,8 +3,6 @@ package org.webshar.hrms.controller;
 import java.util.List;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -18,25 +16,22 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.webshar.hrms.model.db.Employee;
 import org.webshar.hrms.request.employee.EmployeeCreateRequest;
+import org.webshar.hrms.request.employee.EmployeeSearchRequest;
 import org.webshar.hrms.request.employee.EmployeeUpdateRequest;
 import org.webshar.hrms.service.EmployeeService;
 import org.webshar.hrms.service.exception.ServiceException;
 
 @RestController
 @RequestMapping("/api/employees")
-public class EmployeeController
-{
+public class EmployeeController {
 
   @Autowired
   EmployeeService employeeService;
 
-  private static final Logger LOGGER = LoggerFactory.getLogger(EmployeeController.class);
-
   @GetMapping(value = "/{id}")
   public Employee getEmployeeByEmployeeId(
       @PathVariable Long id)
-      throws ServiceException
-  {
+      throws ServiceException {
     return employeeService.getEmployeeById(id);
   }
 
@@ -44,9 +39,15 @@ public class EmployeeController
   @ResponseStatus(HttpStatus.CREATED)
   public Employee createEmployee(
       @Valid @RequestBody @NotNull EmployeeCreateRequest employeeCreateRequest)
-      throws ServiceException
-  {
+      throws ServiceException {
     return employeeService.createEmployee(employeeCreateRequest);
+  }
+
+  @PostMapping(value = "/search")
+  @ResponseStatus
+  public List<Employee> searchEmployee(
+      @Valid @RequestBody @NotNull EmployeeSearchRequest employeeSearchRequest) {
+    return employeeService.searchEmployee(employeeSearchRequest);
   }
 
   @PatchMapping(value = "/{id}")
@@ -58,14 +59,12 @@ public class EmployeeController
 
   @DeleteMapping(value = "/{id}")
   @ResponseStatus(HttpStatus.NO_CONTENT)
-  public void deleteEmployeeById(@PathVariable("id") Long id) throws ServiceException
-  {
+  public void deleteEmployeeById(@PathVariable("id") Long id) throws ServiceException {
     employeeService.deleteEmployeeById(id);
   }
 
   @GetMapping(value = "")
-  public List<Employee> getAllEmployees()
-  {
+  public List<Employee> getAllEmployees() {
     return employeeService.getAllEmployees();
   }
 }

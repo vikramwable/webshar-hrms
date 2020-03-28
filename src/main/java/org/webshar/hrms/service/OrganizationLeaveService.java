@@ -16,8 +16,7 @@ import org.webshar.hrms.service.exception.EntityAlreadyExistsException;
 import org.webshar.hrms.service.exception.EntityNotFoundException;
 
 @Service
-public class OrganizationLeaveService
-{
+public class OrganizationLeaveService {
 
   @Autowired
   OrganizationLeaveRepository organizationLeaveRepository;
@@ -31,31 +30,27 @@ public class OrganizationLeaveService
   @Autowired
   OrganizationLeaveBuilder organizationLeaveBuilder;
 
-  public List<OrganizationLeave> getOrganizationLeaveByOrganizationId(Long organizationId)
-  {
+  public List<OrganizationLeave> getOrganizationLeaveByOrganizationId(Long organizationId) {
     return organizationLeaveRepository.findByOrganizationId(organizationId);
   }
 
   public OrganizationLeave createOrganizationLeave(
       OrganizationLeaveCreateRequest organizationLeaveCreateRequest)
-      throws EntityAlreadyExistsException, EntityNotFoundException
-  {
+      throws EntityAlreadyExistsException, EntityNotFoundException {
     LeaveType leaveType = leaveTypeService.getLeaveTypeById(organizationLeaveCreateRequest.getLeaveTypeId());
 
-    Organization organization = organizationService.getOrganizationById(organizationLeaveCreateRequest.getOrganizationId());
+    Organization organization = organizationService
+        .getOrganizationById(organizationLeaveCreateRequest.getOrganizationId());
 
     List<OrganizationLeave> organizationLeaveList = organizationLeaveRepository
         .findByOrganizationIdAndLeaveTypeId(organizationLeaveCreateRequest.getOrganizationId(),
             organizationLeaveCreateRequest.getLeaveTypeId());
-    if (organizationLeaveList.isEmpty())
-    {
+    if (organizationLeaveList.isEmpty()) {
       OrganizationLeave organizationLeaveToCreate = organizationLeaveBuilder
-          .buildFromRequest(organizationLeaveCreateRequest,leaveType,organization);
+          .buildFromRequest(organizationLeaveCreateRequest, leaveType, organization);
       return organizationLeaveRepository
           .save(organizationLeaveToCreate);
-    }
-    else
-    {
+    } else {
       throw new EntityAlreadyExistsException(
           ErrorMessageConstants.ORGANIZATION_LEAVE_WITH_ORGANIZATION_AND_LEAVE_ID_EXISTS);
     }
@@ -83,22 +78,17 @@ public class OrganizationLeaveService
     return organizationLeaveRepository.save(organizationLeaveAfterUpdate);
   }
 
-  public void deleteOrganizationLeaveById(Long id) throws EntityNotFoundException
-  {
+  public void deleteOrganizationLeaveById(Long id) throws EntityNotFoundException {
     Optional<OrganizationLeave> organizationLeaveToDelete = organizationLeaveRepository
         .findById(id);
-    if (organizationLeaveToDelete.isPresent())
-    {
+    if (organizationLeaveToDelete.isPresent()) {
       organizationLeaveRepository.delete(organizationLeaveToDelete.get());
-    }
-    else
-    {
+    } else {
       throw new EntityNotFoundException(ErrorMessageConstants.ORGANIZATION_LEAVE_BY_ID_NOT_NULL);
     }
   }
 
-  public List<OrganizationLeave> getAllOrganizationLeaves()
-  {
+  public List<OrganizationLeave> getAllOrganizationLeaves() {
     return organizationLeaveRepository.findAll();
   }
 }

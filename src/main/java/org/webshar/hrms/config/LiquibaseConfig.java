@@ -1,9 +1,7 @@
 package org.webshar.hrms.config;
 
-import liquibase.integration.spring.SpringLiquibase;
-
 import javax.activation.DataSource;
-
+import liquibase.integration.spring.SpringLiquibase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.liquibase.LiquibaseProperties;
@@ -14,16 +12,6 @@ public class LiquibaseConfig {
   @Autowired
   @Qualifier("tenantDataSource")
   private DataSource tenantDataSource;
-
-  @Bean
-  public LiquibaseProperties primaryLiquibaseProperties() {
-    return new LiquibaseProperties();
-  }
-
-  @Bean(name = "liquibase")
-  public SpringLiquibase primaryLiquibase() {
-    return (SpringLiquibase) springLiquibase(tenantDataSource, primaryLiquibaseProperties());
-  }
 
   private static SpringLiquibase springLiquibase(DataSource dataSource, LiquibaseProperties properties) {
     SpringLiquibase liquibase = new SpringLiquibase();
@@ -38,5 +26,15 @@ public class LiquibaseConfig {
     liquibase.setChangeLogParameters(properties.getParameters());
     liquibase.setRollbackFile(properties.getRollbackFile());
     return liquibase;
+  }
+
+  @Bean
+  public LiquibaseProperties primaryLiquibaseProperties() {
+    return new LiquibaseProperties();
+  }
+
+  @Bean(name = "liquibase")
+  public SpringLiquibase primaryLiquibase() {
+    return springLiquibase(tenantDataSource, primaryLiquibaseProperties());
   }
 }

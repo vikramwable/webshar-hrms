@@ -21,8 +21,7 @@ import org.webshar.hrms.service.exception.EntityNotFoundException;
 
 @Service
 @Transactional
-public class LeaveAllocationService
-{
+public class LeaveAllocationService {
 
   @Autowired
   LeaveAllocationRepository leaveAllocationRepository;
@@ -40,8 +39,7 @@ public class LeaveAllocationService
   LeaveTypeService leaveTypeService;
 
   public LeaveAllocationResponse getEmployeeAllocatedLeavesById(final Long id)
-      throws EntityNotFoundException
-  {
+      throws EntityNotFoundException {
     LeaveAllocation leaveAllocation = leaveAllocationRepository.findById(id)
         .orElseThrow(
             () -> new EntityNotFoundException(
@@ -52,8 +50,7 @@ public class LeaveAllocationService
 
   public List<LeaveAllocationResponse> getEmployeesAllocatedLeavesByEmployeeId(
       final Long employeeId)
-      throws EntityNotFoundException
-  {
+      throws EntityNotFoundException {
     return leaveAllocationResponseBuilder
         .buildFromResult(leaveAllocationRepository
             .findByEmployeeId(employeeService.getEmployeeByEmployeeId(employeeId).getId()));
@@ -62,17 +59,13 @@ public class LeaveAllocationService
   public LeaveAllocation getEmployeeAllocatedLeavesByEmployeeIdAndLeaveType(
       final Long employeeId,
       Long leaveTypeId)
-      throws EntityNotFoundException
-  {
+      throws EntityNotFoundException {
 
     LeaveAllocation leaveAllocation = leaveAllocationRepository
         .findByEmployeeIdAndLeaveTypeId(employeeId, leaveTypeId);
-    if (leaveAllocation != null)
-    {
+    if (leaveAllocation != null) {
       return leaveAllocation;
-    }
-    else
-    {
+    } else {
       throw new EntityNotFoundException(
           ErrorMessageConstants.EMPLOYEE_LEAVE_GIVEN_TYPE_OF_LEAVE_NOT_ALLOCATED_FOR_GIVEN_EMPLOYEE);
     }
@@ -80,8 +73,7 @@ public class LeaveAllocationService
 
   public LeaveAllocationResponse assignLeavesToAnEmployee(
       final EmployeeLeaveAllocationCreateRequest employeeLeaveAllocationCreateRequest)
-      throws EntityAlreadyExistsException, EntityNotFoundException
-  {
+      throws EntityAlreadyExistsException, EntityNotFoundException {
     Employee employee = employeeService
         .getEmployeeByEmployeeId(employeeLeaveAllocationCreateRequest.getEmployeeId());
     LeaveType leaveType = leaveTypeService
@@ -127,53 +119,47 @@ public class LeaveAllocationService
 
   public void deleteAllocatedLeavesOfAnEmployeeByEmployeeIdAndLeaveType(final Long employeeId,
       final Long leaveTypeId)
-      throws EntityNotFoundException
-  {
-    Employee employee = employeeService.getEmployeeByEmployeeId(employeeId);
-    if (employeeId != null && leaveTypeId != null)
-    {
-      leaveAllocationRepository
-          .deleteByEmployeeIdAndLeaveTypeId(
-              employeeService.getEmployeeByEmployeeId(employeeId).getId(),
-              leaveTypeService.getLeaveTypeById(leaveTypeId).getId());
-    }
-    else if (employeeId != null && leaveTypeId == null)
-    {
+      throws EntityNotFoundException {
+    if (leaveTypeId != null) {
+      if (employeeId != null) {
+        leaveAllocationRepository
+            .deleteByEmployeeIdAndLeaveTypeId(
+                employeeService.getEmployeeByEmployeeId(employeeId).getId(),
+                leaveTypeService.getLeaveTypeById(leaveTypeId).getId());
+      }
+    } else if (employeeId != null) {
       leaveAllocationRepository
           .deleteByEmployeeId(employeeService.getEmployeeByEmployeeId(employeeId).getId());
     }
   }
 
-  public List<LeaveAllocationResponse> getAllocatedLeavesOfAllEmployees()
-  {
+  public List<LeaveAllocationResponse> getAllocatedLeavesOfAllEmployees() {
     return leaveAllocationResponseBuilder
         .buildFromResult(leaveAllocationRepository.findAll());
   }
 
   private boolean isStartAndEndDateAreOverlappingWithExistingRecordForGivenEmployeeAndLeaveTypeId(
       final Long employeeId, final Long leaveTypeId, final Date startDate, final Date endDate)
-      throws EntityAlreadyExistsException
-  {
+      throws EntityAlreadyExistsException {
     List<LeaveAllocation> leaveAllocationList = leaveAllocationRepository
         .findAllByStartDateGreaterThanEqualAndStartDateLessThanEqual(startDate, endDate);
 
     leaveAllocationList.addAll(
         leaveAllocationRepository
             .findAllByEndDateGreaterThanEqualAndEndDateLessThanEqual(startDate, endDate));
-    leaveAllocationList.addAll(leaveAllocationRepository.findAllByStartDateLessThanEqualAndEndDateGreaterThanEqual(startDate,endDate));
+    leaveAllocationList.addAll(
+        leaveAllocationRepository.findAllByStartDateLessThanEqualAndEndDateGreaterThanEqual(startDate, endDate));
 
-    Optional<LeaveAllocation>  leaveApplicationResult = leaveAllocationList
+    Optional<LeaveAllocation> leaveApplicationResult = leaveAllocationList
         .stream()
-        .filter(leaveApplication -> (leaveApplication.getEmployee().getId() == employeeId) && (leaveApplication.getLeaveType().getId() == leaveTypeId))
+        .filter(leaveApplication -> (leaveApplication.getEmployee().getId().equals(employeeId)) && (
+            leaveApplication.getLeaveType().getId().equals(leaveTypeId)))
         .findFirst();
 
-    if (leaveApplicationResult.isPresent())
-    {
+    if (leaveApplicationResult.isPresent()) {
       throw new EntityAlreadyExistsException(
           ErrorMessageConstants.EMPLOYEE_LEAVE_ALLOCATED_WITH_GIVEN_LEAVE_TYPE_AND_START_DATE_AND_END_DATE_OVERLAPPING);
-    }
-    else
-    {
+    } else {
       return true;
     }
   }

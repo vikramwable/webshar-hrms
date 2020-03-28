@@ -13,21 +13,19 @@ import lombok.ToString;
 @Setter
 @ToString(callSuper = true)
 @Table(name = "organization")
-public class Organization extends BaseModel
-{
+public class Organization extends BaseModel {
+
   @Column(name = "name", nullable = false, unique = true, length = 200)
   private String name;
 
   @Column(name = "is_active", nullable = false)
   private Boolean isActive;
 
-  public Organization()
-  {
+  public Organization() {
 
   }
 
-  public Organization(final Organization organization)
-  {
+  public Organization(final Organization organization) {
     this.setId(organization.getId());
     this.setName(organization.getName());
     this.setGuid(organization.getGuid());
@@ -36,14 +34,11 @@ public class Organization extends BaseModel
   }
 
   @Override
-  public boolean equals(Object o)
-  {
-    if (this == o)
-    {
+  public boolean equals(Object o) {
+    if (this == o) {
       return true;
     }
-    if (o == null || getClass() != o.getClass())
-    {
+    if (o == null || getClass() != o.getClass()) {
       return false;
     }
     Organization that = (Organization) o;
@@ -51,8 +46,7 @@ public class Organization extends BaseModel
   }
 
   @Override
-  public int hashCode()
-  {
+  public int hashCode() {
     return Objects.hash(name);
   }
 }

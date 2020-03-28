@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import org.webshar.hrms.model.db.Resource;
 
 @Repository
-public interface ResourceRepository extends JpaRepository<Resource, Long>
-{
+public interface ResourceRepository extends JpaRepository<Resource, Long> {
+
   List<Resource> findByName(@Param("name") String name);
 }

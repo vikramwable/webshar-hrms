@@ -17,8 +17,8 @@ import org.webshar.hrms.service.exception.EntityAlreadyExistsException;
 import org.webshar.hrms.service.exception.EntityNotFoundException;
 
 @Service
-public class ResourceService
-{
+public class ResourceService {
+
   @Autowired
   ResourceRepository resourceRepository;
 
@@ -31,25 +31,20 @@ public class ResourceService
   @Autowired
   private ModelMapper modelMapper;
 
-  public Resource getResourceById(Long resourceId) throws EntityNotFoundException
-  {
+  public Resource getResourceById(Long resourceId) throws EntityNotFoundException {
     return resourceRepository.findById(resourceId)
         .orElseThrow(() -> new EntityNotFoundException(ErrorMessageConstants.RESOURCE_BY_ID_NOT_FOUND));
   }
 
   public Resource createResource(ResourceCreateRequest resourceCreateRequest)
-      throws EntityAlreadyExistsException, EntityNotFoundException
-  {
+      throws EntityAlreadyExistsException, EntityNotFoundException {
     List<Resource> resources = resourceRepository.findByName(resourceCreateRequest.getName());
-    if (resources.isEmpty())
-    {
+    if (resources.isEmpty()) {
       List<Permission> permissionList = validatePermissions(resourceCreateRequest.getPermissions());
-      Resource resourceToCreate = resourceBuilder.buildFromRequest(resourceCreateRequest,permissionList);
+      Resource resourceToCreate = resourceBuilder.buildFromRequest(resourceCreateRequest, permissionList);
 
       return resourceRepository.save(resourceToCreate);
-    }
-    else
-    {
+    } else {
       throw new EntityAlreadyExistsException(ErrorMessageConstants.RESOURCE_DUPLICATE_NAME);
     }
   }
@@ -63,29 +58,24 @@ public class ResourceService
     return resourceRepository.save(resourceToUpdate);
   }
 
-  public void deleteResourceById(Long id) throws EntityNotFoundException
-  {
+  public void deleteResourceById(Long id) throws EntityNotFoundException {
     Optional<Resource> resourceToDelete = resourceRepository.findById(id);
 
-    if (resourceToDelete.isPresent())
-    {
+    if (resourceToDelete.isPresent()) {
       resourceRepository.deleteById(id);
-    }
-    else
+    } else {
       throw new EntityNotFoundException(ErrorMessageConstants.RESOURCE_BY_ID_NOT_FOUND);
+    }
   }
 
-  public List<Resource> getAllResources()
-  {
+  public List<Resource> getAllResources() {
     return resourceRepository.findAll();
   }
 
-  private List<Permission> validatePermissions(String[] permissions) throws EntityNotFoundException
-  {
+  private List<Permission> validatePermissions(String[] permissions) throws EntityNotFoundException {
     List<Permission> permissionList = new ArrayList<>();
-    if(permissions != null){
-      for (String name : permissions)
-      {
+    if (permissions != null) {
+      for (String name : permissions) {
         permissionList.addAll(permissionService.getPermissionByName(name));
       }
     }

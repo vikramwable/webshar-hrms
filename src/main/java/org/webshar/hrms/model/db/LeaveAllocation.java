@@ -3,15 +3,14 @@ package org.webshar.hrms.model.db;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import lombok.Getter;
-import lombok.Setter;
-
+import java.util.Date;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import java.util.Date;
-import java.util.Objects;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 
 @Entity
@@ -20,8 +19,8 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString(callSuper = true)
-public class LeaveAllocation extends BaseModel
-{
+public class LeaveAllocation extends BaseModel {
+
   @OneToOne
   Employee employee;
 
@@ -48,12 +47,10 @@ public class LeaveAllocation extends BaseModel
   @Column(name = "total_leaves", nullable = false)
   private Long totalLeaves;
 
-  public LeaveAllocation()
-  {
+  public LeaveAllocation() {
   }
 
-  public LeaveAllocation(LeaveAllocation leaveAllocation)
-  {
+  public LeaveAllocation(LeaveAllocation leaveAllocation) {
     this.setId(leaveAllocation.getId());
     this.setGuid(leaveAllocation.getGuid());
     this.setLeaveType(leaveAllocation.getLeaveType());
@@ -68,14 +65,11 @@ public class LeaveAllocation extends BaseModel
   }
 
   @Override
-  public boolean equals(Object o)
-  {
-    if (this == o)
-    {
+  public boolean equals(Object o) {
+    if (this == o) {
       return true;
     }
-    if (o == null || getClass() != o.getClass())
-    {
+    if (o == null || getClass() != o.getClass()) {
       return false;
     }
     LeaveAllocation that = (LeaveAllocation) o;
@@ -87,8 +81,7 @@ public class LeaveAllocation extends BaseModel
   }
 
   @Override
-  public int hashCode()
-  {
+  public int hashCode() {
     return Objects.hash(this.getId(), employee, leaveType, startDate, endDate);
   }
 

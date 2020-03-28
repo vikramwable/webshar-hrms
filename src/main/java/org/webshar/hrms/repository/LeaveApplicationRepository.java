@@ -7,8 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.query.Param;
 import org.webshar.hrms.model.db.LeaveApplication;
 
-public interface LeaveApplicationRepository extends JpaRepository<LeaveApplication, Long>
-{
+public interface LeaveApplicationRepository extends JpaRepository<LeaveApplication, Long> {
 
   public LeaveApplication findByEmployeeIdAndStartDateAndEndDate(
       @Param("employee_id") final Long employeeId,
@@ -33,12 +32,6 @@ public interface LeaveApplicationRepository extends JpaRepository<LeaveApplicati
       @Param("leave_type_id") final Long leaveTypeId,
       @Param("leave_status_id") final Collection<Long> leaveStatusIds
   );
-
-
-//  public List<LeaveApplication> findAllByStartDateGreaterThanEqualAndStartDateLessThanEqualOrEndDateGreaterThanEqualAndEndDateLessThanEqualOrStartDateLessThanEqualAndEndDateGreaterThanEqual(
-//      @Param("start_date") final Date startDate,
-//      @Param("end_date") final Date endDate
-//  );
 
   public List<LeaveApplication> findAllByStartDateGreaterThanEqualAndStartDateLessThanEqual(
       @Param("start_date") final Date startDate,
