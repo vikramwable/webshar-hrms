@@ -65,7 +65,7 @@ public class LeaveAllocationService
       throws EntityNotFoundException
   {
     LeaveAllocation leaveAllocation = leaveAllocationRepository
-        .findGivenTypeOfLeaveAllocatedOrNotInThatDateRange(
+        .findGivenTypeOfLeaveAllocatedOrNotInTheGivenDateRange(
             employeeId, leaveTypeId, startDate, endDate);
     if (leaveAllocation != null)
     {
@@ -165,7 +165,7 @@ public class LeaveAllocationService
       throws EntityAlreadyExistsException
   {
     LeaveAllocation leaveAllocationList = leaveAllocationRepository
-        .findGivenTypeOfLeaveAllocatedOrNotInThatDateRange(employeeId, leaveTypeId, startDate,
+        .findGivenTypeOfLeaveAllocatedOrNotInTheGivenDateRange(employeeId, leaveTypeId, startDate,
             endDate);
     if (leaveAllocationList != null)
     {

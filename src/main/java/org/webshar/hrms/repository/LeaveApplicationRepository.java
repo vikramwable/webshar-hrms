@@ -44,7 +44,7 @@ public interface LeaveApplicationRepository extends JpaRepository<LeaveApplicati
           "       OR (:startDate <= l.endDate AND l.endDate <=  :endDate)" +
           "       OR (l.startDate <= :startDate AND  :endDate <= l.endDate )" +
           " )")
-  public List<LeaveApplication> findLeaveAlreadyAppliedForGivenDateRange(
+  public List<LeaveApplication> findLeaveAlreadyAppliedInTheGivenDateRange(
       @Param("startDate") LocalDate startDate,
       @Param("endDate") LocalDate endDate);
 }

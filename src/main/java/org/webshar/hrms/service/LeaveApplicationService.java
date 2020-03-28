@@ -187,7 +187,7 @@ public class LeaveApplicationService
       throws EntityAlreadyExistsException
   {
     List<LeaveApplication> leaveApplicationList = leaveApplicationRepository
-        .findLeaveAlreadyAppliedForGivenDateRange(startDate, endDate);
+        .findLeaveAlreadyAppliedInTheGivenDateRange(startDate, endDate);
 
     Optional<LeaveApplication> leaveApplicationResult = leaveApplicationList
         .stream()

@@ -44,7 +44,7 @@ public interface LeaveAllocationRepository extends
       "       OR (:startDate <= l.endDate AND l.endDate <=  :endDate)" +
       "       OR (l.startDate <= :startDate AND  :endDate <= l.endDate )" +
       " )")
-  public LeaveAllocation findGivenTypeOfLeaveAllocatedOrNotInThatDateRange(
+  public LeaveAllocation findGivenTypeOfLeaveAllocatedOrNotInTheGivenDateRange(
       @Param("employeeId") Long employeeId,
       @Param("leaveTypeId") Long leaveTypeId,
       @Param("startDate") LocalDate startDate,
