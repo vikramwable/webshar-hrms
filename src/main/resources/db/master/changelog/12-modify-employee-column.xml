@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+  <changeSet id="12" author="nikhil">
+    <dropForeignKeyConstraint
+      baseTableName="leave_approval"
+      constraintName="fk_employee_leave_approval"/>
+    <modifyDataType
+      columnName="employee_id"
+      newDataType="varchar(100)"
+      tableName="employee"/>
+    <modifyDataType
+      columnName="approved_by_employee_id"
+      newDataType="varchar(100)"
+      tableName="leave_approval"/>
+    <addForeignKeyConstraint baseColumnNames="approved_by_employee_id"
+      baseTableName="leave_approval"
+      constraintName="fk_employee_leave_approval"
+      deferrable="true"
+      initiallyDeferred="true"
+      onDelete="CASCADE"
+      onUpdate="RESTRICT"
+      referencedColumnNames="employee_id"
+      referencedTableName="employee"/>
+  </changeSet>
+</databaseChangeLog>
