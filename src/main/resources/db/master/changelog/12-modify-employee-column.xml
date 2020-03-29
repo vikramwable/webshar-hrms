@@ -14,10 +14,11 @@
       columnName="employee_id"
       newDataType="varchar(100)"
       tableName="employee"/>
-    <modifyDataType
-      columnName="approved_by_employee_id"
-      newDataType="varchar(100)"
-      tableName="leave_approval"/>
+    <renameColumn
+      columnDataType="varchar(100)"
+      newColumnName="emp_id"
+      oldColumnName="employee_id"
+      tableName="employee"/>
     <addForeignKeyConstraint baseColumnNames="approved_by_employee_id"
       baseTableName="leave_approval"
       constraintName="fk_employee_leave_approval"
@@ -25,7 +26,7 @@
       initiallyDeferred="true"
       onDelete="CASCADE"
       onUpdate="RESTRICT"
-      referencedColumnNames="employee_id"
+      referencedColumnNames="id"
       referencedTableName="employee"/>
   </changeSet>
 </databaseChangeLog>

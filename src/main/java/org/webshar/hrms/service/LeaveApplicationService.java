@@ -8,7 +8,6 @@ import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -132,7 +131,7 @@ public class LeaveApplicationService
     else
     {
       isStartAndEndDateAreOverlappingWithExistingRecordForGivenEmployeeAndLeaveTypeId(
-          employee.getId(), leaveType.getId(), employeeLeaveApplicationCreateRequest.getStartDate(),
+          employeeLeaveApplicationCreateRequest.getStartDate(),
           employeeLeaveApplicationCreateRequest.getEndDate());
       LeaveApplication leaveToApply = leaveApplicationRepository
           .findByEmployeeIdAndStartDateAndEndDate(
@@ -183,19 +182,13 @@ public class LeaveApplicationService
   }
 
   private void isStartAndEndDateAreOverlappingWithExistingRecordForGivenEmployeeAndLeaveTypeId(
-      final Long employeeId, final Long leaveTypeId, final LocalDate startDate, final LocalDate endDate)
+      final LocalDate startDate, final LocalDate endDate)
       throws EntityAlreadyExistsException
   {
     List<LeaveApplication> leaveApplicationList = leaveApplicationRepository
         .findLeaveAlreadyAppliedInTheGivenDateRange(startDate, endDate);
 
-    Optional<LeaveApplication> leaveApplicationResult = leaveApplicationList
-        .stream()
-        .filter(leaveApplication -> (leaveApplication.getEmployee().getId().equals(employeeId)) && (
-            leaveApplication.getLeaveType().getId().equals(leaveTypeId)))
-        .findFirst();
-
-    if (leaveApplicationResult.isPresent())
+    if (!leaveApplicationList.isEmpty())
     {
       throw new EntityAlreadyExistsException(
           ErrorMessageConstants.LEAVE_APPLICATION_WITH_GIVEN_LEAVE_TYPE_AND_START_DATE_AND_END_DATE_OVERLAPPING);

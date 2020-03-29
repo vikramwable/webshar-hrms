@@ -12,9 +12,9 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long>
 
   public List<Employee> findByEmail(@Param("email") String email);
 
-  public Employee findByEmpId(@Param("employee_id") String empId);
+  public Employee findByEmpId(@Param("emp_id") String empId);
 
-  public List<Employee> findByEmpIdOrEmail(@Param("employee_id") String empId,
+  public List<Employee> findByEmpIdOrEmail(@Param("emp_id") String empId,
       @Param("email") String email);
 
 }

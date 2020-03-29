@@ -21,7 +21,7 @@ import lombok.ToString;
 public class Employee extends BaseModel
 {
 
-  @Column(name = "employee_id", nullable = false, unique = true, length = 11)
+  @Column(name = "emp_id", nullable = false, unique = true, length = 11)
   private String empId;
 
   @Column(name = "organization_id", nullable = false, unique = true, length = 11)

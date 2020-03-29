@@ -12,22 +12,7 @@ public interface LeaveAllocationRepository extends
     JpaRepository<LeaveAllocation, Long>
 {
 
-  public List<LeaveAllocation> findByEmployeeId(@Param("id") final Long id);
-
-  public List<LeaveAllocation> findAllByStartDateGreaterThanEqualAndStartDateLessThanEqual(
-      @Param("start_date") final Date startDate,
-      @Param("end_date") final Date endDate
-  );
-
-  public List<LeaveAllocation> findAllByEndDateGreaterThanEqualAndEndDateLessThanEqual(
-      @Param("start_date") final Date startDate,
-      @Param("end_date") final Date endDate
-  );
-
-  public List<LeaveAllocation> findAllByStartDateLessThanEqualAndEndDateGreaterThanEqual(
-      @Param("start_date") final Date startDate,
-      @Param("end_date") final Date endDate
-  );
+  public List<LeaveAllocation> findByEmployeeId(@Param("employee_id") final Long id);
 
   public void deleteByEmployeeId(@Param("employee_id") final Long employeeId);
 
@@ -44,7 +29,7 @@ public interface LeaveAllocationRepository extends
       "       OR (:startDate <= l.endDate AND l.endDate <=  :endDate)" +
       "       OR (l.startDate <= :startDate AND  :endDate <= l.endDate )" +
       " )")
-  public LeaveAllocation findGivenTypeOfLeaveAllocatedOrNotInTheGivenDateRange(
+  public List<LeaveAllocation> findGivenTypeOfLeaveAllocatedOrNotInTheGivenDateRange(
       @Param("employeeId") Long employeeId,
       @Param("leaveTypeId") Long leaveTypeId,
       @Param("startDate") LocalDate startDate,

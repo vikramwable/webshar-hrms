@@ -64,12 +64,12 @@ public class LeaveAllocationService
       Long leaveTypeId, final LocalDate startDate, final LocalDate endDate)
       throws EntityNotFoundException
   {
-    LeaveAllocation leaveAllocation = leaveAllocationRepository
+    List<LeaveAllocation> leaveAllocationList = leaveAllocationRepository
         .findGivenTypeOfLeaveAllocatedOrNotInTheGivenDateRange(
             employeeId, leaveTypeId, startDate, endDate);
-    if (leaveAllocation != null)
+    if (!leaveAllocationList.isEmpty())
     {
-      return leaveAllocation;
+      return leaveAllocationList.get(0);
     }
     else
     {
@@ -164,10 +164,10 @@ public class LeaveAllocationService
       final Long employeeId, final Long leaveTypeId, final LocalDate startDate, final LocalDate endDate)
       throws EntityAlreadyExistsException
   {
-    LeaveAllocation leaveAllocationList = leaveAllocationRepository
+    List<LeaveAllocation> leaveAllocationList = leaveAllocationRepository
         .findGivenTypeOfLeaveAllocatedOrNotInTheGivenDateRange(employeeId, leaveTypeId, startDate,
             endDate);
-    if (leaveAllocationList != null)
+    if (!leaveAllocationList.isEmpty())
     {
       throw new EntityAlreadyExistsException(
            ErrorMessageConstants.EMPLOYEE_LEAVE_ALLOCATED_WITH_GIVEN_LEAVE_TYPE_AND_START_DATE_AND_END_DATE_OVERLAPPING);

@@ -17,7 +17,7 @@ public interface LeaveApplicationRepository extends JpaRepository<LeaveApplicati
       @Param("end_date") final LocalDate endDate
   );
 
-  public List<LeaveApplication> findByEmployeeId(@Param("id") final Long employeeId);
+  public List<LeaveApplication> findByEmployeeId(@Param("employee_id") final Long employeeId);
 
   public List<LeaveApplication> findByEmployeeIdAndLeaveTypeId(
       @Param("employee_id") final Long employeeId,
