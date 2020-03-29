@@ -9,8 +9,7 @@ import lombok.Data;
 import org.webshar.hrms.constants.ErrorMessageConstants;
 
 @Data
-public class EmployeeCreateRequest
-{
+public class EmployeeCreateRequest {
 
   @NotNull(message = ErrorMessageConstants.EMPLOYEE_EMP_ID_NOT_NULL)
   private String empId;
@@ -50,20 +49,14 @@ public class EmployeeCreateRequest
   private String contact;
 
   @NotNull(message = ErrorMessageConstants.EMPLOYEE_DESIGNATION_NOT_NULL)
-  @NotBlank(message = ErrorMessageConstants.EMPLOYEE_DESIGNATION__NOT_BLANK)
+  @NotBlank(message = ErrorMessageConstants.EMPLOYEE_DESIGNATION_NOT_BLANK)
   private String designation;
 
   @AssertTrue(message = ErrorMessageConstants.EMPLOYEE_INVALID_STATAUS)
-  private boolean isValidStatus()
-  {
-    if (isActive == null)
-    {
+  private boolean isValidStatus() {
+    if (isActive == null) {
       return true;
     }
-    else if (isActive != true && isActive != false)
-    {
-      return false;
-    }
-    return true;
+    return isActive || !isActive;
   }
 }

@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import org.webshar.hrms.model.db.Role;
 
 @Repository
-public interface RoleRepository extends JpaRepository<Role, Long>
-{
+public interface RoleRepository extends JpaRepository<Role, Long> {
+
   List<Role> findByName(@Param("name") String name);
 }

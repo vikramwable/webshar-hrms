@@ -1,7 +1,6 @@
 package org.webshar.hrms.enums;
 
-public enum LeaveStatus
-{
+public enum LeaveStatus {
   PENDING,
   APPROVED,
   REJECTED,

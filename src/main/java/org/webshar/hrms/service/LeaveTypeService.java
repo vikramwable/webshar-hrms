@@ -8,14 +8,12 @@ import org.webshar.hrms.repository.LeaveTypeRepository;
 import org.webshar.hrms.service.exception.EntityNotFoundException;
 
 @Service
-public class LeaveTypeService
-{
+public class LeaveTypeService {
 
   @Autowired
   LeaveTypeRepository leaveTypeRepository;
 
-  public LeaveType getLeaveTypeById(Long id) throws EntityNotFoundException
-  {
+  public LeaveType getLeaveTypeById(Long id) throws EntityNotFoundException {
     return leaveTypeRepository.findById(id)
         .orElseThrow(
             () -> new EntityNotFoundException(ErrorMessageConstants.LEAVE_TYPE_BY_ID_NOT_FOUND));

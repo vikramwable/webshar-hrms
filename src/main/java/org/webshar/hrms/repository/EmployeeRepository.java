@@ -7,8 +7,7 @@ import org.springframework.stereotype.Repository;
 import org.webshar.hrms.model.db.Employee;
 
 @Repository
-public interface EmployeeRepository extends JpaRepository<Employee, Long>
-{
+public interface EmployeeRepository extends JpaRepository<Employee, Long>, EmployeeRepositoryCustom {
 
   public List<Employee> findByEmail(@Param("email") String email);
 
@@ -16,5 +15,4 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long>
 
   public List<Employee> findByEmpIdOrEmail(@Param("emp_id") String empId,
       @Param("email") String email);
-
 }

@@ -15,8 +15,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString(callSuper = true)
-public class Role extends BaseModel
-{
+public class Role extends BaseModel {
 
   @Column(name = "name", nullable = false, unique = true, length = 200)
   private String name;
@@ -25,14 +24,11 @@ public class Role extends BaseModel
   private List<Permission> permissions;
 
   @Override
-  public boolean equals(Object o)
-  {
-    if (this == o)
-    {
+  public boolean equals(Object o) {
+    if (this == o) {
       return true;
     }
-    if (o == null || getClass() != o.getClass())
-    {
+    if (o == null || getClass() != o.getClass()) {
       return false;
     }
     Role role = (Role) o;
@@ -40,8 +36,7 @@ public class Role extends BaseModel
   }
 
   @Override
-  public int hashCode()
-  {
+  public int hashCode() {
     return Objects.hash(name);
   }
 }

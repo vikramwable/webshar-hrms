@@ -21,8 +21,7 @@ import org.webshar.hrms.service.exception.EntityNotFoundException;
 
 @Service
 @Transactional
-public class LeaveAllocationService
-{
+public class LeaveAllocationService {
 
   @Autowired
   LeaveAllocationRepository leaveAllocationRepository;
@@ -40,8 +39,7 @@ public class LeaveAllocationService
   LeaveTypeService leaveTypeService;
 
   public LeaveAllocationResponse getEmployeeAllocatedLeavesById(final Long id)
-      throws EntityNotFoundException
-  {
+      throws EntityNotFoundException {
     LeaveAllocation leaveAllocation = leaveAllocationRepository.findById(id)
         .orElseThrow(
             () -> new EntityNotFoundException(
@@ -51,19 +49,16 @@ public class LeaveAllocationService
   }
 
   public List<LeaveAllocationResponse> getEmployeesAllocatedLeavesByEmployeeId(
-      final Long id)
-      throws EntityNotFoundException
-  {
+      final Long employeeId)
+      throws EntityNotFoundException {
     return leaveAllocationResponseBuilder
         .buildFromResult(leaveAllocationRepository
-            .findByEmployeeId(employeeService.getEmployeeById(id).getId()));
+            .findByEmployeeId(employeeId));
   }
 
   public LeaveAllocation getEmployeeAllocatedLeavesByEmployeeIdAndLeaveType(
-      final Long employeeId,
-      Long leaveTypeId, final LocalDate startDate, final LocalDate endDate)
-      throws EntityNotFoundException
-  {
+      final Long employeeId, Long leaveTypeId, final LocalDate startDate, final LocalDate endDate)
+      throws EntityNotFoundException {
     List<LeaveAllocation> leaveAllocationList = leaveAllocationRepository
         .findGivenTypeOfLeaveAllocatedOrNotInTheGivenDateRange(
             employeeId, leaveTypeId, startDate, endDate);
@@ -80,8 +75,7 @@ public class LeaveAllocationService
 
   public LeaveAllocationResponse assignLeavesToAnEmployee(
       final EmployeeLeaveAllocationCreateRequest employeeLeaveAllocationCreateRequest)
-      throws EntityAlreadyExistsException, EntityNotFoundException
-  {
+      throws EntityAlreadyExistsException, EntityNotFoundException {
     Employee employee = employeeService
         .getEmployeeById(employeeLeaveAllocationCreateRequest.getEmployeeId());
     LeaveType leaveType = leaveTypeService
@@ -137,25 +131,19 @@ public class LeaveAllocationService
 
   public void deleteAllocatedLeavesOfAnEmployeeByEmployeeIdAndLeaveType(final Long employeeId,
       final Long leaveTypeId)
-      throws EntityNotFoundException
-  {
-    employeeService.getEmployeeById(employeeId);
-    if (employeeId != null && leaveTypeId != null)
-    {
-      leaveAllocationRepository
-          .deleteByEmployeeIdAndLeaveTypeId(
-              employeeId,
-              leaveTypeService.getLeaveTypeById(leaveTypeId).getId());
-    }
-    else if (employeeId != null)
-    {
+      throws EntityNotFoundException {
+    if (leaveTypeId != null) {
+      if (employeeId != null) {
+        leaveAllocationRepository
+            .deleteByEmployeeIdAndLeaveTypeId(employeeId,leaveTypeService.getLeaveTypeById(leaveTypeId).getId());
+      }
+    } else if (employeeId != null) {
       leaveAllocationRepository
           .deleteByEmployeeId(employeeId);
     }
   }
 
-  public List<LeaveAllocationResponse> getAllocatedLeavesOfAllEmployees()
-  {
+  public List<LeaveAllocationResponse> getAllocatedLeavesOfAllEmployees() {
     return leaveAllocationResponseBuilder
         .buildFromResult(leaveAllocationRepository.findAll());
   }

@@ -6,7 +6,6 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import java.time.LocalDate;
 import lombok.Getter;
 import lombok.Setter;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
@@ -20,8 +19,8 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString(callSuper = true)
-public class LeaveAllocation extends BaseModel
-{
+public class LeaveAllocation extends BaseModel {
+
   @OneToOne
   Employee employee;
 
@@ -48,12 +47,10 @@ public class LeaveAllocation extends BaseModel
   @Column(name = "total_leaves", nullable = false)
   private Long totalLeaves;
 
-  public LeaveAllocation()
-  {
+  public LeaveAllocation() {
   }
 
-  public LeaveAllocation(LeaveAllocation leaveAllocation)
-  {
+  public LeaveAllocation(LeaveAllocation leaveAllocation) {
     this.setId(leaveAllocation.getId());
     this.setGuid(leaveAllocation.getGuid());
     this.setLeaveType(leaveAllocation.getLeaveType());
@@ -69,14 +66,11 @@ public class LeaveAllocation extends BaseModel
   }
 
   @Override
-  public boolean equals(Object o)
-  {
-    if (this == o)
-    {
+  public boolean equals(Object o) {
+    if (this == o) {
       return true;
     }
-    if (o == null || getClass() != o.getClass())
-    {
+    if (o == null || getClass() != o.getClass()) {
       return false;
     }
     LeaveAllocation that = (LeaveAllocation) o;
@@ -88,8 +82,7 @@ public class LeaveAllocation extends BaseModel
   }
 
   @Override
-  public int hashCode()
-  {
+  public int hashCode() {
     return Objects.hash(this.getId(), employee, leaveType, startDate, endDate);
   }
 

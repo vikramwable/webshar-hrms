@@ -29,8 +29,7 @@ import org.webshar.hrms.service.exception.InsufficientLeaveException;
 
 @Service
 @Transactional
-public class LeaveApplicationService
-{
+public class LeaveApplicationService {
 
   public static final String DATE_FORMAT = "yyyy-MM-dd";
 
@@ -55,13 +54,11 @@ public class LeaveApplicationService
   @Autowired
   LeaveApplicationResponseBuilder leaveApplicationResponseBuilder;
 
-  public List<EmployeeLeaveApplicationResponse> getAllAppliedLeavesOfAllEmployees()
-  {
+  public List<EmployeeLeaveApplicationResponse> getAllAppliedLeavesOfAllEmployees() {
     return leaveApplicationResponseBuilder.buildFromResult(leaveApplicationRepository.findAll());
   }
 
-  public EmployeeLeaveApplicationResponse getLeaveById(final Long id) throws EntityNotFoundException
-  {
+  public EmployeeLeaveApplicationResponse getLeaveById(final Long id) throws EntityNotFoundException {
     LeaveApplication leaveApplication = leaveApplicationRepository.findById(id)
         .orElseThrow(
             () -> new EntityNotFoundException(ErrorMessageConstants.LEAVE_BY_ID_NOT_FOUND));
@@ -70,22 +67,18 @@ public class LeaveApplicationService
 
   public List<EmployeeLeaveApplicationResponse> getLeaveApplicationByEmployeeIdLeaveTypeAndLeaveStatus(
       final Long employeeId, final Long leaveTypeId, final Long leaveStatusId)
-      throws EntityNotFoundException
-  {
+      throws EntityNotFoundException {
     Employee employee = employeeService.getEmployeeById(employeeId);
 
-    if (employeeId != null && leaveTypeId == null && leaveStatusId == null)
-    {
-      return leaveApplicationResponseBuilder
-          .buildFromResult(leaveApplicationRepository.findByEmployeeId(employee.getId()));
-    }
-    else if (employeeId != null && leaveTypeId != null && leaveStatusId == null)
-    {
-      return leaveApplicationResponseBuilder.buildFromResult(leaveApplicationRepository
-          .findByEmployeeIdAndLeaveTypeId(employee.getId(), leaveTypeId));
-    }
-    else if (employeeId != null && leaveTypeId != null)
-    {
+    if (null == leaveStatusId) {
+      if (employeeId != null && leaveTypeId == null) {
+        return leaveApplicationResponseBuilder
+            .buildFromResult(leaveApplicationRepository.findByEmployeeId(employee.getId()));
+      } else if (employeeId != null) {
+        return leaveApplicationResponseBuilder.buildFromResult(leaveApplicationRepository
+            .findByEmployeeIdAndLeaveTypeId(employee.getId(), leaveTypeId));
+      }
+    } else if (employeeId != null && leaveTypeId != null) {
       return leaveApplicationResponseBuilder.buildFromResult(leaveApplicationRepository
           .findByEmployeeIdAndLeaveTypeIdAndLeaveStatusId(employee.getId(), leaveTypeId,
               leaveStatusId));
@@ -96,8 +89,7 @@ public class LeaveApplicationService
   public EmployeeLeaveApplicationResponse applyLeave(
       final EmployeeLeaveApplicationCreateRequest employeeLeaveApplicationCreateRequest)
       throws EntityNotFoundException, InsufficientLeaveException,
-      EntityAlreadyExistsException
-  {
+      EntityAlreadyExistsException {
     Employee employee = employeeService
         .getEmployeeById(employeeLeaveApplicationCreateRequest.getEmployeeId());
 
@@ -123,13 +115,10 @@ public class LeaveApplicationService
 
     int availableLeaves = (int) (allocatedEmployeeLeaves.getTotalLeaves() - appliedLeaves.size());
 
-    if (availableLeaves < noOfDaysLeaveApplied)
-    {
+    if (availableLeaves < noOfDaysLeaveApplied) {
       throw new InsufficientLeaveException(
           ErrorMessageConstants.LEAVE_INSUFFICIENT_LEAVE_COUNT_OF_GIVEN_LEAVE_TYPE);
-    }
-    else
-    {
+    } else {
       isStartAndEndDateAreOverlappingWithExistingRecordForGivenEmployeeAndLeaveTypeId(
           employeeLeaveApplicationCreateRequest.getStartDate(),
           employeeLeaveApplicationCreateRequest.getEndDate());
@@ -138,14 +127,11 @@ public class LeaveApplicationService
               employee.getId(),
               employeeLeaveApplicationCreateRequest.getStartDate(),
               employeeLeaveApplicationCreateRequest.getEndDate());
-      if (leaveToApply == null)
-      {
+      if (leaveToApply == null) {
         leaveToApply = leaveApplicationBuilder
             .buildFromRequest(employeeLeaveApplicationCreateRequest, leaveType, employee,
                 leaveStatusService.getLeaveStatusByStatus(PENDING.toString()));
-      }
-      else
-      {
+      } else {
         throw new EntityAlreadyExistsException(
             ErrorMessageConstants.LEAVE_WITH_GIVEN_TYPE_AND_STATUS_EXISTS);
       }
@@ -190,6 +176,7 @@ public class LeaveApplicationService
 
     if (!leaveApplicationList.isEmpty())
     {
+
       throw new EntityAlreadyExistsException(
           ErrorMessageConstants.LEAVE_APPLICATION_WITH_GIVEN_LEAVE_TYPE_AND_START_DATE_AND_END_DATE_OVERLAPPING);
     }

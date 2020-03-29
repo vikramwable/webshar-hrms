@@ -15,8 +15,8 @@ import lombok.ToString;
 @Table(name = "leave_application")
 @Data
 @ToString(callSuper = true)
-public class LeaveApplication extends BaseModel
-{
+public class LeaveApplication extends BaseModel {
+
   @Column(name = "start_date", nullable = false)
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
   private LocalDate startDate;
@@ -34,11 +34,11 @@ public class LeaveApplication extends BaseModel
   @OneToOne
   private LeaveStatus leaveStatus;
 
-  public LeaveApplication(){
+  public LeaveApplication() {
 
   }
 
-  public  LeaveApplication(LeaveApplication leaveApplication){
+  public LeaveApplication(LeaveApplication leaveApplication) {
     this.setId(leaveApplication.getId());
     this.setGuid(leaveApplication.getGuid());
     this.setStartDate(leaveApplication.getStartDate());
@@ -51,14 +51,11 @@ public class LeaveApplication extends BaseModel
   }
 
   @Override
-  public boolean equals(Object o)
-  {
-    if (this == o)
-    {
+  public boolean equals(Object o) {
+    if (this == o) {
       return true;
     }
-    if (o == null || getClass() != o.getClass())
-    {
+    if (o == null || getClass() != o.getClass()) {
       return false;
     }
     LeaveApplication leaveApplication = (LeaveApplication) o;
@@ -69,8 +66,7 @@ public class LeaveApplication extends BaseModel
   }
 
   @Override
-  public int hashCode()
-  {
+  public int hashCode() {
     return Objects.hash(this.getId(), startDate, endDate, leaveType);
   }
 }

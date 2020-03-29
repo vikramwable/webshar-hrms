@@ -9,8 +9,7 @@ import lombok.Data;
 import org.webshar.hrms.constants.ErrorMessageConstants;
 
 @Data
-public class EmployeeLeaveAllocationCreateRequest
-{
+public class EmployeeLeaveAllocationCreateRequest {
 
   @NotNull(message = ErrorMessageConstants.EMPLOYEE_EMP_ID_NOT_NULL)
   private Long employeeId;

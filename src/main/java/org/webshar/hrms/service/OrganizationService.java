@@ -14,8 +14,7 @@ import org.webshar.hrms.service.exception.EntityAlreadyExistsException;
 import org.webshar.hrms.service.exception.EntityNotFoundException;
 
 @Service
-public class OrganizationService
-{
+public class OrganizationService {
 
   @Autowired
   OrganizationRepository organizationRepository;
@@ -23,27 +22,22 @@ public class OrganizationService
   @Autowired
   OrganizationBuilder organizationBuilder;
 
-  public Organization getOrganizationById(Long organizationId) throws EntityNotFoundException
-  {
+  public Organization getOrganizationById(Long organizationId) throws EntityNotFoundException {
     return organizationRepository.findById(organizationId)
         .orElseThrow(
             () -> new EntityNotFoundException(ErrorMessageConstants.ORGANIZATION_BY_ID_NOT_FOUND));
   }
 
   public Organization createOrganization(OrganizationCreateRequest organizationCreateRequest)
-      throws EntityAlreadyExistsException
-  {
+      throws EntityAlreadyExistsException {
     List<Organization> organizations = organizationRepository
         .findByName(organizationCreateRequest.getName());
-    if (organizations.isEmpty())
-    {
+    if (organizations.isEmpty()) {
       Organization organizationToCreate = organizationBuilder
           .buildFromRequest(organizationCreateRequest);
 
       return organizationRepository.save(organizationToCreate);
-    }
-    else
-    {
+    } else {
       throw new EntityAlreadyExistsException(ErrorMessageConstants.ORGANIZATION_DUPLICATE_NAME);
     }
   }
@@ -61,22 +55,17 @@ public class OrganizationService
     return updatedOrganization;
   }
 
-  public void deleteOrganizationById(Long id) throws EntityNotFoundException
-  {
+  public void deleteOrganizationById(Long id) throws EntityNotFoundException {
     Optional<Organization> organizationToDelete = organizationRepository.findById(id);
 
-    if (organizationToDelete.isPresent())
-    {
+    if (organizationToDelete.isPresent()) {
       organizationRepository.deleteById(id);
-    }
-    else
-    {
+    } else {
       throw new EntityNotFoundException(ErrorMessageConstants.ORGANIZATION_BY_ID_NOT_FOUND);
     }
   }
 
-  public List<Organization> getAllOrganizations()
-  {
+  public List<Organization> getAllOrganizations() {
     return organizationRepository.findAll();
   }
 }

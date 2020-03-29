@@ -8,8 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.webshar.hrms.model.db.LeaveApplication;
 
-public interface LeaveApplicationRepository extends JpaRepository<LeaveApplication, Long>
-{
+public interface LeaveApplicationRepository extends JpaRepository<LeaveApplication, Long> {
 
   public LeaveApplication findByEmployeeIdAndStartDateAndEndDate(
       @Param("employee_id") final Long employeeId,

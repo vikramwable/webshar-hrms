@@ -6,11 +6,11 @@ import lombok.Data;
 import org.webshar.hrms.constants.ErrorMessageConstants;
 
 @Data
-public class RoleCreateRequest
-{
+public class RoleCreateRequest {
+
   @NotNull(message = ErrorMessageConstants.ROLE_NAME_NOT_NULL)
   @NotBlank(message = ErrorMessageConstants.ROLE_NAME_NOT_BLANK)
   private String name;
 
-  private String [] permissions;
+  private String[] permissions;
 }

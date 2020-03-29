@@ -6,8 +6,8 @@ import java.time.LocalDateTime;
 import lombok.Data;
 
 @Data
-public class EmployeeLeaveApplicationResponse
-{
+public class EmployeeLeaveApplicationResponse {
+
   private Long id;
 
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
@@ -31,8 +31,7 @@ public class EmployeeLeaveApplicationResponse
 }
 
 @Data
-class Employee
-{
+class Employee {
 
   private Long id;
 
@@ -56,16 +55,16 @@ class Employee
 }
 
 @Data
-class LeaveType
-{
+class LeaveType {
+
   private Long id;
 
   private String type;
 }
 
 @Data
-class LeaveStatus
-{
+class LeaveStatus {
+
   private Long id;
 
   private String status;

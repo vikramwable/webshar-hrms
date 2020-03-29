@@ -8,8 +8,7 @@ import lombok.Data;
 import org.webshar.hrms.constants.ErrorMessageConstants;
 
 @Data
-public class EmployeeLeaveApplicationCreateRequest
-{
+public class EmployeeLeaveApplicationCreateRequest {
 
   @NotNull(message = ErrorMessageConstants.LEAVE_EMPLOYEE_ID_NOT_NULL)
   private Long employeeId;
