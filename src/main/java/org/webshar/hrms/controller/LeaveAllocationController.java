@@ -56,7 +56,7 @@ public class LeaveAllocationController {
       EmployeeLeaveAllocationUpdateRequest employeeLeaveAllocationUpdateRequest)
       throws ServiceException
   {
-    Assert.isTrue(id.equals(employeeLeaveAllocationUpdateRequest.getEmployeeId()),
+    Assert.isTrue(id.equals(employeeLeaveAllocationUpdateRequest.getId()),
         "id and employeeLeaveAllocationUpdateRequest.id must be same");
 
     return leaveAllocationService

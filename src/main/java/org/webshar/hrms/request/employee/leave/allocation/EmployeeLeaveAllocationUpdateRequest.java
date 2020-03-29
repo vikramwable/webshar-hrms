@@ -10,6 +10,9 @@ import org.webshar.hrms.constants.ErrorMessageConstants;
 @Data
 public class EmployeeLeaveAllocationUpdateRequest {
 
+  @NotNull(message = ErrorMessageConstants.EMPLOYEE_LEAVE_ALLOCATED_BY_ID_NOT_FOUND)
+  private Long id;
+
   @NotNull(message = ErrorMessageConstants.EMPLOYEE_EMP_ID_NOT_NULL)
   private Long employeeId;
 
