@@ -44,7 +44,6 @@ public class EmployeeController {
   }
 
   @PostMapping(value = "/search")
-  @ResponseStatus
   public List<Employee> searchEmployee(
       @Valid @RequestBody @NotNull EmployeeSearchRequest employeeSearchRequest) {
     return employeeService.searchEmployee(employeeSearchRequest);
