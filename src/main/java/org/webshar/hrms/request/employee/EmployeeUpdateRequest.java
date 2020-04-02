@@ -11,9 +11,6 @@ import org.webshar.hrms.constants.ErrorMessageConstants;
 @Data
 public class EmployeeUpdateRequest {
 
-  @NotNull(message = ErrorMessageConstants.EMPLOYEE_ID_NOT_NULL)
-  private Long id;
-
   private String empId;
 
   private Long organizationId;

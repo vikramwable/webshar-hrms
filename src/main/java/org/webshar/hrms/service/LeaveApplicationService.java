@@ -119,7 +119,8 @@ public class LeaveApplicationService {
       throw new InsufficientLeaveException(
           ErrorMessageConstants.LEAVE_INSUFFICIENT_LEAVE_COUNT_OF_GIVEN_LEAVE_TYPE);
     } else {
-      isStartAndEndDateAreOverlappingWithExistingRecordForGivenEmployeeAndLeaveTypeId(
+      isStartAndEndDateAreOverlappingWithExistingRecordForGivenEmployeeId(
+          employeeLeaveApplicationCreateRequest.getEmployeeId(),
           employeeLeaveApplicationCreateRequest.getStartDate(),
           employeeLeaveApplicationCreateRequest.getEndDate());
       LeaveApplication leaveToApply = leaveApplicationRepository
@@ -167,12 +168,12 @@ public class LeaveApplicationService {
     return (int) ChronoUnit.DAYS.between(startDate, endDate) + 1;
   }
 
-  private void isStartAndEndDateAreOverlappingWithExistingRecordForGivenEmployeeAndLeaveTypeId(
-      final LocalDate startDate, final LocalDate endDate)
+  private void isStartAndEndDateAreOverlappingWithExistingRecordForGivenEmployeeId(
+      final Long employeeId, final LocalDate startDate, final LocalDate endDate)
       throws EntityAlreadyExistsException
   {
     List<LeaveApplication> leaveApplicationList = leaveApplicationRepository
-        .findLeaveAlreadyAppliedInTheGivenDateRange(startDate, endDate);
+        .findLeaveAlreadyAppliedInTheGivenDateRange(employeeId,startDate, endDate);
 
     if (!leaveApplicationList.isEmpty())
     {

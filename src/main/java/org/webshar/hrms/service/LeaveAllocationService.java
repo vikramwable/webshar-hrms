@@ -112,7 +112,7 @@ public class LeaveAllocationService {
 
     Optional<LeaveAllocation> employeeLeaveAllocationToUpdate =
         leaveAllocationRepository
-            .findById(employeeLeaveAllocationUpdateRequest.getId());
+            .findById(id);
     if (employeeLeaveAllocationToUpdate.isPresent())
     {
       LeaveAllocation updatedLeaveAllocation =

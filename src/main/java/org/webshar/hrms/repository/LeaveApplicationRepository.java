@@ -37,13 +37,14 @@ public interface LeaveApplicationRepository extends JpaRepository<LeaveApplicati
   @Query
       (" SELECT l " +
           " FROM LeaveApplication l " +
-          " WHERE " +
-          " (" +
+          " WHERE  l.employee.id = :employeeId" +
+          " AND (" +
           "       (:startDate <= l.startDate AND l.startDate <=  :endDate)" +
           "       OR (:startDate <= l.endDate AND l.endDate <=  :endDate)" +
           "       OR (l.startDate <= :startDate AND  :endDate <= l.endDate )" +
           " )")
   public List<LeaveApplication> findLeaveAlreadyAppliedInTheGivenDateRange(
+      @Param("employeeId") Long employeeId,
       @Param("startDate") LocalDate startDate,
       @Param("endDate") LocalDate endDate);
 }
