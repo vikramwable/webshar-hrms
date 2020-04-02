@@ -23,6 +23,9 @@ public class EmployeeService {
   @Autowired
   EmployeeBuilder employeeBuilder;
 
+  @Autowired
+  OrganizationService organizationService;
+
 
   public Employee getEmployeeById(Long id) throws EntityNotFoundException {
     return employeeRepository.findById(id)
@@ -31,9 +34,8 @@ public class EmployeeService {
   }
 
 
-  public Employee getEmployeeByEmployeeId(Long employeeId) throws EntityNotFoundException {
-    Employee employee = employeeRepository.findByEmployeeId(
-        employeeId);
+  public Employee getEmployeeByEmployeeId(String employeeId) throws EntityNotFoundException {
+    Employee employee = employeeRepository.findByEmpId(employeeId);
     if (employee == null) {
       throw new EntityNotFoundException(ErrorMessageConstants.EMPLOYEE_BY_ID_NOT_FOUND);
     } else {
@@ -42,9 +44,12 @@ public class EmployeeService {
   }
 
   public Employee createEmployee(EmployeeCreateRequest employeeCreateRequest)
-      throws EntityAlreadyExistsException {
+      throws EntityAlreadyExistsException, EntityNotFoundException
+  {
     List<Employee> employees = employeeRepository
-        .findByEmail(employeeCreateRequest.getEmail());
+        .findByEmpIdOrEmail(employeeCreateRequest.getEmpId(),employeeCreateRequest.getEmail());
+
+    organizationService.getOrganizationById(employeeCreateRequest.getOrganizationId());
     if (employees.isEmpty()) {
       Employee employeeToCreate = employeeBuilder
           .buildFromRequest(employeeCreateRequest);

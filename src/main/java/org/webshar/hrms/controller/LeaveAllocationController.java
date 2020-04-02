@@ -5,6 +5,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -51,8 +52,10 @@ public class LeaveAllocationController {
   @PatchMapping(value = "/{id}")
   public LeaveAllocationResponse updateAllocatedLeavesOfAnEmployeeByEmployeeIdAndLeaveTypeId(
       @PathVariable Long id,
-      @NotNull @Valid @RequestBody final EmployeeLeaveAllocationUpdateRequest employeeLeaveAllocationUpdateRequest)
-      throws ServiceException {
+      @NotNull @Valid @RequestBody final
+      EmployeeLeaveAllocationUpdateRequest employeeLeaveAllocationUpdateRequest)
+      throws ServiceException
+  {
     return leaveAllocationService
         .updateEmployeesAllocatedLeavesByEmployeeIdAndLeaveType(id, employeeLeaveAllocationUpdateRequest);
   }

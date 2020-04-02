@@ -12,7 +12,7 @@ import org.webshar.hrms.constants.ErrorMessageConstants;
 public class EmployeeCreateRequest {
 
   @NotNull(message = ErrorMessageConstants.EMPLOYEE_EMP_ID_NOT_NULL)
-  private Long employeeId;
+  private String empId;
 
   @NotNull(message = ErrorMessageConstants.EMPLOYEE_ORGANIZATION_ID_NOT_NULL)
   private Long organizationId;

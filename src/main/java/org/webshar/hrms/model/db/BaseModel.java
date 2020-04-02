@@ -39,7 +39,7 @@ public abstract class BaseModel implements Serializable {
 
   @LastModifiedDate
   @Column(name = "updated_at", nullable = false)
-  private LocalDateTime updateAt;
+  private LocalDateTime updatedAt;
 
   @CreatedBy
   @Column(name = "created_by", nullable = false, updatable = false)

@@ -1,7 +1,7 @@
 package org.webshar.hrms.request.employee.leave.allocation;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import java.util.Date;
+import java.time.LocalDate;
 import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.NotNull;
 import lombok.Data;
@@ -17,10 +17,10 @@ public class EmployeeLeaveAllocationUpdateRequest {
   private Long leaveTypeId;
 
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-  private Date startDate;
+  private LocalDate startDate;
 
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-  private Date endDate;
+  private LocalDate endDate;
 
   private Long allottedLeaves;
 
@@ -35,22 +35,48 @@ public class EmployeeLeaveAllocationUpdateRequest {
   }
 
   @AssertTrue(message = ErrorMessageConstants.LEAVE_END_DATE_CANNOT_LESS_THAN_START_DATE)
-  private boolean isEndDateIsValid() {
-    return endDate != null && !endDate.before(startDate);
+  private boolean isEndDateIsValid()
+  {
+    if (endDate != null && endDate.isBefore(startDate) )
+    {
+      return false;
+    }
+    else
+    {
+      return true;
+    }
   }
 
-  @AssertTrue(message = ErrorMessageConstants.EMPLOYEE_LEAVE_ALLOCATED_LEAVES_CAN_NOT_BE_NEGATIVE)
-  private boolean isAllottedLeavesValid() {
-    return allottedLeaves != null && allottedLeaves >= 0;
+  @AssertTrue(message =
+      ErrorMessageConstants.LEAVE_ALLOCATED_LEAVES_ARE_MORE_THAN_ALLOCATED_TIME_PERIOD)
+  private boolean isAllottedLeavesCountValid()
+  {
+    if(allottedLeaves != null && allottedLeaves < 0)
+    {
+      return false;
+    }
+    return true;
   }
 
-  @AssertTrue(message = ErrorMessageConstants.EMPLOYEE_LEAVE_ADDITIONAL_LEAVES_CAN_NOT_BE_NEGATIVE)
-  private boolean isAdditionalLeavesValid() {
-    return additionalLeaves != null && additionalLeaves >= 0;
+  @AssertTrue(message =
+      ErrorMessageConstants.LEAVE_CARRIED_LEAVES_ARE_MORE_THAN_ALLOCATED_TIME_PERIOD)
+  private boolean isCarriedLeavesCountValid()
+  {
+    if(carriedLeaves != null && carriedLeaves < 0)
+    {
+      return false;
+    }
+    return true;
   }
 
-  @AssertTrue(message = ErrorMessageConstants.EMPLOYEE_LEAVE_CARRIED_LEAVES_CAN_NOT_BE_NEGATIVE)
-  private boolean isCarriedLeavesValid() {
-    return carriedLeaves != null && carriedLeaves >= 0;
+  @AssertTrue(message =
+      ErrorMessageConstants.LEAVE_ADDITIONAL_LEAVES_ARE_MORE_THAN_ALLOCATED_TIME_PERIOD)
+  private boolean isAdditionalLeavesCountValid()
+  {
+    if(additionalLeaves != null && additionalLeaves < 0)
+    {
+      return false;
+    }
+    return true;
   }
 }

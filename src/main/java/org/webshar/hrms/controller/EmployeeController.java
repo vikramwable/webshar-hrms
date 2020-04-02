@@ -29,7 +29,7 @@ public class EmployeeController {
   EmployeeService employeeService;
 
   @GetMapping(value = "/{id}")
-  public Employee getEmployeeByEmployeeId(
+  public Employee getEmployeeById(
       @PathVariable Long id)
       throws ServiceException {
     return employeeService.getEmployeeById(id);

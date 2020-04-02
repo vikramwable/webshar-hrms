@@ -1,30 +1,29 @@
 package org.webshar.hrms.model.db;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Objects;
+import lombok.Data;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import lombok.Getter;
-import lombok.Setter;
+
 import lombok.ToString;
 
 @Entity
 @Table(name = "leave_application")
-@Getter
-@Setter
+@Data
 @ToString(callSuper = true)
 public class LeaveApplication extends BaseModel {
 
   @Column(name = "start_date", nullable = false)
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-  private Date startDate;
+  private LocalDate startDate;
 
   @Column(name = "end_date", nullable = false)
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-  private Date endDate;
+  private LocalDate endDate;
 
   @OneToOne
   private Employee employee;
@@ -45,6 +44,7 @@ public class LeaveApplication extends BaseModel {
     this.setStartDate(leaveApplication.getStartDate());
     this.setEndDate(leaveApplication.getEndDate());
     this.setCreatedAt(leaveApplication.getCreatedAt());
+    this.setUpdatedAt(leaveApplication.getUpdatedAt());
     this.setEmployee(leaveApplication.getEmployee());
     this.setLeaveStatus(leaveApplication.getLeaveStatus());
     this.setLeaveType(leaveApplication.getLeaveType());

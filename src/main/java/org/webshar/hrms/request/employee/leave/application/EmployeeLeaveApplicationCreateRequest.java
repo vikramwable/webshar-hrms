@@ -1,7 +1,7 @@
 package org.webshar.hrms.request.employee.leave.application;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import java.util.Date;
+import java.time.LocalDate;
 import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.NotNull;
 import lombok.Data;
@@ -18,14 +18,23 @@ public class EmployeeLeaveApplicationCreateRequest {
 
   @NotNull(message = ErrorMessageConstants.LEAVE_START_DATE_NOT_NULL)
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-  private Date startDate;
+  private LocalDate startDate;
 
   @NotNull(message = ErrorMessageConstants.LEAVE_END_DATE_NOT_NULL)
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-  private Date endDate;
+  private LocalDate endDate;
 
   @AssertTrue(message = ErrorMessageConstants.LEAVE_END_DATE_CANNOT_LESS_THAN_START_DATE)
-  private boolean isValidEndDate() {
-    return endDate != null && !endDate.before(startDate);
+  private boolean isValidEndDate()
+  {
+    if (endDate == null)
+    {
+      return false;
+    }
+    else if (endDate.isBefore(startDate))
+    {
+      return false;
+    }
+    return true;
   }
 }

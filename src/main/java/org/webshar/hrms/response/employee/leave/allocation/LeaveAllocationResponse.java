@@ -1,7 +1,8 @@
 package org.webshar.hrms.response.employee.leave.allocation;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import lombok.Data;
 
 @Data
@@ -11,10 +12,10 @@ public class LeaveAllocationResponse {
   LeaveType leaveType;
   private Long id;
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-  private Date startDate;
+  private LocalDate startDate;
 
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-  private Date endDate;
+  private LocalDate endDate;
 
   private Long allottedLeaves;
 
@@ -25,10 +26,10 @@ public class LeaveAllocationResponse {
   private Long totalLeaves;
 
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
-  private Date createdAt;
+  private LocalDateTime createdAt;
 
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
-  private Date updatedAt;
+  private LocalDateTime updatedAt;
 }
 
 @Data
