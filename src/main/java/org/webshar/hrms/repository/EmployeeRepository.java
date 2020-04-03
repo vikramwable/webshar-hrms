@@ -11,9 +11,9 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long>, Emplo
 
   List<Employee> findByEmail(@Param("email") String email);
 
-  Employee findByEmployeeId(@Param("employee_id") Long employeeId);
+  Employee findByEmpId(@Param("emp_id") Long empId);
 
-  boolean existsByIdAndOrganizationId(@Param("employee_id") final Long employeeId,
+  boolean existsByIdAndOrganizationId(@Param("id") final Long id,
       @Param("organization_id") final Long organizationId);
 
   Employee findByEmpId(@Param("emp_id") String empId);
