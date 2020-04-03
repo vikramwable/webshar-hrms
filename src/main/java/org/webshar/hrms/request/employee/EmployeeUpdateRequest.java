@@ -37,6 +37,8 @@ public class EmployeeUpdateRequest {
 
   private String designation;
 
+  private Long reportsTo;
+
   @AssertTrue(message = ErrorMessageConstants.EMPLOYEE_EMP_ID_NOT_NULL)
   private boolean isValidEmployeeId() {
     return employeeId == null;

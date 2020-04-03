@@ -11,6 +11,7 @@ import org.webshar.hrms.repository.EmployeeRepository;
 import org.webshar.hrms.request.employee.EmployeeCreateRequest;
 import org.webshar.hrms.request.employee.EmployeeSearchRequest;
 import org.webshar.hrms.request.employee.EmployeeUpdateRequest;
+import org.webshar.hrms.service.exception.BadRequestException;
 import org.webshar.hrms.service.exception.EntityAlreadyExistsException;
 import org.webshar.hrms.service.exception.EntityNotFoundException;
 
@@ -41,8 +42,9 @@ public class EmployeeService {
     }
   }
 
+  @Transactional
   public Employee createEmployee(EmployeeCreateRequest employeeCreateRequest)
-      throws EntityAlreadyExistsException {
+      throws EntityAlreadyExistsException, BadRequestException {
     List<Employee> employees = employeeRepository
         .findByEmail(employeeCreateRequest.getEmail());
     if (employees.isEmpty()) {
@@ -54,8 +56,9 @@ public class EmployeeService {
     }
   }
 
+  @Transactional
   public Employee updateEmployee(final Long id, EmployeeUpdateRequest employeeUpdateRequest)
-      throws EntityNotFoundException {
+      throws EntityNotFoundException, BadRequestException {
     Employee employeeToUpdate = employeeRepository.findById(id)
         .orElseThrow(() -> new EntityNotFoundException(ErrorMessageConstants.EMPLOYEE_BY_ID_NOT_FOUND));
     Employee updatedEmployee = employeeBuilder.buildFromRequest(employeeToUpdate, employeeUpdateRequest);
@@ -64,7 +67,6 @@ public class EmployeeService {
 
   public void deleteEmployeeById(Long id) throws EntityNotFoundException {
     Employee employeeToDelete = getEmployeeById(id);
-
     employeeRepository.deleteById(employeeToDelete.getId());
   }
 

@@ -19,6 +19,7 @@
   <include file="changelog/09-leave_application-schema.xml" relativeToChangelogFile="true"/>
   <include file="changelog/10-leave-approval.xml" relativeToChangelogFile="true"/>
   <include file="changelog/11-leave_allocation-schema.xml" relativeToChangelogFile="true"/>
+  <include file="changelog/12-add-column-reportsto-in-employee-table.xml" relativeToChangelogFile="true"/>
 
 </databaseChangeLog>
 

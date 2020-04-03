@@ -2,15 +2,21 @@ package org.webshar.hrms.model.builder;
 
 import java.util.UUID;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.webshar.hrms.model.db.Employee;
+import org.webshar.hrms.repository.EmployeeRepository;
 import org.webshar.hrms.request.employee.EmployeeCreateRequest;
 import org.webshar.hrms.request.employee.EmployeeUpdateRequest;
+import org.webshar.hrms.service.exception.BadRequestException;
 
 @Component
 public class EmployeeBuilder {
 
-  public Employee buildFromRequest(EmployeeCreateRequest employeeCreateRequest) {
+  @Autowired
+  private EmployeeRepository employeeRepository;
+
+  public Employee buildFromRequest(EmployeeCreateRequest employeeCreateRequest) throws BadRequestException {
     Employee employee = new Employee();
     employee.setEmployeeId(employeeCreateRequest.getEmployeeId());
     employee.setOrganizationId(employeeCreateRequest.getOrganizationId());
@@ -27,11 +33,14 @@ public class EmployeeBuilder {
     employee.setContact(employeeCreateRequest.getContact());
     employee.setDesignation(employeeCreateRequest.getDesignation());
     employee.setGuid(UUID.randomUUID());
+    //if reports to is available then do validation of data
+    checkAndUpdateReportsTo(employee, employeeCreateRequest.getReportsTo(), employeeCreateRequest.getOrganizationId());
+
     return employee;
   }
 
   public Employee buildFromRequest(Employee employeeToBeUpdated,
-      EmployeeUpdateRequest employeeUpdateRequest) {
+      EmployeeUpdateRequest employeeUpdateRequest) throws BadRequestException {
     Employee employeeAfterUpdate = new Employee(employeeToBeUpdated);
     if (employeeUpdateRequest.getEmployeeId() != null) {
       employeeAfterUpdate.setEmployeeId(employeeUpdateRequest.getEmployeeId());
@@ -74,16 +83,28 @@ public class EmployeeBuilder {
       employeeAfterUpdate.setAddress(employeeUpdateRequest.getAddress());
     }
 
-    if (StringUtils
-        .isNotBlank(employeeUpdateRequest.getContact())) {
+    if (StringUtils.isNotBlank(employeeUpdateRequest.getContact())) {
       employeeAfterUpdate.setContact(employeeUpdateRequest.getContact());
     }
 
-    if (StringUtils
-        .isNotBlank(employeeUpdateRequest.getDesignation())) {
-      employeeAfterUpdate.setDesignation(employeeUpdateRequest.getDesignation()
-      );
+    if (StringUtils.isNotBlank(employeeUpdateRequest.getDesignation())) {
+      employeeAfterUpdate.setDesignation(employeeUpdateRequest.getDesignation());
     }
+    checkAndUpdateReportsTo(employeeAfterUpdate, employeeAfterUpdate.getReportsTo(),
+        employeeAfterUpdate.getOrganizationId());
+
     return employeeAfterUpdate;
+  }
+
+  private void checkAndUpdateReportsTo(final Employee employee, final Long reportsTo, final Long organizationId)
+      throws BadRequestException {
+    //if reports to is available then do validation of data
+    if (reportsTo != null) {
+      if (employeeRepository.existsByIdAndOrganizationId(reportsTo, organizationId)) {
+        employee.setReportsTo(reportsTo);
+      } else {
+        throw new BadRequestException("Invalid value for reports to field");
+      }
+    }
   }
 }

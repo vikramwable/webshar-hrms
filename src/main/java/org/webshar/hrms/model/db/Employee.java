@@ -29,7 +29,7 @@ public class Employee extends BaseModel {
   private Long organizationId;
   @Column(name = "first_name", nullable = false, length = 100)
   private String firstName;
-  @Column(name = "middle_name", nullable = true, length = 100)
+  @Column(name = "middle_name", length = 100)
   private String middleName;
   @Column(name = "last_name", nullable = false, length = 100)
   private String lastName;
@@ -41,14 +41,16 @@ public class Employee extends BaseModel {
   private String email;
   @Column(name = "joining_date", nullable = false, updatable = false)
   private Date joiningDate;
-  @Column(name = "exit_date", nullable = true)
+  @Column(name = "exit_date")
   private Date exitDate;
-  @Column(name = "address", nullable = true, length = 300)
+  @Column(name = "address", length = 300)
   private String address;
   @Column(name = "contact", nullable = false, length = 100)
   private String contact;
   @Column(name = "designation", nullable = false, length = 200)
   private String designation;
+  @Column(name = "reports_to", length = 11)
+  private Long reportsTo;
 
   public Employee() {
 
@@ -71,6 +73,7 @@ public class Employee extends BaseModel {
     this.setContact(employee.getContact());
     this.setDesignation(employee.getDesignation());
     this.setCreatedAt(employee.getCreatedAt());
+    this.setReportsTo(employee.getReportsTo());
   }
 
   @Override
