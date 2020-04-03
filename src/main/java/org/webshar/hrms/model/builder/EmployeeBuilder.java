@@ -18,7 +18,7 @@ public class EmployeeBuilder {
 
   public Employee buildFromRequest(EmployeeCreateRequest employeeCreateRequest) throws BadRequestException {
     Employee employee = new Employee();
-    employee.setEmployeeId(employeeCreateRequest.getEmployeeId());
+    employee.setEmpId(employeeCreateRequest.getEmpId());
     employee.setOrganizationId(employeeCreateRequest.getOrganizationId());
     employee.setFirstName(employeeCreateRequest.getFirstName());
     employee.setMiddleName(employeeCreateRequest.getMiddleName());
@@ -42,8 +42,9 @@ public class EmployeeBuilder {
   public Employee buildFromRequest(Employee employeeToBeUpdated,
       EmployeeUpdateRequest employeeUpdateRequest) throws BadRequestException {
     Employee employeeAfterUpdate = new Employee(employeeToBeUpdated);
-    if (employeeUpdateRequest.getEmployeeId() != null) {
-      employeeAfterUpdate.setEmployeeId(employeeUpdateRequest.getEmployeeId());
+    if (employeeUpdateRequest.getEmpId() != null)
+    {
+      employeeAfterUpdate.setEmpId(employeeUpdateRequest.getEmpId());
     }
     if (employeeUpdateRequest.getOrganizationId() != null) {
       employeeAfterUpdate.setOrganizationId(employeeUpdateRequest.getOrganizationId());

@@ -23,8 +23,8 @@ public class Employee extends BaseModel {
    *
    */
   private static final long serialVersionUID = 1L;
-  @Column(name = "employee_id", nullable = false, unique = true, length = 11)
-  private Long employeeId;
+  @Column(name = "emp_id", nullable = false, unique = true, length = 11)
+  private String empId;
   @Column(name = "organization_id", nullable = false, unique = true, length = 11)
   private Long organizationId;
   @Column(name = "first_name", nullable = false, length = 100)
@@ -59,7 +59,7 @@ public class Employee extends BaseModel {
   public Employee(Employee employee) {
     this.setId(employee.getId());
     this.setGuid(employee.getGuid());
-    this.setEmployeeId(employee.getEmployeeId());
+    this.setEmpId(employee.getEmpId());
     this.setOrganizationId(employee.getOrganizationId());
     this.setFirstName(employee.getFirstName());
     this.setMiddleName(employee.getMiddleName());
@@ -85,7 +85,7 @@ public class Employee extends BaseModel {
       return false;
     }
     Employee employee = (Employee) o;
-    return employeeId.equals(employee.employeeId) &&
+    return empId.equals(employee.empId) &&
         firstName.equals(employee.firstName) &&
         middleName.equals(employee.middleName) &&
         lastName.equals(employee.lastName) &&
@@ -93,7 +93,8 @@ public class Employee extends BaseModel {
   }
 
   @Override
-  public int hashCode() {
-    return Objects.hash(employeeId, firstName, middleName, lastName, email);
+  public int hashCode()
+  {
+    return Objects.hash(empId, firstName, middleName, lastName, email);
   }
 }

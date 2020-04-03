@@ -3,16 +3,11 @@ package org.webshar.hrms.service;
 import static org.webshar.hrms.enums.LeaveStatus.CANCELED;
 import static org.webshar.hrms.enums.LeaveStatus.PENDING;
 import static org.webshar.hrms.enums.LeaveStatus.REJECTED;
-
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -73,7 +68,7 @@ public class LeaveApplicationService {
   public List<EmployeeLeaveApplicationResponse> getLeaveApplicationByEmployeeIdLeaveTypeAndLeaveStatus(
       final Long employeeId, final Long leaveTypeId, final Long leaveStatusId)
       throws EntityNotFoundException {
-    Employee employee = employeeService.getEmployeeByEmployeeId(employeeId);
+    Employee employee = employeeService.getEmployeeById(employeeId);
 
     if (null == leaveStatusId) {
       if (employeeId != null && leaveTypeId == null) {
@@ -96,7 +91,7 @@ public class LeaveApplicationService {
       throws EntityNotFoundException, InsufficientLeaveException,
       EntityAlreadyExistsException {
     Employee employee = employeeService
-        .getEmployeeByEmployeeId(employeeLeaveApplicationCreateRequest.getEmployeeId());
+        .getEmployeeById(employeeLeaveApplicationCreateRequest.getEmployeeId());
 
     LeaveType leaveType = leaveTypeService
         .getLeaveTypeById(employeeLeaveApplicationCreateRequest.getLeaveTypeId());
@@ -107,7 +102,8 @@ public class LeaveApplicationService {
 
     LeaveAllocation allocatedEmployeeLeaves = leaveAllocationService
         .getEmployeeAllocatedLeavesByEmployeeIdAndLeaveType(employee.getId(),
-            leaveType.getId());
+            leaveType.getId(), employeeLeaveApplicationCreateRequest.getStartDate(),
+            employeeLeaveApplicationCreateRequest.getEndDate());
 
     Collection<Long> leaveStatusIds = new ArrayList<>();
     leaveStatusIds.add(leaveStatusService.getLeaveStatusByStatus(REJECTED.toString()).getId());
@@ -123,8 +119,9 @@ public class LeaveApplicationService {
       throw new InsufficientLeaveException(
           ErrorMessageConstants.LEAVE_INSUFFICIENT_LEAVE_COUNT_OF_GIVEN_LEAVE_TYPE);
     } else {
-      isStartAndEndDateAreOverlappingWithExistingRecordForGivenEmployeeAndLeaveTypeId(
-          employee.getId(), leaveType.getId(), employeeLeaveApplicationCreateRequest.getStartDate(),
+      isStartAndEndDateAreOverlappingWithExistingRecordForGivenEmployeeId(
+          employeeLeaveApplicationCreateRequest.getEmployeeId(),
+          employeeLeaveApplicationCreateRequest.getStartDate(),
           employeeLeaveApplicationCreateRequest.getEndDate());
       LeaveApplication leaveToApply = leaveApplicationRepository
           .findByEmployeeIdAndStartDateAndEndDate(
@@ -139,17 +136,19 @@ public class LeaveApplicationService {
         throw new EntityAlreadyExistsException(
             ErrorMessageConstants.LEAVE_WITH_GIVEN_TYPE_AND_STATUS_EXISTS);
       }
-      return leaveApplicationResponseBuilder.buildFromResult(leaveApplicationRepository.save(leaveToApply));
-    }
-  }
 
+      return leaveApplicationResponseBuilder
+          .buildFromResult(leaveApplicationRepository.save(leaveToApply));
+    }
+
+  }
 
   public EmployeeLeaveApplicationResponse updateLeaveApplication(
       final Long id, final EmployeeLeaveApplicationUpdateRequest employeeLeaveApplicationUpdateRequest)
       throws EntityNotFoundException {
 
     Employee employee = employeeService
-        .getEmployeeByEmployeeId(employeeLeaveApplicationUpdateRequest.getEmployeeId());
+        .getEmployeeById(employeeLeaveApplicationUpdateRequest.getEmployeeId());
     LeaveStatus leaveStatus = leaveStatusService
         .getLeaveStatusById(employeeLeaveApplicationUpdateRequest.getLeaveStatusId());
 
@@ -164,35 +163,23 @@ public class LeaveApplicationService {
     return leaveApplicationResponseBuilder.buildFromResult(updatedLeaveApplication);
   }
 
-  private int getNoOfDaysLeaveApplied(final Date startDate, final Date endDate) {
-    DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(DATE_FORMAT);
-    LocalDate ldStartDate = LocalDate
-        .parse(new SimpleDateFormat(DATE_FORMAT).format(startDate), dateTimeFormatter);
-    LocalDate ldEndDate = LocalDate
-        .parse(new SimpleDateFormat(DATE_FORMAT).format(endDate), dateTimeFormatter);
-    return (int) ChronoUnit.DAYS.between(ldStartDate, ldEndDate) + 1;
+  private int getNoOfDaysLeaveApplied(final LocalDate startDate, final LocalDate endDate)
+  {
+    return (int) ChronoUnit.DAYS.between(startDate, endDate) + 1;
   }
 
-  private void isStartAndEndDateAreOverlappingWithExistingRecordForGivenEmployeeAndLeaveTypeId(
-      final Long employeeId, final Long leaveTypeId, final Date startDate, final Date endDate)
-      throws EntityAlreadyExistsException {
+  private void isStartAndEndDateAreOverlappingWithExistingRecordForGivenEmployeeId(
+      final Long employeeId, final LocalDate startDate, final LocalDate endDate)
+      throws EntityAlreadyExistsException
+  {
     List<LeaveApplication> leaveApplicationList = leaveApplicationRepository
-        .findAllByStartDateGreaterThanEqualAndStartDateLessThanEqual(startDate, endDate);
+        .findLeaveAlreadyAppliedInTheGivenDateRange(employeeId,startDate, endDate);
 
-    leaveApplicationList
-        .addAll(leaveApplicationRepository.findAllByEndDateGreaterThanEqualAndEndDateLessThanEqual(startDate, endDate));
-    leaveApplicationList.addAll(
-        leaveApplicationRepository.findAllByStartDateLessThanEqualAndEndDateGreaterThanEqual(startDate, endDate));
+    if (!leaveApplicationList.isEmpty())
+    {
 
-    Optional<LeaveApplication> leaveApplicationResult = leaveApplicationList
-        .stream()
-        .filter(leaveApplication -> (leaveApplication.getEmployee().getId().equals(employeeId)) && (
-            leaveApplication.getLeaveType().getId().equals(leaveTypeId)))
-        .findFirst();
-
-    if (leaveApplicationResult.isPresent()) {
       throw new EntityAlreadyExistsException(
-          ErrorMessageConstants.LEAVE_ALLOCATED_WITH_GIVEN_LEAVE_TYPE_AND_START_DATE_AND_END_DATE_OVERLAPPING);
+          ErrorMessageConstants.LEAVE_APPLICATION_WITH_GIVEN_LEAVE_TYPE_AND_START_DATE_AND_END_DATE_OVERLAPPING);
     }
   }
 }

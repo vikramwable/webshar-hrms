@@ -10,7 +10,7 @@ import org.webshar.hrms.constants.ErrorMessageConstants;
 @Data
 public class EmployeeUpdateRequest {
 
-  private Long employeeId;
+  private String empId;
 
   private Long organizationId;
 
@@ -41,7 +41,7 @@ public class EmployeeUpdateRequest {
 
   @AssertTrue(message = ErrorMessageConstants.EMPLOYEE_EMP_ID_NOT_NULL)
   private boolean isValidEmployeeId() {
-    return employeeId == null;
+    return empId == null;
   }
 
   @AssertTrue(message = ErrorMessageConstants.EMPLOYEE_ORGANIZATION_ID_NOT_NULL)
@@ -98,4 +98,5 @@ public class EmployeeUpdateRequest {
   private boolean isValidDesignation() {
     return designation == null || StringUtils.isNoneBlank(middleName);
   }
+
 }

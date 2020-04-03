@@ -9,10 +9,15 @@ import org.webshar.hrms.model.db.Employee;
 @Repository
 public interface EmployeeRepository extends JpaRepository<Employee, Long>, EmployeeRepositoryCustom {
 
-  public List<Employee> findByEmail(@Param("email") String email);
+  List<Employee> findByEmail(@Param("email") String email);
 
-  public Employee findByEmployeeId(@Param("employee_id") Long employeeId);
+  Employee findByEmployeeId(@Param("employee_id") Long employeeId);
 
-  public boolean existsByIdAndOrganizationId(@Param("employee_id") final Long employeeId,
+  boolean existsByIdAndOrganizationId(@Param("employee_id") final Long employeeId,
       @Param("organization_id") final Long organizationId);
+
+  Employee findByEmpId(@Param("emp_id") String empId);
+
+  List<Employee> findByEmpIdOrEmail(@Param("emp_id") String empId,
+      @Param("email") String email);
 }

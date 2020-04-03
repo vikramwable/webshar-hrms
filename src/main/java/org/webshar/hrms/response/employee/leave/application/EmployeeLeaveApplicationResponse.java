@@ -1,7 +1,8 @@
 package org.webshar.hrms.response.employee.leave.application;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import lombok.Data;
 
 @Data
@@ -10,16 +11,16 @@ public class EmployeeLeaveApplicationResponse {
   private Long id;
 
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-  private Date startDate;
+  private LocalDate startDate;
 
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-  private Date endDate;
+  private LocalDate endDate;
 
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
-  private Date createdAt;
+  private LocalDateTime createdAt;
 
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm")
-  private Date updatedAt;
+  private LocalDateTime updatedAt;
 
   private Employee employee;
 
