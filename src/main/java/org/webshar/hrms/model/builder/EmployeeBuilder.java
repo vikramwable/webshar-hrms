@@ -1,6 +1,5 @@
 package org.webshar.hrms.model.builder;
 
-import java.util.Optional;
 import java.util.UUID;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +16,7 @@ public class EmployeeBuilder {
   @Autowired
   private EmployeeRepository employeeRepository;
 
-  public Employee buildFromRequest(EmployeeCreateRequest employeeCreateRequest, Optional<Employee> reportsTo)
+  public Employee buildFromRequest(EmployeeCreateRequest employeeCreateRequest, Employee reportsTo)
       throws BadRequestException {
     Employee employee = new Employee();
     employee.setEmpId(employeeCreateRequest.getEmpId());
@@ -42,7 +41,7 @@ public class EmployeeBuilder {
   }
 
   public Employee buildFromRequest(Employee employeeToBeUpdated,
-      EmployeeUpdateRequest employeeUpdateRequest, final Optional<Employee> reportsTo) throws BadRequestException {
+      EmployeeUpdateRequest employeeUpdateRequest, final Employee reportsTo) throws BadRequestException {
     Employee employeeAfterUpdate = new Employee(employeeToBeUpdated);
     if (employeeUpdateRequest.getEmpId() != null) {
       employeeAfterUpdate.setEmpId(employeeUpdateRequest.getEmpId());
@@ -98,14 +97,13 @@ public class EmployeeBuilder {
     return employeeAfterUpdate;
   }
 
-  private void checkAndUpdateReportsTo(final Employee employee, final Optional<Employee> reportsTo,
+  private void checkAndUpdateReportsTo(final Employee employee, final Employee reportsTo,
       final Long organizationId)
       throws BadRequestException {
     //if reports to is available then do validation of data
-    if (reportsTo.isPresent()) {
-      Employee reportsToEmployee = reportsTo.get();
-      if (employeeRepository.existsByIdAndOrganizationId(reportsToEmployee.getId(), organizationId)) {
-        employee.setReportsTo(reportsToEmployee);
+    if (reportsTo != null) {
+      if (employeeRepository.existsByIdAndOrganizationId(reportsTo.getId(), organizationId)) {
+        employee.setReportsTo(reportsTo);
       } else {
         throw new BadRequestException("Invalid value for reports to field");
       }

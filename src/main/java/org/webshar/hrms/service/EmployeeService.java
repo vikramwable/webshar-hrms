@@ -53,7 +53,7 @@ public class EmployeeService {
     Optional<Employee> reportTo = getReportsToEmployee(employeeCreateRequest.getReportsTo());
     organizationService.getOrganizationById(employeeCreateRequest.getOrganizationId());
     if (employees.isEmpty()) {
-      Employee employeeToCreate = employeeBuilder.buildFromRequest(employeeCreateRequest, reportTo);
+      Employee employeeToCreate = employeeBuilder.buildFromRequest(employeeCreateRequest, reportTo.get());
       return employeeRepository.save(employeeToCreate);
     } else {
       throw new EntityAlreadyExistsException(ErrorMessageConstants.EMPLOYEE_DUPLICATE_EMAIL);
@@ -66,7 +66,8 @@ public class EmployeeService {
     Employee employeeToUpdate = employeeRepository.findById(id)
         .orElseThrow(() -> new EntityNotFoundException(ErrorMessageConstants.EMPLOYEE_BY_ID_NOT_FOUND));
     Optional<Employee> reportTo = getReportsToEmployee(employeeUpdateRequest.getReportsTo());
-    Employee updatedEmployee = employeeBuilder.buildFromRequest(employeeToUpdate, employeeUpdateRequest, reportTo);
+    Employee updatedEmployee = employeeBuilder
+        .buildFromRequest(employeeToUpdate, employeeUpdateRequest, reportTo.get());
     return employeeRepository.save(updatedEmployee);
   }
 
