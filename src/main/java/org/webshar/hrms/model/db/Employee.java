@@ -4,8 +4,11 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import java.util.Date;
 import java.util.Objects;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
@@ -49,8 +52,13 @@ public class Employee extends BaseModel {
   private String contact;
   @Column(name = "designation", nullable = false, length = 200)
   private String designation;
-  @Column(name = "reports_to", length = 11)
-  private Long reportsTo;
+
+//  @Column(name = "reports_to", length = 11)
+//  private Long reportsTo;
+
+  @OneToOne(cascade = CascadeType.ALL)
+  @JoinColumn(name = "reports_to", referencedColumnName = "id")
+  private Employee reportsTo;
 
   public Employee() {
 
@@ -93,8 +101,7 @@ public class Employee extends BaseModel {
   }
 
   @Override
-  public int hashCode()
-  {
+  public int hashCode() {
     return Objects.hash(empId, firstName, middleName, lastName, email);
   }
 }

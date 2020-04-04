@@ -1,6 +1,7 @@
 package org.webshar.hrms.service;
 
 import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -49,11 +50,10 @@ public class EmployeeService {
       throws EntityAlreadyExistsException, BadRequestException, EntityNotFoundException {
     List<Employee> employees = employeeRepository
         .findByEmpIdOrEmail(employeeCreateRequest.getEmpId(), employeeCreateRequest.getEmail());
-
+    Optional<Employee> reportTo = getReportsToEmployee(employeeCreateRequest.getReportsTo());
     organizationService.getOrganizationById(employeeCreateRequest.getOrganizationId());
     if (employees.isEmpty()) {
-      Employee employeeToCreate = employeeBuilder
-          .buildFromRequest(employeeCreateRequest);
+      Employee employeeToCreate = employeeBuilder.buildFromRequest(employeeCreateRequest, reportTo);
       return employeeRepository.save(employeeToCreate);
     } else {
       throw new EntityAlreadyExistsException(ErrorMessageConstants.EMPLOYEE_DUPLICATE_EMAIL);
@@ -65,8 +65,17 @@ public class EmployeeService {
       throws EntityNotFoundException, BadRequestException {
     Employee employeeToUpdate = employeeRepository.findById(id)
         .orElseThrow(() -> new EntityNotFoundException(ErrorMessageConstants.EMPLOYEE_BY_ID_NOT_FOUND));
-    Employee updatedEmployee = employeeBuilder.buildFromRequest(employeeToUpdate, employeeUpdateRequest);
+    Optional<Employee> reportTo = getReportsToEmployee(employeeUpdateRequest.getReportsTo());
+    Employee updatedEmployee = employeeBuilder.buildFromRequest(employeeToUpdate, employeeUpdateRequest, reportTo);
     return employeeRepository.save(updatedEmployee);
+  }
+
+  private Optional<Employee> getReportsToEmployee(Long reportsTo) {
+    Optional<Employee> reportTo = null;
+    if (reportsTo != null) {
+      reportTo = employeeRepository.findById(reportsTo);
+    }
+    return reportTo;
   }
 
   public void deleteEmployeeById(Long id) throws EntityNotFoundException {
