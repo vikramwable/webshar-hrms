@@ -72,7 +72,7 @@ public class EmployeeService {
   }
 
   private Optional<Employee> getReportsToEmployee(Long reportsTo) {
-    Optional<Employee> reportTo = null;
+    Optional<Employee> reportTo = Optional.empty();
     if (reportsTo != null) {
       reportTo = employeeRepository.findById(reportsTo);
     }
