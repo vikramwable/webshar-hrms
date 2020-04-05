@@ -4,8 +4,11 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import java.util.Date;
 import java.util.Objects;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
@@ -29,7 +32,7 @@ public class Employee extends BaseModel {
   private Long organizationId;
   @Column(name = "first_name", nullable = false, length = 100)
   private String firstName;
-  @Column(name = "middle_name", nullable = true, length = 100)
+  @Column(name = "middle_name", length = 100)
   private String middleName;
   @Column(name = "last_name", nullable = false, length = 100)
   private String lastName;
@@ -41,14 +44,21 @@ public class Employee extends BaseModel {
   private String email;
   @Column(name = "joining_date", nullable = false, updatable = false)
   private Date joiningDate;
-  @Column(name = "exit_date", nullable = true)
+  @Column(name = "exit_date")
   private Date exitDate;
-  @Column(name = "address", nullable = true, length = 300)
+  @Column(name = "address", length = 300)
   private String address;
   @Column(name = "contact", nullable = false, length = 100)
   private String contact;
   @Column(name = "designation", nullable = false, length = 200)
   private String designation;
+
+//  @Column(name = "reports_to", length = 11)
+//  private Long reportsTo;
+
+  @OneToOne(cascade = CascadeType.ALL)
+  @JoinColumn(name = "reports_to", referencedColumnName = "id")
+  private Employee reportsTo;
 
   public Employee() {
 
@@ -71,6 +81,7 @@ public class Employee extends BaseModel {
     this.setContact(employee.getContact());
     this.setDesignation(employee.getDesignation());
     this.setCreatedAt(employee.getCreatedAt());
+    this.setReportsTo(employee.getReportsTo());
   }
 
   @Override
@@ -90,8 +101,7 @@ public class Employee extends BaseModel {
   }
 
   @Override
-  public int hashCode()
-  {
+  public int hashCode() {
     return Objects.hash(empId, firstName, middleName, lastName, email);
   }
 }

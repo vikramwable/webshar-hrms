@@ -52,6 +52,9 @@ public class EmployeeCreateRequest {
   @NotBlank(message = ErrorMessageConstants.EMPLOYEE_DESIGNATION_NOT_BLANK)
   private String designation;
 
+  private Long reportsTo;
+
+
   @AssertTrue(message = ErrorMessageConstants.EMPLOYEE_INVALID_STATAUS)
   private boolean isValidStatus() {
     if (isActive == null) {

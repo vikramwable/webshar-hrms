@@ -19,6 +19,7 @@ import org.webshar.hrms.request.employee.EmployeeCreateRequest;
 import org.webshar.hrms.request.employee.EmployeeSearchRequest;
 import org.webshar.hrms.request.employee.EmployeeUpdateRequest;
 import org.webshar.hrms.service.EmployeeService;
+import org.webshar.hrms.service.exception.BadRequestException;
 import org.webshar.hrms.service.exception.ServiceException;
 
 @RestController
@@ -39,7 +40,7 @@ public class EmployeeController {
   @ResponseStatus(HttpStatus.CREATED)
   public Employee createEmployee(
       @Valid @RequestBody @NotNull EmployeeCreateRequest employeeCreateRequest)
-      throws ServiceException {
+      throws ServiceException, BadRequestException {
     return employeeService.createEmployee(employeeCreateRequest);
   }
 
@@ -52,7 +53,8 @@ public class EmployeeController {
   @PatchMapping(value = "/{id}")
   public Employee updateEmployeeById(
       @PathVariable Long id,
-      @NotNull @Valid @RequestBody EmployeeUpdateRequest employeeUpdateRequest) throws ServiceException {
+      @NotNull @Valid @RequestBody EmployeeUpdateRequest employeeUpdateRequest)
+      throws ServiceException, BadRequestException {
     return employeeService.updateEmployee(id, employeeUpdateRequest);
   }
 

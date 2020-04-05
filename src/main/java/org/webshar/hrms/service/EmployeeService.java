@@ -1,6 +1,7 @@
 package org.webshar.hrms.service;
 
 import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,6 +12,7 @@ import org.webshar.hrms.repository.EmployeeRepository;
 import org.webshar.hrms.request.employee.EmployeeCreateRequest;
 import org.webshar.hrms.request.employee.EmployeeSearchRequest;
 import org.webshar.hrms.request.employee.EmployeeUpdateRequest;
+import org.webshar.hrms.service.exception.BadRequestException;
 import org.webshar.hrms.service.exception.EntityAlreadyExistsException;
 import org.webshar.hrms.service.exception.EntityNotFoundException;
 
@@ -43,33 +45,42 @@ public class EmployeeService {
     }
   }
 
+  @Transactional
   public Employee createEmployee(EmployeeCreateRequest employeeCreateRequest)
-      throws EntityAlreadyExistsException, EntityNotFoundException
-  {
+      throws EntityAlreadyExistsException, BadRequestException, EntityNotFoundException {
     List<Employee> employees = employeeRepository
-        .findByEmpIdOrEmail(employeeCreateRequest.getEmpId(),employeeCreateRequest.getEmail());
-
+        .findByEmpIdOrEmail(employeeCreateRequest.getEmpId(), employeeCreateRequest.getEmail());
+    Optional<Employee> reportTo = getReportsToEmployee(employeeCreateRequest.getReportsTo());
     organizationService.getOrganizationById(employeeCreateRequest.getOrganizationId());
     if (employees.isEmpty()) {
-      Employee employeeToCreate = employeeBuilder
-          .buildFromRequest(employeeCreateRequest);
+      Employee employeeToCreate = employeeBuilder.buildFromRequest(employeeCreateRequest, reportTo.get());
       return employeeRepository.save(employeeToCreate);
     } else {
       throw new EntityAlreadyExistsException(ErrorMessageConstants.EMPLOYEE_DUPLICATE_EMAIL);
     }
   }
 
+  @Transactional
   public Employee updateEmployee(final Long id, EmployeeUpdateRequest employeeUpdateRequest)
-      throws EntityNotFoundException {
+      throws EntityNotFoundException, BadRequestException {
     Employee employeeToUpdate = employeeRepository.findById(id)
         .orElseThrow(() -> new EntityNotFoundException(ErrorMessageConstants.EMPLOYEE_BY_ID_NOT_FOUND));
-    Employee updatedEmployee = employeeBuilder.buildFromRequest(employeeToUpdate, employeeUpdateRequest);
+    Optional<Employee> reportTo = getReportsToEmployee(employeeUpdateRequest.getReportsTo());
+    Employee updatedEmployee = employeeBuilder
+        .buildFromRequest(employeeToUpdate, employeeUpdateRequest, reportTo.get());
     return employeeRepository.save(updatedEmployee);
+  }
+
+  private Optional<Employee> getReportsToEmployee(Long reportsTo) {
+    Optional<Employee> reportTo = Optional.empty();
+    if (reportsTo != null) {
+      reportTo = employeeRepository.findById(reportsTo);
+    }
+    return reportTo;
   }
 
   public void deleteEmployeeById(Long id) throws EntityNotFoundException {
     Employee employeeToDelete = getEmployeeById(id);
-
     employeeRepository.deleteById(employeeToDelete.getId());
   }
 
