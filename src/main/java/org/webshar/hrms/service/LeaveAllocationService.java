@@ -49,8 +49,7 @@ public class LeaveAllocationService {
   }
 
   public List<LeaveAllocationResponse> getEmployeesAllocatedLeavesByEmployeeId(
-      final Long employeeId)
-      throws EntityNotFoundException {
+      final Long employeeId) {
     return leaveAllocationResponseBuilder
         .buildFromResult(leaveAllocationRepository
             .findByEmployeeId(employeeId));
