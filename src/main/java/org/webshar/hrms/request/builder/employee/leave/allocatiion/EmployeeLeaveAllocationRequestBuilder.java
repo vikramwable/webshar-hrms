@@ -7,12 +7,13 @@ import org.webshar.hrms.model.db.OrganizationLeave;
 import org.webshar.hrms.request.employee.leave.allocation.EmployeeLeaveAllocationCreateRequest;
 
 @Component
-public class EmployeeLeaveAllocationRequestBuilder
-{
+public class EmployeeLeaveAllocationRequestBuilder {
+
   public static final String START_DATE = "startDate";
   public static final String END_DATE = "endDate";
 
-  public EmployeeLeaveAllocationCreateRequest buildFromOrganizationLeaves(Employee employee, OrganizationLeave organizationLeave){
+  public EmployeeLeaveAllocationCreateRequest buildFromOrganizationLeaves(Employee employee,
+      OrganizationLeave organizationLeave) {
 
     //For each assigned leaveType allocate same leaves to employee
     EmployeeLeaveAllocationCreateRequest employeeLeaveAllocationCreateRequest = new EmployeeLeaveAllocationCreateRequest();
@@ -28,10 +29,10 @@ public class EmployeeLeaveAllocationRequestBuilder
     return employeeLeaveAllocationCreateRequest;
   }
 
-  private String getDate(String whichDate){
+  private String getDate(String whichDate) {
     LocalDate currentdate = LocalDate.now();
     int currentYear = currentdate.getYear();
-    switch (whichDate){
+    switch (whichDate) {
       case START_DATE:
         return currentYear + "-" + "01" + "-" + "01";
       case END_DATE:
