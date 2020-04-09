@@ -6,11 +6,13 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Entity
 @Table(name = "leave_type")
 @Getter
 @Setter
+@ToString(callSuper = true)
 public class LeaveType extends BaseModel {
 
   @Column(name = "type", nullable = false, unique = true, length = 200)
