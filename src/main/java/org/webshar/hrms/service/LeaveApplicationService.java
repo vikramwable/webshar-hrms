@@ -3,6 +3,7 @@ package org.webshar.hrms.service;
 import static org.webshar.hrms.enums.LeaveStatus.CANCELED;
 import static org.webshar.hrms.enums.LeaveStatus.PENDING;
 import static org.webshar.hrms.enums.LeaveStatus.REJECTED;
+
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
@@ -163,20 +164,17 @@ public class LeaveApplicationService {
     return leaveApplicationResponseBuilder.buildFromResult(updatedLeaveApplication);
   }
 
-  private int getNoOfDaysLeaveApplied(final LocalDate startDate, final LocalDate endDate)
-  {
+  private int getNoOfDaysLeaveApplied(final LocalDate startDate, final LocalDate endDate) {
     return (int) ChronoUnit.DAYS.between(startDate, endDate) + 1;
   }
 
   private void isStartAndEndDateAreOverlappingWithExistingRecordForGivenEmployeeId(
       final Long employeeId, final LocalDate startDate, final LocalDate endDate)
-      throws EntityAlreadyExistsException
-  {
+      throws EntityAlreadyExistsException {
     List<LeaveApplication> leaveApplicationList = leaveApplicationRepository
-        .findLeaveAlreadyAppliedInTheGivenDateRange(employeeId,startDate, endDate);
+        .findLeaveAlreadyAppliedInTheGivenDateRange(employeeId, startDate, endDate);
 
-    if (!leaveApplicationList.isEmpty())
-    {
+    if (!leaveApplicationList.isEmpty()) {
 
       throw new EntityAlreadyExistsException(
           ErrorMessageConstants.LEAVE_APPLICATION_WITH_GIVEN_LEAVE_TYPE_AND_START_DATE_AND_END_DATE_OVERLAPPING);

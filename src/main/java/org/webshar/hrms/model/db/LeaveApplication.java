@@ -3,12 +3,11 @@ package org.webshar.hrms.model.db;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import java.time.LocalDate;
 import java.util.Objects;
-import lombok.Data;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-
+import lombok.Data;
 import lombok.ToString;
 
 @Entity

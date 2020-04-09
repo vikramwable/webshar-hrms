@@ -35,57 +35,28 @@ public class EmployeeLeaveAllocationCreateRequest {
   private Long additionalLeaves;
 
   @AssertTrue(message = ErrorMessageConstants.LEAVE_END_DATE_CANNOT_LESS_THAN_START_DATE)
-  private boolean isValidEndDate()
-  {
-    if (endDate == null || endDate.isBefore(startDate) )
-    {
-      return false;
-    }
-    else
-    {
-      return true;
-    }
+  private boolean isValidEndDate() {
+    return endDate != null && !endDate.isBefore(startDate);
   }
 
   @AssertTrue(message =
       ErrorMessageConstants.LEAVE_ALLOCATED_LEAVES_ARE_MORE_THAN_ALLOCATED_TIME_PERIOD)
-  private boolean isAllottedLeavesCountValid()
-  {
-    if(allottedLeaves != null && allottedLeaves < 0)
-    {
-      return false;
-    }
-    else if(ChronoUnit.DAYS.between(startDate, endDate)+1 < allottedLeaves){
-      return false;
-    }
-    return true;
+  private boolean isAllottedLeavesCountValid() {
+    return !(allottedLeaves != null && allottedLeaves < 0
+        && ChronoUnit.DAYS.between(startDate, endDate) + 1 < allottedLeaves);
   }
 
   @AssertTrue(message =
       ErrorMessageConstants.LEAVE_CARRIED_LEAVES_ARE_MORE_THAN_ALLOCATED_TIME_PERIOD)
-  private boolean isCarriedLeavesCountValid()
-  {
-    if(carriedLeaves != null && carriedLeaves < 0)
-    {
-      return false;
-    }
-    else if(ChronoUnit.DAYS.between(startDate, endDate)+1 < carriedLeaves){
-      return false;
-    }
-    return true;
+  private boolean isCarriedLeavesCountValid() {
+    return !(carriedLeaves != null && carriedLeaves < 0
+        && ChronoUnit.DAYS.between(startDate, endDate) + 1 < carriedLeaves);
   }
 
   @AssertTrue(message =
       ErrorMessageConstants.LEAVE_ADDITIONAL_LEAVES_ARE_MORE_THAN_ALLOCATED_TIME_PERIOD)
-  private boolean isAdditionalLeavesCountValid()
-  {
-    if(additionalLeaves != null && additionalLeaves < 0)
-    {
-      return false;
-    }
-    else if(ChronoUnit.DAYS.between(startDate, endDate)+1 < additionalLeaves){
-      return false;
-    }
-    return true;
+  private boolean isAdditionalLeavesCountValid() {
+    return !(additionalLeaves != null && additionalLeaves < 0
+        && ChronoUnit.DAYS.between(startDate, endDate) + 1 < additionalLeaves);
   }
 }

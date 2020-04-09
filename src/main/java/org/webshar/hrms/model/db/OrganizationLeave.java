@@ -15,9 +15,6 @@ import lombok.ToString;
 @ToString(callSuper = true)
 public class OrganizationLeave extends BaseModel {
 
-  /**
-   *
-   */
   private static final long serialVersionUID = 1L;
   @Column(name = "count", nullable = false, unique = true, length = 11)
   private Long count;

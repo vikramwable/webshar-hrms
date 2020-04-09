@@ -32,14 +32,14 @@ public interface LeaveAllocationRepository extends
 
   @Query
       (" SELECT l " +
-      " FROM LeaveAllocation l " +
-      " WHERE l.employee.id = :employeeId" +
-      " AND l.leaveType.id = :leaveTypeId" +
-      " AND (" +
-      "       (:startDate <= l.startDate AND l.startDate <=  :endDate)" +
-      "       OR (:startDate <= l.endDate AND l.endDate <=  :endDate)" +
-      "       OR (l.startDate <= :startDate AND  :endDate <= l.endDate )" +
-      " )")
+          " FROM LeaveAllocation l " +
+          " WHERE l.employee.id = :employeeId" +
+          " AND l.leaveType.id = :leaveTypeId" +
+          " AND (" +
+          "       (:startDate <= l.startDate AND l.startDate <=  :endDate)" +
+          "       OR (:startDate <= l.endDate AND l.endDate <=  :endDate)" +
+          "       OR (l.startDate <= :startDate AND  :endDate <= l.endDate )" +
+          " )")
   public List<LeaveAllocation> findGivenTypeOfLeaveAllocatedOrNotInTheGivenDateRange(
       @Param("employeeId") Long employeeId,
       @Param("leaveTypeId") Long leaveTypeId,

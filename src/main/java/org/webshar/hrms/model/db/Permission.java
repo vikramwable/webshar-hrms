@@ -6,12 +6,14 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 
 @Entity
 @Table(name = "permission")
 @Getter
 @Setter
+@ToString(callSuper = true)
 public class Permission extends BaseModel {
 
   @Column(name = "name", nullable = false, unique = true, length = 200)
