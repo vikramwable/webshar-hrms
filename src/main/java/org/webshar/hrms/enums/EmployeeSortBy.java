@@ -1,7 +1,7 @@
 package org.webshar.hrms.enums;
 
 public enum EmployeeSortBy {
-  EMPLOYEE_ID,
-  EMPLOYEE_FIRST_NAME,
+  EMP_ID,
+  FIRST_NAME,
   JOINING_DATE
 }

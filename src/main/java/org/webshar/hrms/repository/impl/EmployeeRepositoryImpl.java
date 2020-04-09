@@ -24,12 +24,12 @@ public class EmployeeRepositoryImpl implements EmployeeRepositoryCustom {
   EntityManager entityManager;
 
   public static String getSortByValue(final EmployeeSearchRequest employeeSearchRequest) {
-    String sortBy = "employeeId";
+    String sortBy = "empId";
     switch (EmployeeSortBy.valueOf(employeeSearchRequest.getSortBy())) {
-      case EMPLOYEE_ID:
-        sortBy = "employeeId";
+      case EMP_ID:
+        sortBy = "empId";
         break;
-      case EMPLOYEE_FIRST_NAME:
+      case FIRST_NAME:
         sortBy = "firstName";
         break;
       case JOINING_DATE:
