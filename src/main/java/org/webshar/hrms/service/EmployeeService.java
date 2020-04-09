@@ -2,13 +2,17 @@ package org.webshar.hrms.service;
 
 import java.util.List;
 import java.util.Optional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.webshar.hrms.constants.ErrorMessageConstants;
 import org.webshar.hrms.model.builder.EmployeeBuilder;
 import org.webshar.hrms.model.db.Employee;
+import org.webshar.hrms.model.db.OrganizationLeave;
 import org.webshar.hrms.repository.EmployeeRepository;
+import org.webshar.hrms.request.builder.employee.leave.allocatiion.EmployeeLeaveAllocationRequestBuilder;
 import org.webshar.hrms.request.employee.EmployeeCreateRequest;
 import org.webshar.hrms.request.employee.EmployeeSearchRequest;
 import org.webshar.hrms.request.employee.EmployeeUpdateRequest;
@@ -28,6 +32,16 @@ public class EmployeeService {
   @Autowired
   OrganizationService organizationService;
 
+  @Autowired
+  OrganizationLeaveService organizationLeaveService;
+
+  @Autowired
+  LeaveAllocationService leaveAllocationService;
+
+  @Autowired
+  EmployeeLeaveAllocationRequestBuilder employeeLeaveAllocationRequestBuilder;
+
+  public static final Logger LOGGER = LoggerFactory.getLogger(EmployeeService.class);
 
   public Employee getEmployeeById(Long id) throws EntityNotFoundException {
     return employeeRepository.findById(id)
@@ -53,8 +67,11 @@ public class EmployeeService {
     Optional<Employee> reportTo = getReportsToEmployee(employeeCreateRequest.getReportsTo());
     organizationService.getOrganizationById(employeeCreateRequest.getOrganizationId());
     if (employees.isEmpty()) {
-      Employee employeeToCreate = employeeBuilder.buildFromRequest(employeeCreateRequest, reportTo.get());
-      return employeeRepository.save(employeeToCreate);
+      Employee employeeToCreate = employeeBuilder
+          .buildFromRequest(employeeCreateRequest, reportTo.isPresent() ? reportTo.get() : null);
+      employeeToCreate = employeeRepository.save(employeeToCreate);
+      assignDefaultInitialLeavesToEmployee(employeeToCreate);
+      return employeeToCreate;
     } else {
       throw new EntityAlreadyExistsException(ErrorMessageConstants.EMPLOYEE_DUPLICATE_EMAIL);
     }
@@ -64,10 +81,12 @@ public class EmployeeService {
   public Employee updateEmployee(final Long id, EmployeeUpdateRequest employeeUpdateRequest)
       throws EntityNotFoundException, BadRequestException {
     Employee employeeToUpdate = employeeRepository.findById(id)
-        .orElseThrow(() -> new EntityNotFoundException(ErrorMessageConstants.EMPLOYEE_BY_ID_NOT_FOUND));
+        .orElseThrow(
+            () -> new EntityNotFoundException(ErrorMessageConstants.EMPLOYEE_BY_ID_NOT_FOUND));
     Optional<Employee> reportTo = getReportsToEmployee(employeeUpdateRequest.getReportsTo());
     Employee updatedEmployee = employeeBuilder
-        .buildFromRequest(employeeToUpdate, employeeUpdateRequest, reportTo.get());
+        .buildFromRequest(employeeToUpdate, employeeUpdateRequest,
+            reportTo.isPresent() ? reportTo.get() : null);
     return employeeRepository.save(updatedEmployee);
   }
 
@@ -91,5 +110,19 @@ public class EmployeeService {
   @Transactional
   public List<Employee> searchEmployee(final EmployeeSearchRequest employeeSearchRequest) {
     return employeeRepository.searchEmployee(employeeSearchRequest);
+  }
+
+  private void assignDefaultInitialLeavesToEmployee(Employee employee)
+      throws EntityNotFoundException, EntityAlreadyExistsException {
+    //Fetch All assigned leaves of an employee's organization
+    List<OrganizationLeave> organizationLeaveList = organizationLeaveService
+        .getOrganizationLeaveByOrganizationId(employee.getOrganizationId());
+
+    if (!organizationLeaveList.isEmpty()) {
+      for (OrganizationLeave organizationLeave : organizationLeaveList) {
+        leaveAllocationService.assignLeavesToAnEmployee(employeeLeaveAllocationRequestBuilder
+            .buildFromOrganizationLeaves(employee, organizationLeave));
+      }
+    }
   }
 }

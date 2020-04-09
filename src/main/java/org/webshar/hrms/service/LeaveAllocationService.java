@@ -49,8 +49,7 @@ public class LeaveAllocationService {
   }
 
   public List<LeaveAllocationResponse> getEmployeesAllocatedLeavesByEmployeeId(
-      final Long employeeId)
-      throws EntityNotFoundException {
+      final Long employeeId) {
     return leaveAllocationResponseBuilder
         .buildFromResult(leaveAllocationRepository
             .findByEmployeeId(employeeId));
@@ -62,12 +61,9 @@ public class LeaveAllocationService {
     List<LeaveAllocation> leaveAllocationList = leaveAllocationRepository
         .findGivenTypeOfLeaveAllocatedOrNotInTheGivenDateRange(
             employeeId, leaveTypeId, startDate, endDate);
-    if (!leaveAllocationList.isEmpty())
-    {
+    if (!leaveAllocationList.isEmpty()) {
       return leaveAllocationList.get(0);
-    }
-    else
-    {
+    } else {
       throw new EntityNotFoundException(
           ErrorMessageConstants.EMPLOYEE_LEAVE_GIVEN_TYPE_OF_LEAVE_NOT_ALLOCATED_FOR_GIVEN_EMPLOYEE);
     }
@@ -95,16 +91,14 @@ public class LeaveAllocationService {
 
   public LeaveAllocationResponse updateEmployeesAllocatedLeavesByEmployeeIdAndLeaveType(
       final Long id, final EmployeeLeaveAllocationUpdateRequest employeeLeaveAllocationUpdateRequest)
-      throws EntityNotFoundException, EntityAlreadyExistsException
-  {
+      throws EntityNotFoundException, EntityAlreadyExistsException {
     Employee employee = employeeService
         .getEmployeeById(employeeLeaveAllocationUpdateRequest.getEmployeeId());
     LeaveType leaveType = leaveTypeService
         .getLeaveTypeById(employeeLeaveAllocationUpdateRequest.getLeaveTypeId());
 
     if (employeeLeaveAllocationUpdateRequest.getStartDate() != null
-        && employeeLeaveAllocationUpdateRequest.getEndDate() != null)
-    {
+        && employeeLeaveAllocationUpdateRequest.getEndDate() != null) {
       isStartAndEndDateAreOverlappingWithExistingRecordForGivenEmployeeAndLeaveTypeId(
           employee.getId(), leaveType.getId(), employeeLeaveAllocationUpdateRequest.getStartDate(),
           employeeLeaveAllocationUpdateRequest.getEndDate());
@@ -113,17 +107,14 @@ public class LeaveAllocationService {
     Optional<LeaveAllocation> employeeLeaveAllocationToUpdate =
         leaveAllocationRepository
             .findById(id);
-    if (employeeLeaveAllocationToUpdate.isPresent())
-    {
+    if (employeeLeaveAllocationToUpdate.isPresent()) {
       LeaveAllocation updatedLeaveAllocation =
           leaveAllocationBuilder.buildFromRequest(employeeLeaveAllocationUpdateRequest,
               employeeLeaveAllocationToUpdate.get(), employee, leaveType);
 
       return leaveAllocationResponseBuilder
           .buildFromResult(leaveAllocationRepository.save(updatedLeaveAllocation));
-    }
-    else
-    {
+    } else {
       throw new EntityNotFoundException(
           ErrorMessageConstants.EMPLOYEE_LEAVE_ALLOCATED_BY_ID_NOT_FOUND);
     }
@@ -135,7 +126,7 @@ public class LeaveAllocationService {
     if (leaveTypeId != null) {
       if (employeeId != null) {
         leaveAllocationRepository
-            .deleteByEmployeeIdAndLeaveTypeId(employeeId,leaveTypeService.getLeaveTypeById(leaveTypeId).getId());
+            .deleteByEmployeeIdAndLeaveTypeId(employeeId, leaveTypeService.getLeaveTypeById(leaveTypeId).getId());
       }
     } else if (employeeId != null) {
       leaveAllocationRepository
@@ -150,18 +141,14 @@ public class LeaveAllocationService {
 
   private boolean isStartAndEndDateAreOverlappingWithExistingRecordForGivenEmployeeAndLeaveTypeId(
       final Long employeeId, final Long leaveTypeId, final LocalDate startDate, final LocalDate endDate)
-      throws EntityAlreadyExistsException
-  {
+      throws EntityAlreadyExistsException {
     List<LeaveAllocation> leaveAllocationList = leaveAllocationRepository
         .findGivenTypeOfLeaveAllocatedOrNotInTheGivenDateRange(employeeId, leaveTypeId, startDate,
             endDate);
-    if (!leaveAllocationList.isEmpty())
-    {
+    if (!leaveAllocationList.isEmpty()) {
       throw new EntityAlreadyExistsException(
-           ErrorMessageConstants.EMPLOYEE_LEAVE_ALLOCATED_WITH_GIVEN_LEAVE_TYPE_AND_START_DATE_AND_END_DATE_OVERLAPPING);
-    }
-    else
-    {
+          ErrorMessageConstants.EMPLOYEE_LEAVE_ALLOCATED_WITH_GIVEN_LEAVE_TYPE_AND_START_DATE_AND_END_DATE_OVERLAPPING);
+    } else {
       return false;
     }
   }
