@@ -35,48 +35,25 @@ public class EmployeeLeaveAllocationUpdateRequest {
   }
 
   @AssertTrue(message = ErrorMessageConstants.LEAVE_END_DATE_CANNOT_LESS_THAN_START_DATE)
-  private boolean isEndDateIsValid()
-  {
-    if (endDate != null && endDate.isBefore(startDate) )
-    {
-      return false;
-    }
-    else
-    {
-      return true;
-    }
+  private boolean isEndDateIsValid() {
+    return endDate != null && !endDate.isBefore(startDate);
   }
 
   @AssertTrue(message =
       ErrorMessageConstants.LEAVE_ALLOCATED_LEAVES_ARE_MORE_THAN_ALLOCATED_TIME_PERIOD)
-  private boolean isAllottedLeavesCountValid()
-  {
-    if(allottedLeaves != null && allottedLeaves < 0)
-    {
-      return false;
-    }
-    return true;
+  private boolean isAllottedLeavesCountValid() {
+    return allottedLeaves != null && allottedLeaves >= 0;
   }
 
   @AssertTrue(message =
       ErrorMessageConstants.LEAVE_CARRIED_LEAVES_ARE_MORE_THAN_ALLOCATED_TIME_PERIOD)
-  private boolean isCarriedLeavesCountValid()
-  {
-    if(carriedLeaves != null && carriedLeaves < 0)
-    {
-      return false;
-    }
-    return true;
+  private boolean isCarriedLeavesCountValid() {
+    return carriedLeaves != null && carriedLeaves >= 0;
   }
 
   @AssertTrue(message =
       ErrorMessageConstants.LEAVE_ADDITIONAL_LEAVES_ARE_MORE_THAN_ALLOCATED_TIME_PERIOD)
-  private boolean isAdditionalLeavesCountValid()
-  {
-    if(additionalLeaves != null && additionalLeaves < 0)
-    {
-      return false;
-    }
-    return true;
+  private boolean isAdditionalLeavesCountValid() {
+    return additionalLeaves != null && additionalLeaves >= 0;
   }
 }

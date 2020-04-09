@@ -52,10 +52,6 @@ public class Employee extends BaseModel {
   private String contact;
   @Column(name = "designation", nullable = false, length = 200)
   private String designation;
-
-//  @Column(name = "reports_to", length = 11)
-//  private Long reportsTo;
-
   @OneToOne(cascade = CascadeType.ALL)
   @JoinColumn(name = "reports_to", referencedColumnName = "id")
   private Employee reportsTo;

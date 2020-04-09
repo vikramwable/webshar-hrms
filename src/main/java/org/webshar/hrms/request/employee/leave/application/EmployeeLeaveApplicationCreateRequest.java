@@ -25,16 +25,7 @@ public class EmployeeLeaveApplicationCreateRequest {
   private LocalDate endDate;
 
   @AssertTrue(message = ErrorMessageConstants.LEAVE_END_DATE_CANNOT_LESS_THAN_START_DATE)
-  private boolean isValidEndDate()
-  {
-    if (endDate == null)
-    {
-      return false;
-    }
-    else if (endDate.isBefore(startDate))
-    {
-      return false;
-    }
-    return true;
+  private boolean isValidEndDate() {
+    return endDate != null && !endDate.isBefore(startDate);
   }
 }
