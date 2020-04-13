@@ -22,36 +22,47 @@ import lombok.ToString;
 @JsonInclude(Include.NON_NULL)
 public class Employee extends BaseModel {
 
-  /**
-   *
-   */
   private static final long serialVersionUID = 1L;
+
   @Column(name = "emp_id", nullable = false, unique = true, length = 11)
   private String empId;
+
   @Column(name = "organization_id", nullable = false, unique = true, length = 11)
   private Long organizationId;
+
   @Column(name = "first_name", nullable = false, length = 100)
   private String firstName;
+
   @Column(name = "middle_name", length = 100)
   private String middleName;
+
   @Column(name = "last_name", nullable = false, length = 100)
   private String lastName;
+
   @Column(name = "date_of_birth", nullable = false)
   private Date dateOfBirth;
+
   @Column(name = "is_active", nullable = false)
   private Boolean isActive;
+
   @Column(name = "email", nullable = false, length = 100)
   private String email;
+
   @Column(name = "joining_date", nullable = false, updatable = false)
   private Date joiningDate;
+
   @Column(name = "exit_date")
   private Date exitDate;
+
   @Column(name = "address", length = 300)
   private String address;
+
   @Column(name = "contact", nullable = false, length = 100)
   private String contact;
+
   @Column(name = "designation", nullable = false, length = 200)
   private String designation;
+
   @OneToOne(cascade = CascadeType.ALL)
   @JoinColumn(name = "reports_to", referencedColumnName = "id")
   private Employee reportsTo;

@@ -22,7 +22,7 @@ public class EmployeeSearchRequest {
   private Integer perPage;
   @ApiModelProperty(value = "page", example = "1")
   private Integer page;
-  @ApiModelProperty(value = "sortBy", example = "EMPLOYEE_ID")
+  @ApiModelProperty(value = "sortBy", example = "EMP_ID")
   private String sortBy;
   @ApiModelProperty(value = "order", example = "ASC")
   private String order;
@@ -36,25 +36,21 @@ public class EmployeeSearchRequest {
       setOrder("DESC");
     }
 
-    for (Order o : Order.values()) {
-      if (o.name().equals(order)) {
-        return true;
-      }
-    }
-    return false;
+    return Arrays.stream(Order.values())
+        .map(Order::name)
+        .anyMatch(o -> o.equals(order));
   }
 
   @AssertTrue(message = ErrorMessageConstants.EMPLOYEE_INVALID_INVALID_SORT_BY_COLUMN)
   public boolean isValidSortBy() {
     if (StringUtils.isEmpty(sortBy)) {
-      setSortBy("EMPLOYEE_ID");
+      this.setSortBy("EMP_ID");
     }
-    for (EmployeeSortBy sortParam : EmployeeSortBy.values()) {
-      if (sortParam.name().equals(sortBy)) {
-        return true;
-      }
-    }
-    return false;
+
+    return Arrays.stream(EmployeeSortBy.values())
+        .map(EmployeeSortBy::name)
+        .anyMatch(s -> s.equals(sortBy));
+
   }
 
   @AssertTrue(message = ErrorMessageConstants.INVALID_PER_PAGE_VALUE)
