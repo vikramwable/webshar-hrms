@@ -8,6 +8,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import lombok.Getter;
@@ -27,8 +28,9 @@ public class Employee extends BaseModel {
   @Column(name = "emp_id", nullable = false, unique = true, length = 11)
   private String empId;
 
-  @Column(name = "organization_id", nullable = false, unique = true, length = 11)
-  private Long organizationId;
+  @ManyToOne
+  @JoinColumn(name = "organization_id")
+  private Organization organization;
 
   @Column(name = "first_name", nullable = false, length = 100)
   private String firstName;
@@ -75,7 +77,7 @@ public class Employee extends BaseModel {
     this.setId(employee.getId());
     this.setGuid(employee.getGuid());
     this.setEmpId(employee.getEmpId());
-    this.setOrganizationId(employee.getOrganizationId());
+    this.setOrganization(employee.getOrganization());
     this.setFirstName(employee.getFirstName());
     this.setMiddleName(employee.getMiddleName());
     this.setLastName(employee.getLastName());

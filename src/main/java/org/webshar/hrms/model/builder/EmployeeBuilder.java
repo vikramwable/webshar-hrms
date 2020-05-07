@@ -8,7 +8,9 @@ import org.webshar.hrms.model.db.Employee;
 import org.webshar.hrms.repository.EmployeeRepository;
 import org.webshar.hrms.request.employee.EmployeeCreateRequest;
 import org.webshar.hrms.request.employee.EmployeeUpdateRequest;
+import org.webshar.hrms.service.OrganizationService;
 import org.webshar.hrms.service.exception.BadRequestException;
+import org.webshar.hrms.service.exception.EntityNotFoundException;
 
 @Component
 public class EmployeeBuilder {
@@ -16,11 +18,14 @@ public class EmployeeBuilder {
   @Autowired
   private EmployeeRepository employeeRepository;
 
+  @Autowired
+  private OrganizationService organizationService;
+
   public Employee buildFromRequest(EmployeeCreateRequest employeeCreateRequest, Employee reportsTo)
-      throws BadRequestException {
+      throws BadRequestException, EntityNotFoundException {
     Employee employee = new Employee();
     employee.setEmpId(employeeCreateRequest.getEmpId());
-    employee.setOrganizationId(employeeCreateRequest.getOrganizationId());
+    employee.setOrganization(organizationService.getOrganizationById(employeeCreateRequest.getOrganizationId()));
     employee.setFirstName(employeeCreateRequest.getFirstName());
     employee.setMiddleName(employeeCreateRequest.getMiddleName());
     employee.setLastName(employeeCreateRequest.getLastName());
@@ -41,13 +46,15 @@ public class EmployeeBuilder {
   }
 
   public Employee buildFromRequest(Employee employeeToBeUpdated,
-      EmployeeUpdateRequest employeeUpdateRequest, final Employee reportsTo) throws BadRequestException {
+      EmployeeUpdateRequest employeeUpdateRequest, final Employee reportsTo)
+      throws BadRequestException, EntityNotFoundException {
     Employee employeeAfterUpdate = new Employee(employeeToBeUpdated);
     if (employeeUpdateRequest.getEmpId() != null) {
       employeeAfterUpdate.setEmpId(employeeUpdateRequest.getEmpId());
     }
     if (employeeUpdateRequest.getOrganizationId() != null) {
-      employeeAfterUpdate.setOrganizationId(employeeUpdateRequest.getOrganizationId());
+      employeeAfterUpdate
+          .setOrganization(organizationService.getOrganizationById(employeeUpdateRequest.getOrganizationId()));
     }
     if (StringUtils.isNotBlank(employeeUpdateRequest.getFirstName())) {
       employeeAfterUpdate.setFirstName(employeeUpdateRequest.getFirstName());
@@ -92,7 +99,7 @@ public class EmployeeBuilder {
       employeeAfterUpdate.setDesignation(employeeUpdateRequest.getDesignation());
     }
     checkAndUpdateReportsTo(employeeAfterUpdate, reportsTo,
-        employeeAfterUpdate.getOrganizationId());
+        employeeAfterUpdate.getOrganization().getId());
 
     return employeeAfterUpdate;
   }

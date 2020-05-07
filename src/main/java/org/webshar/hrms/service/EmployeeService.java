@@ -116,7 +116,7 @@ public class EmployeeService {
       throws EntityNotFoundException, EntityAlreadyExistsException {
     //Fetch All assigned leaves of an employee's organization
     List<OrganizationLeave> organizationLeaveList = organizationLeaveService
-        .getOrganizationLeaveByOrganizationId(employee.getOrganizationId());
+        .getOrganizationLeaveByOrganizationId(employee.getOrganization().getId());
 
     if (!organizationLeaveList.isEmpty()) {
       for (OrganizationLeave organizationLeave : organizationLeaveList) {
