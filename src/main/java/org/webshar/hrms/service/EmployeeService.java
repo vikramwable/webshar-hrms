@@ -49,16 +49,6 @@ public class EmployeeService {
             () -> new EntityNotFoundException(ErrorMessageConstants.EMPLOYEE_BY_ID_NOT_FOUND));
   }
 
-
-  public Employee getEmployeeByEmployeeId(String employeeId) throws EntityNotFoundException {
-    Employee employee = employeeRepository.findByEmpId(employeeId);
-    if (employee == null) {
-      throw new EntityNotFoundException(ErrorMessageConstants.EMPLOYEE_BY_ID_NOT_FOUND);
-    } else {
-      return employee;
-    }
-  }
-
   @Transactional
   public Employee createEmployee(EmployeeCreateRequest employeeCreateRequest)
       throws EntityAlreadyExistsException, BadRequestException, EntityNotFoundException {
@@ -68,7 +58,7 @@ public class EmployeeService {
     organizationService.getOrganizationById(employeeCreateRequest.getOrganizationId());
     if (employees.isEmpty()) {
       Employee employeeToCreate = employeeBuilder
-          .buildFromRequest(employeeCreateRequest, reportTo.isPresent() ? reportTo.get() : null);
+          .buildFromRequest(employeeCreateRequest, reportTo.orElse(null));
       employeeToCreate = employeeRepository.save(employeeToCreate);
       assignDefaultInitialLeavesToEmployee(employeeToCreate);
       return employeeToCreate;
@@ -85,8 +75,7 @@ public class EmployeeService {
             () -> new EntityNotFoundException(ErrorMessageConstants.EMPLOYEE_BY_ID_NOT_FOUND));
     Optional<Employee> reportTo = getReportsToEmployee(employeeUpdateRequest.getReportsTo());
     Employee updatedEmployee = employeeBuilder
-        .buildFromRequest(employeeToUpdate, employeeUpdateRequest,
-            reportTo.isPresent() ? reportTo.get() : null);
+        .buildFromRequest(employeeToUpdate, employeeUpdateRequest, reportTo.orElse(null));
     return employeeRepository.save(updatedEmployee);
   }
 
