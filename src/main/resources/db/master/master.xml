@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+  <include file="changelog/01-organization-schema.xml" relativeToChangelogFile="true"/>
+  <include file="changelog/02-employee-schema.xml" relativeToChangelogFile="true"/>
+  <include file="changelog/03-roles-schema.xml" relativeToChangelogFile="true"/>
+  <include file="changelog/04-permissions-schema.xml"
+    relativeToChangelogFile="true"/>
+  <include file="changelog/05-resources-schema.xml"
+    relativeToChangelogFile="true"/>
+  <include file="changelog/06-leave_type-schema.xml" relativeToChangelogFile="true"/>
+  <include file="changelog/07-leave_status-schema.xml" relativeToChangelogFile="true"/>
+  <include file="changelog/08-organization_leave-schema.xml" relativeToChangelogFile="true"/>
+  <include file="changelog/09-leave_application-schema.xml" relativeToChangelogFile="true"/>
+  <include file="changelog/10-leave-approval.xml" relativeToChangelogFile="true"/>
+  <include file="changelog/11-leave_allocation-schema.xml" relativeToChangelogFile="true"/>
+  <include file="changelog/12-modify-employee-column.xml" relativeToChangelogFile="true"/>
+  <include file="changelog/13-add-column-reportsto-in-employee-table.xml" relativeToChangelogFile="true"/>
+</databaseChangeLog>
+
